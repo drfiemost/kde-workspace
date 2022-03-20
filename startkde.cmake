@@ -272,6 +272,8 @@ export XDG_DATA_DIRS
 # D-Bus autolaunch is broken
 if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
     eval `dbus-launch --sh-syntax --exit-with-session`
+else
+    dbus-update-activation-environment --systemd --all
 fi
 if $qdbus >/dev/null 2>/dev/null; then
     : # ok
