@@ -227,7 +227,7 @@ ModeList RandROutput::modes() const
 RandRMode RandROutput::mode() const
 {
     if (!isConnected())
-        return None;
+        return NULL;
 
     if (!m_crtc)
         return RandRMode();

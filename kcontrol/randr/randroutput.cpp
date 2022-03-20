@@ -202,12 +202,12 @@ void RandROutput::handleEvent(XRROutputChangeNotifyEvent *event)
 		m_connected = (event->connection == RR_Connected);
 		loadSettings(false);
 		if (!m_connected && currentCrtc != None)
-			setCrtc(None);
+			setCrtc(NULL);
 	}
 
 	// check if we are still connected, if not, release the crtc connection
 	if(!m_connected && m_crtc->isValid())
-		setCrtc(None);
+		setCrtc(NULL);
 
 	if(changed)
 		emit outputChanged(m_id, changed);
@@ -267,7 +267,7 @@ ModeList RandROutput::modes() const
 RandRMode RandROutput::mode() const
 {
 	if (!isConnected())
-		return None;
+		return NULL;
 
 	if (!m_crtc)
 		return RandRMode();
