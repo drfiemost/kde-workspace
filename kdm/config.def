@@ -1476,7 +1476,7 @@ Description:
 
 Key: TerminateServer
 Type: bool
-Default: false
+Default: true
 User: core
 Instance: #:*/!
 Merge: xdm
