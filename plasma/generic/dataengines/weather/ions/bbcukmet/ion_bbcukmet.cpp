@@ -312,11 +312,11 @@ void UKMETIon::readSearchHTMLData(const QString& source, const QByteArray& html)
 
     while (!stream.atEnd()) {
        line = stream.readLine();
-       if (line.contains("<p class=\"response\">") > 0) {
+       if (line.contains("<p class=\"response\">") != 0) {
            flag = 1;
        }
 
-       if (line.contains("There are no forecasts matching") > 0) {
+       if (line.contains("There are no forecasts matching") != 0) {
            break;
        }
 
@@ -342,7 +342,7 @@ void UKMETIon::readSearchHTMLData(const QString& source, const QByteArray& html)
             }
        }
 
-       if (line.contains("<div class=\"line\">") > 0) {
+       if (line.contains("<div class=\"line\">") != 0) {
            flag = 0;
        }
     }
