@@ -1,7 +1,7 @@
 project(KDEBASE_WORKSPACE)
 # set_package_properties appeared in cmake 2.8.6
 # TODO: Remove when kdelibs >= 4.10 will be required
-cmake_minimum_required(VERSION 2.8.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 # Used e.g. in KDE4WorkspaceConfig.cmake, Alex
 set(KDE4WORKSPACE_VERSION_MAJOR 4)
@@ -19,13 +19,6 @@ find_package(KDE4 4.9.4 REQUIRED)
 include(KDE4Defaults)
 
 option(WITH_XINERAMA "Xinerama support for multi-headed X displays" ON)
-
-find_package(Strigi)
-
-set_package_properties(Strigi PROPERTIES DESCRIPTION "Desktop indexing and search support"
-                       URL "http://strigi.sourceforge.net"
-                       TYPE REQUIRED
-                      )
 
 find_package(ZLIB)
 set_package_properties(ZLIB PROPERTIES DESCRIPTION "Support for gzip compressed files and data streams"
@@ -148,20 +141,6 @@ set_package_properties(PythonLibrary PROPERTIES DESCRIPTION "Python scripting la
                        URL "http://python.org"
                        TYPE OPTIONAL
                        PURPOSE "Needed to build plasma scriptengine for python."
-                      )
-
-macro_optional_find_package(Soprano 2.7.56)
-set_package_properties(Soprano PROPERTIES DESCRIPTION "Semantic Desktop Storing"
-                       URL "http://soprano.sourceforge.net"
-                       TYPE OPTIONAL
-                       PURPOSE "Required to build Nepomuk features."
-                      )
-
-macro_optional_find_package(NepomukCore QUIET CONFIG)
-set_package_properties(NepomukCore PROPERTIES DESCRIPTION "Nepomuk Core Library"
-                       URL "https://projects.kde.org/nepomuk-core"
-                       TYPE OPTIONAL
-                       PURPOSE "Required to build Nepomuk features."
                       )
 
 macro_optional_find_package(Boost 1.34.0 MODULE)
