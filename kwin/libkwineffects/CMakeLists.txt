@@ -64,7 +64,6 @@ macro( KWIN4_ADD_GLUTILS_BACKEND name glinclude )
     endif()
     set_target_properties(${name} PROPERTIES VERSION 1.0.0 SOVERSION 1 )
     target_link_libraries(${name} ${ARGN})
-    target_link_libraries(${name} LINK_INTERFACE_LIBRARIES ${ARGN})
 
     install(TARGETS ${name} EXPORT kdeworkspaceLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 endmacro()
@@ -83,7 +82,6 @@ if(OPENGL_FOUND)
     endif()
 
     target_link_libraries(kwinglutils ${OPENGL_gl_LIBRARY})
-    target_link_libraries(kwinglutils LINK_INTERFACE_LIBRARIES ${OPENGL_gl_LIBRARY})
     # -ldl used by OpenGL code
     find_library(DL_LIBRARY dl)
     if (DL_LIBRARY)

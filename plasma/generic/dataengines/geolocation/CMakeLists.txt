@@ -5,8 +5,6 @@ project(geolocation)
 set(plasma_geolocation_interface_SRCS geolocationprovider.cpp)
 kde4_add_library(plasma-geolocation-interface SHARED ${plasma_geolocation_interface_SRCS})
 target_link_libraries(plasma-geolocation-interface ${KDE4_KIO_LIBS} ${KDE4_PLASMA_LIBS})
-target_link_libraries(plasma-geolocation-interface
-                      LINK_INTERFACE_LIBRARIES ${KDE4_KIO_LIBS} ${KDE4_PLASMA_LIBS})
 set_target_properties(plasma-geolocation-interface PROPERTIES
    VERSION ${GENERIC_LIB_VERSION}
    SOVERSION ${GENERIC_LIB_SOVERSION}

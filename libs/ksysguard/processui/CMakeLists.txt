@@ -28,7 +28,6 @@ if(X11_XRes_FOUND)
 endif(X11_XRes_FOUND)
 
 target_link_libraries(processui ${KDE4_KDEUI_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTWEBKIT_LIBRARY} processcore)
-target_link_libraries(processui LINK_INTERFACE_LIBRARIES ${KDE4_KDEUI_LIBS} processcore)
 
 
 set_target_properties(processui

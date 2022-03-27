@@ -9,7 +9,6 @@ KDE4_MOC_HEADERS(ksignalplotter ksignalplotter.h kgraphicssignalplotter.h)
 kde4_add_library(ksignalplotter SHARED ${ksignalplotter_LIB_SRCS})
 
 target_link_libraries(ksignalplotter ${KDE4_KDEUI_LIBS})
-target_link_libraries(ksignalplotter LINK_INTERFACE_LIBRARIES ${KDE4_KDEUI_LIBS})
 
 set_target_properties(ksignalplotter
    PROPERTIES VERSION ${GENERIC_LIB_VERSION}
