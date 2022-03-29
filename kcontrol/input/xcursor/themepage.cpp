@@ -29,7 +29,9 @@
 #include <KIO/Job>
 #include <KIO/DeleteJob>
 #include <KIO/NetAccess>
+#ifdef ENABLE_KNEWSTUFF3
 #include <knewstuff3/downloaddialog.h>
+#endif
 
 
 #include <KTar>
@@ -62,7 +64,9 @@ ThemePage::ThemePage(QWidget *parent)
     : QWidget(parent)
 {
     setupUi(this);
+#ifdef ENABLE_KNEWSTUFF3
     installKnsButton->setIcon(KIcon("get-hot-new-stuff"));
+#endif
     installButton->setIcon(KIcon("document-import"));
     removeButton->setIcon(KIcon("edit-delete"));
 
@@ -102,8 +106,9 @@ ThemePage::ThemePage(QWidget *parent)
             installButton->setEnabled(false);
             installKnsButton->setEnabled(false);
     }
-
+#ifdef ENABLE_KNEWSTUFF3
     connect(installKnsButton, SIGNAL(clicked()), SLOT(getNewClicked()));
+#endif
     connect(installButton, SIGNAL(clicked()), SLOT(installClicked()));
     connect(removeButton,  SIGNAL(clicked()), SLOT(removeClicked()));
 }
@@ -427,7 +432,7 @@ void ThemePage::preferredSizeChanged()
     else
         preferredSize = 0;
 }
-
+#ifdef ENABLE_KNEWSTUFF3
 void ThemePage::getNewClicked()
 {
     KNS3::DownloadDialog dialog("xcursor.knsrc", this);
@@ -437,7 +442,7 @@ void ThemePage::getNewClicked()
             model->refreshList();
     }
 }
-
+#endif
 void ThemePage::installClicked()
 {
     // Get the URL for the theme we're going to install

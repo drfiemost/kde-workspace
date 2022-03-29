@@ -30,7 +30,11 @@ set(kcm_kdm_PART_SRCS ${kcmbackgroundlib_SRCS} ${backgroundlib_SRCS}
 kde4_add_plugin(kcm_kdm ${kcm_kdm_PART_SRCS})
 
 
-target_link_libraries(kcm_kdm ${KDE4_KIO_LIBS} ${QIMAGEBLITZ_LIBRARIES} ${KDE4_KNEWSTUFF3_LIBS} ${X11_LIBRARIES} kworkspace)
+target_link_libraries(kcm_kdm ${KDE4_KIO_LIBS} ${QIMAGEBLITZ_LIBRARIES} ${X11_LIBRARIES} kworkspace)
+if(LIBATTICA_FOUND)
+    add_definitions(-DENABLE_KNEWSTUFF3)
+    target_link_libraries(kcm_kdm ${KDE4_KNEWSTUFF3_LIBS})
+endif(LIBATTICA_FOUND)
 
 macro_add_file_dependencies(kdm-shut.cpp ${confci})
 add_dependencies(kcm_kdm ConfigCi)

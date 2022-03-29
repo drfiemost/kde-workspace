@@ -42,7 +42,9 @@ Q_SIGNALS:
   void changed( bool state );
 
 protected Q_SLOTS:
+#ifdef ENABLE_KNEWSTUFF3
   virtual void slotNew();
+#endif
   virtual void slotAdd();
   virtual void slotRemove();
   virtual void slotTest();

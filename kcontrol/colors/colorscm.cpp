@@ -43,8 +43,10 @@
 #include <KPluginFactory>
 #include <KStandardDirs>
 #include <kio/netaccess.h>
+#ifdef ENABLE_KNEWSTUFF3
 #include <knewstuff3/downloaddialog.h>
 #include <knewstuff3/uploaddialog.h>
+#endif
 
 K_PLUGIN_FACTORY( KolorFactory, registerPlugin<KColorCm>(); )
 K_EXPORT_PLUGIN( KolorFactory("kcmcolors") )
@@ -394,7 +396,7 @@ void KColorCm::on_schemeImportButton_clicked()
         }
     }
 }
-
+#ifdef ENABLE_KNEWSTUFF3
 void KColorCm::on_schemeKnsButton_clicked()
 {
     KNS3::DownloadDialog dialog("colorschemes.knsrc", this);
@@ -433,7 +435,7 @@ void KColorCm::on_schemeKnsUploadButton_clicked()
         dialog.exec();
     }
 }
-
+#endif
 void KColorCm::on_schemeSaveButton_clicked()
 {
     QString previousName;

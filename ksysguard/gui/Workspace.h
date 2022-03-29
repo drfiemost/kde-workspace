@@ -57,7 +57,9 @@ class Workspace : public KTabWidget
     void removeWorkSheet();
     void removeWorkSheet( const QString &fileName );
     void removeAllWorkSheets();
+#ifdef ENABLE_KNEWSTUFF3
     void getHotNewWorksheet();
+#endif
     void uploadHotNewWorksheet();
     void cut();
     void copy();

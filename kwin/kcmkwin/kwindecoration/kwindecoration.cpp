@@ -49,7 +49,9 @@
 #include <KDialog>
 #include <KDE/KLocalizedString>
 #include <KMessageBox>
+#ifdef ENABLE_KNEWSTUFF3
 #include <KNS3/DownloadDialog>
+#endif
 #include <KDE/KStandardDirs>
 #include <KDE/KConfigDialogManager>
 #include <KPluginFactory>
@@ -160,7 +162,9 @@ void KWinDecorationModule::init()
     connect(m_ui->decorationList->rootObject(), SIGNAL(currentIndexChanged()), SLOT(slotSelectionChanged()));
     connect(m_ui->decorationList->rootObject(), SIGNAL(widthChanged()), SLOT(updatePreviewWidth()));
     connect(m_ui->configureButtonsButton, SIGNAL(clicked(bool)), this, SLOT(slotConfigureButtons()));
+#ifdef ENABLE_KNEWSTUFF3
     connect(m_ui->ghnsButton, SIGNAL(clicked(bool)), SLOT(slotGHNSClicked()));
+#endif
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), m_proxyModel, SLOT(setFilterFixedString(QString)));
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), m_ui->decorationList->rootObject(), SLOT(returnToBounds()), Qt::QueuedConnection);
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(updateScrollbarRange()), Qt::QueuedConnection);
@@ -346,7 +350,7 @@ void KWinDecorationModule::slotConfigureButtons()
 
     delete configDialog;
 }
-
+#ifdef ENABLE_KNEWSTUFF3
 void KWinDecorationModule::slotGHNSClicked()
 {
     QPointer<KNS3::DownloadDialog> downloadDialog = new KNS3::DownloadDialog("aurorae.knsrc", this);
@@ -377,7 +381,7 @@ void KWinDecorationModule::slotGHNSClicked()
     }
     delete downloadDialog;
 }
-
+#endif
 void KWinDecorationModule::slotConfigureDecoration()
 {
     const QModelIndex index = m_proxyModel->mapToSource(m_proxyModel->index(m_ui->decorationList->rootObject()->property("currentIndex").toInt(), 0));

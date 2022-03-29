@@ -62,8 +62,9 @@ class KDMThemeWidget : public QWidget {
     void themeSelected();
     void removeSelectedThemes();
     void installNewTheme();
+#ifdef ENABLE_KNEWSTUFF3
     void getNewStuff();
-
+#endif
 };
 
 #endif

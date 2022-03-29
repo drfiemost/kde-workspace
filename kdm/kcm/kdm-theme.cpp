@@ -33,7 +33,9 @@
 #include <KUrlRequester>
 #include <KUrlRequesterDialog>
 #include <KTempDir>
+#ifdef ENABLE_KNEWSTUFF3
 #include <knewstuff3/downloaddialog.h>
+#endif
 #include <KDebug>
 #include <KIO/Job>
 #include <KIO/DeleteJob>
@@ -129,15 +131,15 @@ KDMThemeWidget::KDMThemeWidget(QWidget *parent)
     bRemoveTheme->setWhatsThis(i18n("This will remove the selected theme."));
 
     ml->addWidget(bRemoveTheme, 2, 1);
-
+#ifdef ENABLE_KNEWSTUFF3
     bGetNewThemes = new QPushButton(i18nc("@action:button", "&Get New Themes"), this);
 
     ml->addWidget(bGetNewThemes, 2, 2);
-
+    connect(bGetNewThemes, SIGNAL(clicked()), SLOT(getNewStuff()));
+#endif
     connect(themeWidget, SIGNAL(itemSelectionChanged()), SLOT(themeSelected()));
     connect(bInstallTheme, SIGNAL(clicked()), SLOT(installNewTheme()));
     connect(bRemoveTheme, SIGNAL(clicked()), SLOT(removeSelectedThemes()));
-    connect(bGetNewThemes, SIGNAL(clicked()), SLOT(getNewStuff()));
 
     themeDir = KStandardDirs::installPath("data") + "kdm/themes/";
     defaultTheme = 0;
@@ -385,7 +387,7 @@ void KDMThemeWidget::removeSelectedThemes()
         if (delList.at(i).isEmpty())
             themeWidget->takeTopLevelItem(themeWidget->indexOfTopLevelItem(themes.at(i)));
 }
-
+#ifdef ENABLE_KNEWSTUFF3
 void KDMThemeWidget::getNewStuff()
 {
     KNS3::DownloadDialog dialog("kdm.knsrc", this);
@@ -405,5 +407,5 @@ void KDMThemeWidget::getNewStuff()
         }
     }
 }
-
+#endif
 #include "kdm-theme.moc"

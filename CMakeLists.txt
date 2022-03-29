@@ -171,6 +171,13 @@ set_package_properties(QJSON PROPERTIES DESCRIPTION "Library to manage JSON obje
                        PURPOSE "Required to build Chrome/Chromium support for Plasma Bookmarks Runners"
                       )
 
+find_package(LibAttica 0.1.4)
+set_package_properties(LibAttica PROPERTIES DESCRIPTION "A library to access Open Collaboration Service providers"
+                       URL "https://projects.kde.org/attica"
+                       TYPE OPTIONAL
+                       PURPOSE "Attica is needed for the Get Hot New Stuff support"
+                      )
+
 
 include(ConfigureChecks.cmake)
 if(NOT WIN32)

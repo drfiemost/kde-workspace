@@ -29,7 +29,9 @@
 #include <KAuthorized>
 #include <KStandardDirs>
 #include <KServiceTypeTrader>
+#ifdef ENABLE_KNEWSTUFF3
 #include <knewstuff3/downloaddialog.h>
+#endif
 #include <KIconDialog>
 #include <KWindowSystem>
 
@@ -200,10 +202,12 @@ void ActivityManager::createActivityFromScript(const QString &script, const QStr
 
 void ActivityManager::downloadActivityScripts()
 {
+#ifdef ENABLE_KNEWSTUFF3
     KNS3::DownloadDialog *dialog = new KNS3::DownloadDialog( "activities.knsrc", 0 );
     connect(dialog, SIGNAL(accepted()), this, SIGNAL(activityTypeActionsChanged()));
     connect(dialog, SIGNAL(accepted()), dialog, SLOT(deleteLater()));
     dialog->show();
+#endif
 }
 
 void ActivityManager::setContainment(Plasma::Containment *containment)

@@ -68,7 +68,9 @@
 #include <KDE/KPluginLoader>
 #include <KDE/KStandardAction>
 #include <KDE/KZip>
+#ifdef ENABLE_KNEWSTUFF3
 #include <KDE/KNS3/DownloadDialog>
+#endif
 
 #define CFG_GROUP                  "Main Settings"
 #define CFG_PREVIEW_SPLITTER_SIZES "PreviewSplitterSizes"
@@ -406,8 +408,10 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const QVariantList&)
     connect(itsDeleteFontControl, SIGNAL(clicked()), SLOT(deleteFonts()));
     connect(duplicateFontsAct, SIGNAL(triggered(bool)), SLOT(duplicateFonts()));
     //connect(validateFontsAct, SIGNAL(triggered(bool)), SLOT(validateFonts()));
+#ifdef ENABLE_KNEWSTUFF3
     if(itsDownloadFontsAct)
         connect(itsDownloadFontsAct, SIGNAL(triggered(bool)), SLOT(downloadFonts()));
+#endif
     connect(itsPreview, SIGNAL(customContextMenuRequested(QPoint)), SLOT(previewMenu(QPoint)));
     connect(itsPreviewList, SIGNAL(showMenu(QPoint)), SLOT(previewMenu(QPoint)));
     connect(itsPreviewSplitter, SIGNAL(splitterMoved(int,int)), SLOT(splitterMoved()));
@@ -850,7 +854,7 @@ void CKCmFontInst::duplicateFonts()
 //void CKCmFontInst::validateFonts()
 //{
 //}
-
+#ifdef ENABLE_KNEWSTUFF3
 void CKCmFontInst::downloadFonts()
 {
     KNS3::DownloadDialog *newStuff = new KNS3::DownloadDialog("kfontinst.knsrc", this);
@@ -875,7 +879,7 @@ void CKCmFontInst::downloadFonts()
     
     delete newStuff;
 }
-
+#endif
 void CKCmFontInst::print()
 {
     print(false);

@@ -57,7 +57,9 @@ class Image : public Plasma::Wallpaper
         void positioningChanged(int index);
         void addDir();
         void removeDir();
+#ifdef ENABLE_KNEWSTUFF3
         void getNewWallpaper();
+#endif
         void colorChanged(const QColor& color);
         void pictureChanged(const QModelIndex &);
         void wallpaperBrowseCompleted();
@@ -78,7 +80,7 @@ class Image : public Plasma::Wallpaper
         void setWallpaper(const QString &path);
         void setWallpaperRetrieved(KJob *job);
         void addWallpaperRetrieved(KJob *job);
-        void newStuffFinished();
+        //void newStuffFinished();
         void setConfigurationInterfaceModel();
         void updateDirs();
         void updateDirWatch(const QStringList &newDirs);

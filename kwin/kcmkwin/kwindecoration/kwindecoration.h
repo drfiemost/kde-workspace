@@ -113,7 +113,9 @@ protected slots:
     // Allows us to turn "save" on
     void slotSelectionChanged();
     void slotConfigureButtons();
+#ifdef ENABLE_KNEWSTUFF3
     void slotGHNSClicked();
+#endif
     void slotConfigureDecoration();
 
 private:

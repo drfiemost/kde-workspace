@@ -50,9 +50,9 @@ protected Q_SLOTS:
     void loadDesktopTheme();
 
     void setDesktopThemeDirty();
-
+#ifdef ENABLE_KNEWSTUFF3
     void getNewThemes();
-
+#endif
     void detailChanged();
 private:
     static QString toolbarButtonText(int index);

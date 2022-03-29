@@ -59,7 +59,9 @@ class ThemePage : public QWidget, private Ui::ThemePage
             size, otherwise it disables it. If the size setting is looked in kiosk
             mode, it stays always disabled. */
         void updateSizeComboBox();
+#ifdef ENABLE_KNEWSTUFF3
         void getNewClicked();
+#endif
         void installClicked();
         void removeClicked();
 

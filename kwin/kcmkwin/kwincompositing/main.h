@@ -86,7 +86,9 @@ private slots:
     void updateStatusUI(bool compositingIsPossible);
     void showDetailedEffectLoadingInformation();
     void blockFutureWarnings();
+#ifdef ENABLE_KNEWSTUFF3
     void slotGHNS();
+#endif
 
 private:
     bool effectEnabled(const QString& effect, const KConfigGroup& cfg) const;

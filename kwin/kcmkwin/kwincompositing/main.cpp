@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <kservice.h>
 #include <ktitlewidget.h>
 #include <knotification.h>
-#include <KNS3/DownloadDialog>
+//#include <KNS3/DownloadDialog>
 
 #include <QtDBus/QtDBus>
 #include <QPainter>
@@ -124,8 +124,9 @@ KWinCompositingConfig::KWinCompositingConfig(QWidget *parent, const QVariantList
         warn(message, details, dontAgainKey);
     } else
         ui.messageBox->setVisible(false);
+#ifdef ENABLE_KNEWSTUFF3
     ui.ghns->setIcon(KIcon("get-hot-new-stuff"));
-
+#endif
     // For future use
     (void) I18N_NOOP("Use GLSL shaders");
 
@@ -179,8 +180,9 @@ KWinCompositingConfig::KWinCompositingConfig(QWidget *parent, const QVariantList
     connect(ui.glColorCorrection, SIGNAL(toggled(bool)), this, SLOT(changed()));
     connect(m_showDetailedErrors, SIGNAL(triggered(bool)), SLOT(showDetailedEffectLoadingInformation()));
     connect(m_dontShowAgain, SIGNAL(triggered(bool)), SLOT(blockFutureWarnings()));
+#ifdef ENABLE_KNEWSTUFF3
     connect(ui.ghns, SIGNAL(clicked(bool)), SLOT(slotGHNS()));
-
+#endif
     // Open the temporary config file
     // Temporary conf file is used to synchronize effect checkboxes with effect
     // selector by loading/saving effects from/to temp config when active tab
@@ -898,7 +900,7 @@ QString KWinCompositingConfig::quickHelp() const
 {
     return i18n("<h1>Desktop Effects</h1>");
 }
-
+#ifdef ENABLE_KNEWSTUFF3
 void KWinCompositingConfig::slotGHNS()
 {
     QPointer<KNS3::DownloadDialog> downloadDialog = new KNS3::DownloadDialog("kwineffect.knsrc", this);
@@ -909,7 +911,7 @@ void KWinCompositingConfig::slotGHNS()
     }
     delete downloadDialog;
 }
-
+#endif
 } // namespace
 
 #include "dbus.moc"
