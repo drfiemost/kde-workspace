@@ -80,7 +80,9 @@ class Image : public Plasma::Wallpaper
         void setWallpaper(const QString &path);
         void setWallpaperRetrieved(KJob *job);
         void addWallpaperRetrieved(KJob *job);
-        //void newStuffFinished();
+#ifdef ENABLE_KNEWSTUFF3
+        void newStuffFinished();
+#endif
         void setConfigurationInterfaceModel();
         void updateDirs();
         void updateDirWatch(const QStringList &newDirs);

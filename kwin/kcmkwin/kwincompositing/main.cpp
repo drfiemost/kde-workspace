@@ -38,7 +38,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <kservice.h>
 #include <ktitlewidget.h>
 #include <knotification.h>
-//#include <KNS3/DownloadDialog>
+#ifdef ENABLE_KNEWSTUFF3
+#include <KNS3/DownloadDialog>
+#endif
 
 #include <QtDBus/QtDBus>
 #include <QPainter>
