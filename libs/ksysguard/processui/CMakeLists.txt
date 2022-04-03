@@ -6,13 +6,18 @@ check_include_files(byteswap.h HAVE_BYTESWAP_H)
 
 set(ksysguard_WIDGETS "ksysguard.widgets")
 
+if(QT_QTWEBKIT_FOUND)
+    add_definitions(-DENABLE_QTWEBKIT)
+    set(scripting_src scripting.cpp)
+endif(QT_QTWEBKIT_FOUND)
+
 set(processui_LIB_SRCS
    ksysguardprocesslist.cpp
    ProcessFilter.cpp
    ProcessModel.cpp
    ReniceDlg.cpp
    KTextEditVT.cpp
-   scripting.cpp
+   ${scripting_src}
 )
 
 kde4_add_ui_files( processui_LIB_SRCS
@@ -27,7 +32,10 @@ if(X11_XRes_FOUND)
   include_directories(${X11_XRes_INCLUDE_PATH})
 endif(X11_XRes_FOUND)
 
-target_link_libraries(processui ${KDE4_KDEUI_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTWEBKIT_LIBRARY} processcore)
+target_link_libraries(processui ${KDE4_KDEUI_LIBS} ${QT_QTSCRIPT_LIBRARY} processcore)
+if(QT_QTWEBKIT_FOUND)
+    target_link_libraries(processui ${QT_QTWEBKIT_LIBRARY})
+endif(QT_QTWEBKIT_FOUND)
 
 
 set_target_properties(processui

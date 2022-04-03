@@ -58,7 +58,9 @@
 
 #include "ReniceDlg.h"
 #include "ui_ProcessWidgetUI.h"
+#ifdef ENABLE_QTWEBKIT
 #include "scripting.h"
+#endif
 
 #include <sys/types.h>
 #include <unistd.h>
@@ -151,7 +153,9 @@ struct KSysGuardProcessListPrivate {
     KSysGuardProcessListPrivate(KSysGuardProcessList* q, const QString &hostName)
         : mModel(q, hostName), mFilterModel(q), mUi(new Ui::ProcessWidget()), mProcessContextMenu(NULL), mUpdateTimer(NULL)
     {
+#ifdef ENABLE_QTWEBKIT
         mScripting = NULL;
+#endif
         mNeedToExpandInit = false;
         mNumItemsSelected = -1;
         mResortCountDown = 2; //The items added initially will be already sorted, but without CPU info.  On the second refresh we will have CPU usage, so /then/ we can resort
@@ -217,10 +221,10 @@ struct KSysGuardProcessListPrivate {
 
     /** Number of items that are selected */
     int mNumItemsSelected;
-
+#ifdef ENABLE_QTWEBKIT
     /** Class to deal with the scripting. NULL if scripting is disabled */
     Scripting *mScripting;
-
+#endif
     /** A counter to mark when to resort, so that we do not resort on every update */
     int mResortCountDown;
 
@@ -487,12 +491,13 @@ void KSysGuardProcessList::showProcessContextMenu(const QPoint &point) {
         //If the process is stopped, offer to resume it
         d->mProcessContextMenu->addAction(d->resume);
     }
-
+#ifdef ENABLE_QTWEBKIT
     if(numProcesses == 1 && d->mScripting) {
         foreach(QAction *action, d->mScripting->actions()) {
             d->mProcessContextMenu->addAction(action);
         }
     }
+#endif
     if (showSignalingEntries) {
         d->mProcessContextMenu->addSeparator();
         d->mProcessContextMenu->addAction(d->terminate);
@@ -917,8 +922,10 @@ void KSysGuardProcessList::hideEvent ( QHideEvent * event )  //virtual protected
     if(d->mUpdateTimer)
         d->mUpdateTimer->stop();
     //stop any scripts running, to save on memory
+#ifdef ENABLE_QTWEBKIT
     if(d->mScripting)
         d->mScripting->stopAllScripts();
+#endif
     QWidget::hideEvent(event);
 }
 
@@ -1478,10 +1485,15 @@ bool KSysGuardProcessList::isKillButtonVisible() const
 }
 bool KSysGuardProcessList::scriptingEnabled() const
 {
+#ifdef ENABLE_QTWEBKIT
     return !!d->mScripting;
+#else
+    return false;
+#endif
 }
 void KSysGuardProcessList::setScriptingEnabled(bool enabled)
 {
+#ifdef ENABLE_QTWEBKIT
     if(!!d->mScripting == enabled)
         return;  //Nothing changed
     if(!enabled) {
@@ -1491,5 +1503,5 @@ void KSysGuardProcessList::setScriptingEnabled(bool enabled)
         d->mScripting = new Scripting(this);
         d->mScripting->hide();
     }
-
+#endif
 }
