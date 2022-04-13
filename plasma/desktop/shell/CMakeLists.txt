@@ -6,10 +6,12 @@ include_directories(${KDEBASE_WORKSPACE_SOURCE_DIR}/libs
 
 add_subdirectory(configupdates)
 
-set(activitymanager_SRCS
+if(KActivities_FOUND)
+  set(activitymanager_SRCS
     activitymanager/activitymanager.cpp
     activitymanager/kidenticongenerator.cpp
-)
+  )
+endif(KActivities_FOUND)
 
 set(plasma_SRCS
     accessibility/accessiblefactory.cpp

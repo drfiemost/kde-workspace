@@ -4,7 +4,8 @@ include_directories (
 )
 
 add_subdirectory(common)
-
-add_subdirectory(activities)
+if(KActivities_FOUND)
+  add_subdirectory(activities)
+endif(KActivities_FOUND)
 add_subdirectory(global)
 add_subdirectory(profiles)
