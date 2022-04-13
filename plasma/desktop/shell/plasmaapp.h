@@ -80,7 +80,7 @@ public:
     void hideController(int screen);
 
     void prepareContainment(Plasma::Containment *containment);
-
+#if 0
         /**
      * create a new activity based on the active one
      */
@@ -92,7 +92,9 @@ public:
     /**
      * create a new activity from @p script
      */
-    void createActivityFromScript(const QString &script, const QString &name = QString(), const QString &icon = QString(), const QStringList &startupApps = QStringList());
+    void createActivityFromScript(const QString &script, const QString &name = QString(), const QString &icon = QString(),
+ const QStringList &startupApps = QStringList());
+#endif
     static bool isPanelContainment(Plasma::Containment *containment);
 
 #ifdef Q_WS_X11

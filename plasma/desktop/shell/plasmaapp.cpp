@@ -75,7 +75,9 @@
 #include <Plasma/Wallpaper>
 #include <Plasma/WindowEffects>
 
+#ifdef ENABLE_KACTIVITIES
 #include <KActivities/Controller>
+#endif
 
 #include <kephal/screens.h>
 
@@ -570,10 +572,13 @@ ControllerWindow *PlasmaApp::showController(int screen, Plasma::Containment *con
     if (widgetExplorerMode) {
         controller->showWidgetExplorer();
     } else {
+#ifdef ENABLE_KACTIVITIES
         controller->showActivityManager();
+#endif
     }
-
+#ifdef ENABLE_KACTIVITIES
     connect(m_corona->activityController(), SIGNAL(currentActivityChanged(QString)), controller, SLOT(close()));
+#endif
     controller->show();
     Plasma::WindowEffects::slideWindow(controller, controller->location());
     QTimer::singleShot(0, controller, SLOT(activate()));
@@ -855,7 +860,9 @@ DesktopCorona* PlasmaApp::corona(bool createIfMissing)
         c->setItemIndexMethod(QGraphicsScene::NoIndex);
         c->initializeLayout();
         c->processUpdateScripts();
+#ifdef ENABLE_KACTIVITIES
         c->checkActivities();
+#endif
         c->checkScreens();
         foreach (Plasma::Containment *containment, c->containments()) {
             if (containment->screen() != -1 && containment->wallpaper()) {
@@ -1142,6 +1149,7 @@ void PlasmaApp::prepareContainment(Plasma::Containment *containment)
          containment->containmentType() == Plasma::Containment::CustomContainment)) {
         QAction *a = containment->action("remove");
         delete a; //activities handle removal now
+#ifdef ENABLE_KACTIVITIES
         if (!(m_loadingActivity.isEmpty() || m_corona->offscreenWidgets().contains(containment))) {
             Plasma::Context *context = containment->context();
             if (context->currentActivityId().isEmpty()) {
@@ -1152,7 +1160,7 @@ void PlasmaApp::prepareContainment(Plasma::Containment *containment)
                 activity->replaceContainment(containment);
             }
         }
-
+#endif
         if (containment->containmentType() == Plasma::Containment::DesktopContainment) {
             foreach (QAction *action, m_corona->actions()) {
                 containment->addToolBoxAction(action);
@@ -1241,10 +1249,12 @@ void PlasmaApp::configureContainment(Plasma::Containment *containment)
         if (isDashboardContainment) {
             configDialog->setLayoutChangeable(false);
         } else {
+#ifdef ENABLE_KACTIVITIES
             Activity *activity = m_corona->activity(containment->context()->currentActivityId());
             Q_ASSERT(activity);
             connect(configDialog, SIGNAL(containmentPluginChanged(Plasma::Containment*)),
                     activity, SLOT(replaceContainment(Plasma::Containment*)));
+#endif
         }
 
         connect(configDialog, SIGNAL(destroyed(QObject*)), nullManager, SLOT(deleteLater()));
@@ -1254,7 +1264,7 @@ void PlasmaApp::configureContainment(Plasma::Containment *containment)
     KWindowSystem::setOnDesktop(configDialog->winId(), KWindowSystem::currentDesktop());
     KWindowSystem::activateWindow(configDialog->winId());
 }
-
+#ifdef ENABLE_KACTIVITIES
 void PlasmaApp::cloneCurrentActivity()
 {
     if (!m_corona) {
@@ -1277,8 +1287,7 @@ void PlasmaApp::cloneCurrentActivity()
     //load the new one
     controller->setCurrentActivity(newId);
 }
-
-//TODO accomodate activities
+#endif
 void PlasmaApp::setPerVirtualDesktopViews(bool perDesktopViews)
 {
     if (perDesktopViews == perVirtualDesktopViews()) {
@@ -1459,7 +1468,7 @@ void PlasmaApp::plasmoidAccessFinished(Plasma::AccessAppletJob *job)
         c->addApplet(job->applet(), QPointF(-1, -1), false);
     }
 }
-
+#ifdef ENABLE_KACTIVITIES
 void PlasmaApp::createActivity(const QString &plugin)
 {
     if (!m_corona) {
@@ -1534,7 +1543,7 @@ void PlasmaApp::createActivityFromScript(const QString &script, const QString &n
 
     confirmDialog->exec();
 }
-
+#endif
 void PlasmaApp::executeCommands(const QList < QVariant > & commands)
 {
     foreach (const QVariant & command, commands) {
