@@ -1,6 +1,4 @@
 project(KDEBASE_WORKSPACE)
-# set_package_properties appeared in cmake 2.8.6
-# TODO: Remove when kdelibs >= 4.10 will be required
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 # Used e.g. in KDE4WorkspaceConfig.cmake, Alex
@@ -29,7 +27,7 @@ set_package_properties(ZLIB PROPERTIES DESCRIPTION "Support for gzip compressed 
 find_package(KActivities 6.0.0 CONFIG)
 set_package_properties(KActivities PROPERTIES DESCRIPTION "Interface library for the activity manager"
                        URL "https://projects.kde.org/kactivities"
-                       TYPE REQUIRED
+                       TYPE OPTIONAL
                       )
 
 find_package(DBusMenuQt 0.6.0)
