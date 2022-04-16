@@ -77,13 +77,13 @@
 
 #ifdef ENABLE_KACTIVITIES
 #include <KActivities/Controller>
+#include "activity.h"
 #endif
 
 #include <kephal/screens.h>
 
 #include <plasmagenericshell/backgrounddialog.h>
 
-#include "activity.h"
 #include "appadaptor.h"
 #include "controllerwindow.h"
 #include "checkbox.h"
