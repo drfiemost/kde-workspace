@@ -3,9 +3,8 @@ project( ksplashx )
 add_subdirectory( scale )
 add_subdirectory( utils )
 
-include_directories(${PNG_INCLUDE_DIR}  # Deprecated in CMake 2.8.7
-                    ${PNG_INCLUDE_DIRS} # Added in CMake 2.8.7
-                    ${JPEG_INCLUDE_DIR}
+include_directories(${PNG_INCLUDE_DIRS}
+                    ${JPEG_INCLUDE_DIRS}
                    )
 
 include (CheckCXXSourceCompiles)
