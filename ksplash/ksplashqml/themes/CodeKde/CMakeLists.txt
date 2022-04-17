@@ -1,0 +1,11 @@
+install(FILES Preview.png Theme.rc main.qml DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde)
+
+install(FILES images/background.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)
+install(FILES images/gear2.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)
+install(FILES images/gear3-2.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)
+install(FILES images/internet.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)
+install(FILES images/monitor.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)
+install(FILES images/preferences.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)
+install(FILES images/ready-1.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)
+install(FILES images/ready.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)
+install(FILES images/user.png DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/CodeKde/images)

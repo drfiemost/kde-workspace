@@ -1,0 +1,7 @@
+[KSplash Theme: CodeKde]
+Name = CodeKde Motion splash screen
+Description = Animated KDE logo on a black background
+Version = 1.1
+Author = Codicem 
+# Theme behaviour settings.
+Engine = KSplashQML
