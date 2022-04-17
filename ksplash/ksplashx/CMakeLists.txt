@@ -2,6 +2,7 @@ project( ksplashx )
 
 add_subdirectory( scale )
 add_subdirectory( utils )
+add_subdirectory(themes)
 
 include_directories(${PNG_INCLUDE_DIRS}
                     ${JPEG_INCLUDE_DIRS}

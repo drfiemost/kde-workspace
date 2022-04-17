@@ -1,0 +1,9 @@
+[KSplash Theme: Default]
+Name = Kore Air
+Description = Kore Air
+Version = 1.0
+Author = Mcder3 (David Linares)
+Homepage = http://koresource.blogspot.com/
+
+# Theme behaviour settings.
+Engine = KSplashX
