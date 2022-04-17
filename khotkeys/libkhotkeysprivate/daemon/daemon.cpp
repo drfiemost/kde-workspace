@@ -57,7 +57,7 @@ static QDBusInterface* Kded()
 
 bool isRunning()
     {
-    std::auto_ptr<QDBusInterface> kded( Kded() );
+    std::unique_ptr<QDBusInterface> kded( Kded() );
     if (!kded->isValid())
         {
         return false;
@@ -73,7 +73,7 @@ bool isRunning()
 bool reload()
     {
     // No kded no reload
-    std::auto_ptr<QDBusInterface> kded( Kded() );
+    std::unique_ptr<QDBusInterface> kded( Kded() );
     if (!kded->isValid())
         {
         return false;
@@ -110,7 +110,7 @@ bool reload()
 
 bool start()
     {
-    std::auto_ptr<QDBusInterface> kded( Kded() );
+    std::unique_ptr<QDBusInterface> kded( Kded() );
     if (!kded->isValid())
         {
         return false;
@@ -146,7 +146,7 @@ bool stop()
         return true;
         }
 
-    std::auto_ptr<QDBusInterface> kded( Kded() );
+    std::unique_ptr<QDBusInterface> kded( Kded() );
     if (!kded->isValid())
         {
         return false;
