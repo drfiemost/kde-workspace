@@ -1,5 +1,7 @@
 if(${KDE_PLATFORM_PROFILE} STREQUAL "Desktop")
-   add_subdirectory(activitybar)
+   if(KActivities_FOUND)
+      add_subdirectory(activitybar)
+   endif(KActivities_FOUND)
    add_subdirectory(icon)
    add_subdirectory(lock_logout)
    add_subdirectory(panelspacer)

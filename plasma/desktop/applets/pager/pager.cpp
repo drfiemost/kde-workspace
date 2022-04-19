@@ -48,7 +48,9 @@
 #include <Plasma/DeclarativeWidget>
 #include <Plasma/Package>
 
+#ifdef ENABLE_KACTIVITIES
 #include <KActivities/Consumer>
+#endif
 
 #include <taskmanager/task.h>
 
@@ -133,10 +135,11 @@ void Pager::init()
     recalculateGridSizes(m_rows);
 
     setCurrentDesktop(KWindowSystem::currentDesktop());
-
+#ifdef ENABLE_KACTIVITIES
     KActivities::Consumer *act = new KActivities::Consumer(this);
     connect(act, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChanged(QString)));
     m_currentActivity = act->currentActivity();
+#endif
 }
 
 void Pager::updatePagerStyle()

@@ -42,7 +42,9 @@
 #include <KServiceTypeTrader>
 #include <KStandardDirs>
 
+#ifdef ENABLE_KACTIVITIES
 #include <KActivities/Consumer>
+#endif
 
 #include <QtCore/QTimer>
 #include <QtDBus/QDBusConnection>
@@ -56,7 +58,9 @@ Core::Core(QObject* parent, const KComponentData &componentData)
     , m_backend(0)
     , m_applicationData(componentData)
     , m_criticalBatteryTimer(new QTimer(this))
+#ifdef ENABLE_KACTIVITIES
     , m_activityConsumer(new KActivities::Consumer(this))
+#endif
     , m_pendingWakeupEvent(true)
 {
 }
@@ -130,9 +134,10 @@ void Core::onBackendReady()
             this, SLOT(onKIdleTimeoutReached(int,int)));
     connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()),
             this, SLOT(onResumingFromIdle()));
+#ifdef ENABLE_KACTIVITIES
     connect(m_activityConsumer, SIGNAL(currentActivityChanged(QString)),
             this, SLOT(loadProfile()));
-
+#endif
     // Set up the policy agent
     PowerDevil::PolicyAgent::instance()->init();
 
@@ -238,7 +243,7 @@ void Core::loadProfile(bool force)
     }
 
     KConfigGroup config;
-
+#ifdef ENABLE_KACTIVITIES
     // Check the activity in which we are in
     QString activity = m_activityConsumer->currentActivity();
     if (activity.isEmpty()) {
@@ -276,7 +281,9 @@ void Core::loadProfile(bool force)
             profileId = activityConfig.readEntry("actLike", QString());
             kDebug() << "Activity is mirroring a different profile";
         }
-    } else {
+    } else
+#endif
+    {
         // It doesn't, let's load the current state's profile
         if (m_loadedBatteriesUdi.isEmpty()) {
             kDebug() << "No batteries found, loading AC";
@@ -370,6 +377,7 @@ void Core::loadProfile(bool force)
         emit profileChanged(m_currentProfile);
     }
 
+#ifdef ENABLE_KACTIVITIES
     // Now... any special behaviors we'd like to consider?
     if (activityConfig.readEntry("mode", "None") == "SpecialBehavior") {
         kDebug() << "Activity has special behaviors";
@@ -404,6 +412,7 @@ void Core::loadProfile(bool force)
             }
         }
     }
+#endif
 
     // If the lid is closed, retrigger the lid close signal
     if (m_backend->isLidClosed()) {

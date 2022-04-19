@@ -44,14 +44,16 @@
 #include <Plasma/DataEngineManager>
 #include <Plasma/Package>
 
+#ifdef ENABLE_KACTIVITIES
 #include <KActivities/Controller>
 #include <KActivities/Info>
+#include "activity.h"
+#endif
 
 #include <kephal/screens.h>
 
 #include <scripting/layouttemplatepackagestructure.h>
 
-#include "activity.h"
 #include "panelview.h"
 #include "plasmaapp.h"
 #include "plasma-shell-desktop.h"
@@ -63,8 +65,10 @@ DesktopCorona::DesktopCorona(QObject *parent)
     : Plasma::Corona(parent),
       m_addPanelAction(0),
       m_addPanelsMenu(0),
-      m_delayedUpdateTimer(new QTimer(this)),
-      m_activityController(new KActivities::Controller(this))
+      m_delayedUpdateTimer(new QTimer(this))
+#ifdef ENABLE_KACTIVITIES
+      ,m_activityController(new KActivities::Controller(this))
+#endif
 {
     init();
 }
@@ -99,7 +103,7 @@ void DesktopCorona::init()
     setContainmentActionsDefaults(Plasma::Containment::CustomPanelContainment, panelPlugins);
 
     checkAddPanelAction();
-
+#ifdef ENABLE_KACTIVITIES
     //why do these actions belong to plasmaapp?
     //because it makes the keyboard shortcuts work.
     KAction *action = new KAction(PlasmaApp::self());
@@ -119,15 +123,15 @@ void DesktopCorona::init()
     action->setObjectName( QLatin1String("Stop Activity")); //no I18N
     action->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_S));
     connect(action, SIGNAL(triggered()), this, SLOT(stopCurrentActivity()));
-
+#endif
     connect(this, SIGNAL(immutabilityChanged(Plasma::ImmutabilityType)),
             this, SLOT(updateImmutability(Plasma::ImmutabilityType)));
     connect(KSycoca::self(), SIGNAL(databaseChanged(QStringList)), this, SLOT(checkAddPanelAction(QStringList)));
-
+#ifdef ENABLE_KACTIVITIES
     connect(m_activityController, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChanged(QString)));
     connect(m_activityController, SIGNAL(activityAdded(QString)), this, SLOT(activityAdded(QString)));
     connect(m_activityController, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemoved(QString)));
-
+#endif
     // Everything will be repainted shortly after a screen resize was processed, but unfortunately that does not suffice:
     // When screen size is increased, parts of the newly uncovered area on the panel remain black for some reason. Also,
     // if compositing is disabled and the desktop background is a color, parts of the panel are left on the background.
@@ -208,7 +212,7 @@ void DesktopCorona::checkScreen(int screen, bool signalWhenExists)
     //note: hte signal actually triggers view creation only for panels, atm.
     //desktop views are created in response to containment's screenChanged signal instead, which is
     //buggy (sometimes the containment thinks it's already on the screen, so no view is created)
-
+#ifdef ENABLE_KACTIVITIES
     Activity *currentActivity = activity(m_activityController->currentActivity());
     //ensure the desktop(s) have a containment and view
     if (AppSettings::perVirtualDesktopViews()) {
@@ -220,7 +224,7 @@ void DesktopCorona::checkScreen(int screen, bool signalWhenExists)
     } else {
         checkDesktop(currentActivity, signalWhenExists, screen);
     }
-
+#endif
     //ensure the panels get views too
     if (signalWhenExists) {
         foreach (Plasma::Containment * c, containments()) {
@@ -236,7 +240,7 @@ void DesktopCorona::checkScreen(int screen, bool signalWhenExists)
         }
     }
 }
-
+#ifdef ENABLE_KACTIVITIES
 void DesktopCorona::checkDesktop(Activity *activity, bool signalWhenExists, int screen, int desktop)
 {
     Plasma::Containment *c = activity->containmentForScreen(screen, desktop);
@@ -253,7 +257,7 @@ void DesktopCorona::checkDesktop(Activity *activity, bool signalWhenExists, int 
         emit containmentAdded(c);
     }
 }
-
+#endif
 int DesktopCorona::numScreens() const
 {
 #ifdef Q_WS_X11
@@ -582,7 +586,7 @@ void DesktopCorona::addPanel(const QString &plugin)
     panel->setMaximumSize(w, h);
     panel->resize(w, h);
 }
-
+#ifdef ENABLE_KACTIVITIES
 void DesktopCorona::checkActivities()
 {
     kDebug() << "containments to start with" << containments().count();
@@ -766,7 +770,7 @@ void DesktopCorona::stopCurrentActivity()
     QString currentActivity = m_activityController->currentActivity();
     m_activityController->stopActivity(currentActivity);
 }
-
+#endif
 
 #include "desktopcorona.moc"
 

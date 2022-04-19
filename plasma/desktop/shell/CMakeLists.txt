@@ -7,7 +7,9 @@ include_directories(${KDEBASE_WORKSPACE_SOURCE_DIR}/libs
 add_subdirectory(configupdates)
 
 if(KActivities_FOUND)
+  add_definitions(-DENABLE_KACTIVITIES)
   set(activitymanager_SRCS
+    activity.cpp
     activitymanager/activitymanager.cpp
     activitymanager/kidenticongenerator.cpp
   )
@@ -16,7 +18,6 @@ endif(KActivities_FOUND)
 set(plasma_SRCS
     accessibility/accessiblefactory.cpp
     accessibility/accessibleplasmaview.cpp
-    activity.cpp
     scripting/desktopscriptengine.cpp
     scripting/panel.cpp
     checkbox.cpp
@@ -54,7 +55,11 @@ kde4_add_app_icon(plasma_SRCS "${KDE4_INSTALL_DIR}/share/icons/oxygen/*/apps/pla
 
 kde4_add_kdeinit_executable(plasma-desktop ${plasma_SRCS})
 
-target_link_libraries(kdeinit_plasma-desktop ${KDE4_PLASMA_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KIDLETIME_LIBS} ${QT_QTSCRIPT_LIBRARY} ${KACTIVITIES_LIBRARY} kworkspace kactivities plasmagenericshell ${QT_QTDECLARATIVE_LIBRARY})
+target_link_libraries(kdeinit_plasma-desktop ${KDE4_PLASMA_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KIDLETIME_LIBS} ${QT_QTSCRIPT_LIBRARY} kworkspace plasmagenericshell ${QT_QTDECLARATIVE_LIBRARY})
+
+if(KActivities_FOUND)
+    target_link_libraries(kdeinit_plasma-desktop ${KACTIVITIES_LIBRARY})
+endif(KActivities_FOUND)
 
 if(UNIX AND Q_WS_X11)
     target_link_libraries(kdeinit_plasma-desktop ${X11_LIBRARIES})

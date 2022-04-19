@@ -34,7 +34,9 @@
 #include <Plasma/FrameSvg>
 #include <Plasma/WindowEffects>
 
+#ifdef ENABLE_KACTIVITIES
 #include "activitymanager/activitymanager.h"
+#endif
 #include "desktopcorona.h"
 #include "panelview.h"
 #include "plasmaapp.h"
@@ -50,7 +52,9 @@ ControllerWindow::ControllerWindow(QWidget* parent)
      m_background(new Plasma::FrameSvg(this)),
      m_screen(-1),
      m_view(0),
+#ifdef ENABLE_KACTIVITIES
      m_activityManager(0),
+#endif
      m_widgetExplorer(0),
      m_graphicsWidget(0),
      m_ignoredWindowClosed(false)
@@ -93,16 +97,18 @@ ControllerWindow::~ControllerWindow()
 {
     Plasma::Corona *corona = PlasmaApp::self()->corona(false);
     if (corona) {
+#ifdef ENABLE_KACTIVITIES
         if (m_activityManager) {
             corona->removeOffscreenWidget(m_activityManager);
         }
-
+#endif
         if (m_widgetExplorer) {
             corona->removeOffscreenWidget(m_widgetExplorer);
         }
     }
-
+#ifdef ENABLE_KACTIVITIES
     delete m_activityManager;
+#endif
     delete m_widgetExplorer;
     delete m_view;
 }
@@ -172,10 +178,13 @@ void ControllerWindow::setGraphicsWidget(QGraphicsWidget *widget)
         if (m_graphicsWidget == m_widgetExplorer) {
             m_widgetExplorer->deleteLater();
             m_widgetExplorer = 0;
-        } else if (m_graphicsWidget == m_activityManager) {
+        }
+#ifdef ENABLE_KACTIVITIES
+        else if (m_graphicsWidget == m_activityManager) {
             m_activityManager->deleteLater();
             m_activityManager = 0;
         }
+#endif
     }
 
     m_graphicsWidget = widget;
@@ -334,10 +343,11 @@ void ControllerWindow::setLocation(const Plasma::Location &loc)
     if (m_widgetExplorer) {
         m_widgetExplorer->setLocation(location());
     }
-
+#ifdef ENABLE_KACTIVITIES
     if (m_activityManager) {
         m_activityManager->setLocation(location());
     }
+#endif
 }
 
 QPoint ControllerWindow::positionForPanelGeometry(const QRect &panelGeom) const
@@ -394,10 +404,11 @@ void ControllerWindow::showWidgetExplorer()
         m_widgetExplorer = new Plasma::WidgetExplorer(location());
         m_widgetExplorer->setContainment(m_containment.data());
         m_widgetExplorer->populateWidgetList();
+#ifdef ENABLE_KACTIVITIES
         QAction *activityAction = new QAction(KIcon("preferences-activities"), i18n("Activities"), m_widgetExplorer);
         connect(activityAction, SIGNAL(triggered()), this, SLOT(showActivityManager()));
         m_widgetExplorer->addAction(activityAction);
-
+#endif
         PlasmaApp::self()->corona()->addOffscreenWidget(m_widgetExplorer);
         m_widgetExplorer->show();
 
@@ -423,7 +434,7 @@ bool ControllerWindow::showingWidgetExplorer() const
 {
     return m_widgetExplorer;
 }
-
+#ifdef ENABLE_KACTIVITIES
 void ControllerWindow::showActivityManager()
 {
     if (!m_activityManager) {
@@ -457,7 +468,7 @@ bool ControllerWindow::showingActivityManager() const
 {
     return m_activityManager;
 }
-
+#endif
 bool ControllerWindow::isControllerViewVisible() const
 {
     return m_view && m_view->isVisible();
@@ -512,9 +523,12 @@ void ControllerWindow::closeIfNotFocussed()
                 // this "don't close" window closes
                 widget->installEventFilter(this);
             }
-        } else if (m_graphicsWidget == m_activityManager) {
+        }
+#ifdef ENABLE_KACTIVITIES
+        else if (m_graphicsWidget == m_activityManager) {
             close();
         }
+#endif
     }
 }
 
