@@ -33,6 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // X
 #include <X11/Xlib.h>
 
+#include <atomic>
+
 // TODO: Cleanup the order of things in this .h file
 
 class QStringList;
@@ -491,7 +493,7 @@ private:
 
     bool showing_desktop;
     ClientList showing_desktop_clients;
-    int block_showing_desktop;
+    std::atomic<int> block_showing_desktop;
 
     GroupList groups;
 
@@ -500,7 +502,7 @@ private:
     int session_active_client;
     int session_desktop;
 
-    int block_focus;
+    std::atomic<int> block_focus;
 
     /**
      * Holds the menu containing the user actions which is shown
