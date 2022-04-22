@@ -396,7 +396,7 @@ void DesktopCorona::evaluateScripts(const QStringList &scripts, bool isStartup)
 
 void DesktopCorona::printScriptError(const QString &error)
 {
-    kWarning() << "Startup script errror:" << error;
+    kWarning() << "Startup script error:" << error;
 }
 
 void DesktopCorona::printScriptMessage(const QString &error)
