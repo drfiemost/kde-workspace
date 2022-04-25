@@ -80,7 +80,7 @@ public:
     void hideController(int screen);
 
     void prepareContainment(Plasma::Containment *containment);
-#if 0
+#if ENABLE_KACTIVITIES
         /**
      * create a new activity based on the active one
      */
