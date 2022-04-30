@@ -267,7 +267,7 @@ QPixmap PlastikButtonProvider::icon(ButtonIcon icon, int size, bool active, bool
 
             drawObject(p, HorizontalLine, r.x()+(r.width()-lwMark)/2, r.y()+(r.height()-lwMark)/2, lwMark, lwMark);
 
-            // Fall through to OnAllDesktopsIcon intended!
+            [[fallthrough]];
         }
         case OnAllDesktopsIcon:
         {
@@ -292,7 +292,7 @@ QPixmap PlastikButtonProvider::icon(ButtonIcon icon, int size, bool active, bool
             if (lwArrow>1)
                 drawObject(p, HorizontalLine, center-(lwArrow-2), r.y()+2*lwArrow, (lwArrow-2)*2, lwArrow);
 
-            // Fall through to KeepAboveIcon intended!
+            [[fallthrough]];
         }
         case KeepAboveIcon:
         {
@@ -317,7 +317,7 @@ QPixmap PlastikButtonProvider::icon(ButtonIcon icon, int size, bool active, bool
             if (lwArrow>1)
                 drawObject(p, HorizontalLine, center-(lwArrow-2), r.bottom()-(lwArrow-1)-2*lwArrow, (lwArrow-2)*2, lwArrow);
 
-            // Fall through to KeepBelowIcon intended!
+            [[fallthrough]];
         }
         case KeepBelowIcon:
         {
