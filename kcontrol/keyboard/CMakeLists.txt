@@ -37,7 +37,7 @@ kde4_add_plugin(kded_keyboard ${kded_keyboard_SRCS})
 target_link_libraries(kded_keyboard
     ${KDE4_KDECORE_LIBS}  ${KDE4_KDEUI_LIBS} ${X11_LIBRARIES}
     ${text_paint_LIB}
-    ${QT_QTXML_LIBRARY} ${X11_Xkbfile_LIB}
+    Qt4::QtXml ${X11_Xkbfile_LIB}
  )
 
 if(X11_XTest_FOUND)
@@ -67,7 +67,7 @@ set( plasma_applet_keyboard_SRCS
 kde4_add_plugin(plasma_applet_keyboard ${plasma_applet_keyboard_SRCS})
 
 target_link_libraries(plasma_applet_keyboard
-     ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY} ${X11_Xkbfile_LIB} ${X11_LIBRARIES}
+     ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS} Qt4::QtXml ${X11_Xkbfile_LIB} ${X11_LIBRARIES}
      ${text_paint_LIB}
 )
 
@@ -91,7 +91,7 @@ kde4_add_plugin(keyboard_layout_widget ${keyboard_layout_widget_SRCS})
 target_link_libraries(keyboard_layout_widget
      ${KDE4_KDEUI_LIBS} ${X11_LIBRARIES}
      ${text_paint_LIB}
-     ${QT_QTXML_LIBRARY} ${X11_Xkbfile_LIB}
+     Qt4::QtXml ${X11_Xkbfile_LIB}
 )
 
 install( TARGETS keyboard_layout_widget DESTINATION ${PLUGIN_INSTALL_DIR} )

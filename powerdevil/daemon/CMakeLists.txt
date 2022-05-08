@@ -105,7 +105,7 @@ set_target_properties(powerdevilui PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOV
 
 target_link_libraries(powerdevilui
     ${KDE4_KDECORE_LIBS}
-    ${QT_QTGUI_LIBRARY}
+    Qt4::QtGui
 )
 
 macro_bool_to_01(UDEV_FOUND HAVE_UDEV)

@@ -7,6 +7,6 @@ kde4_add_unit_test( ksysguarddtest
 
 target_link_libraries( ksysguarddtest
     ${KDE4_KDEUI_LIBS}
-    ${QT_QTTEST_LIBRARY}
-    ${QT_QTNETWORK_LIBRARY}
+    Qt4::QtTest
+    Qt4::QtNetwork
 )

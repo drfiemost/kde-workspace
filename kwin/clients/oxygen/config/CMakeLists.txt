@@ -25,7 +25,7 @@ kde4_add_plugin(kwin_oxygen_config ${kwin_oxygen_config_PART_SRCS})
 target_link_libraries(
     kwin_oxygen_config
     ${KDE4_KDEUI_LIBS}
-    ${QT_QTGUI_LIBRARY}
+    Qt4::QtGui
     ${X11_X11_LIB}
     kdecorations
     oxygenstyle

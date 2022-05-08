@@ -27,7 +27,7 @@ kde4_add_widget_files(ksysguardlsofwidgets_PART_SRCS ksysguardlsof.widgets)
 
 kde4_add_plugin(ksysguardlsofwidgets ${ksysguardlsofwidgets_PART_SRCS})
 
-target_link_libraries(ksysguardlsofwidgets ${KDE4_KDECORE_LIBS}  ${QT_QTGUI_LIBRARY} lsofui)
+target_link_libraries(ksysguardlsofwidgets ${KDE4_KDECORE_LIBS} Qt4::QtGui lsofui)
 
 install(TARGETS ksysguardlsofwidgets DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/designer )
 

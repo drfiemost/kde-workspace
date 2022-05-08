@@ -8,7 +8,7 @@ kde4_add_plugin(powerdevildpmsaction ${powerdevildpmsaction_SRCS})
 target_link_libraries(powerdevildpmsaction
         ${X11_LIBRARIES}
         ${KDE4_KDECORE_LIBS}
-        ${QT_QTGUI_LIBRARY}
+        Qt4::QtGui
         powerdevilcore)
 install(TARGETS powerdevildpmsaction DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES powerdevildpmsaction.desktop DESTINATION ${SERVICES_INSTALL_DIR})

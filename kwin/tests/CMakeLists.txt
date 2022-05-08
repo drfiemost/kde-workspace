@@ -1,7 +1,7 @@
 set( testUpdateKWin49_SRCS test_update_kwin_49.cpp ../data/update_kwin_49.cpp ../tabbox/tabboxconfig.cpp )
 kde4_add_unit_test( testUpdateKWin49 TESTNAME kwin-TestUpdateKWin49 ${testUpdateKWin49_SRCS} )
 
-target_link_libraries( testUpdateKWin49 ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} )
+target_link_libraries( testUpdateKWin49 ${KDE4_KDECORE_LIBS} Qt4::QtTest )
 
 ########################################################
 # Test ScreenPaintData
@@ -9,7 +9,7 @@ target_link_libraries( testUpdateKWin49 ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY
 set( testScreenPaintData_SRCS test_screen_paint_data.cpp )
 kde4_add_unit_test( testScreenPaintData TESTNAME kwin-TestScreenPaintData ${testScreenPaintData_SRCS} )
 
-target_link_libraries( testScreenPaintData kwineffects ${QT_QTCORE_LIBRARY} ${QT_QTTEST_LIBRARY} )
+target_link_libraries( testScreenPaintData kwineffects Qt4::QtCore Qt4::QtTest )
 
 ########################################################
 # Test WindowPaintData
@@ -17,7 +17,7 @@ target_link_libraries( testScreenPaintData kwineffects ${QT_QTCORE_LIBRARY} ${QT
 set( testWindowPaintData_SRCS test_window_paint_data.cpp )
 kde4_add_unit_test( testWindowPaintData TESTNAME kwin-TestWindowPaintData ${testWindowPaintData_SRCS} )
 
-target_link_libraries( testWindowPaintData kwineffects ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
+target_link_libraries( testWindowPaintData kwineffects Qt4::QtCore Qt4::QtGui Qt4::QtTest )
 
 ########################################################
 # Test VirtualDesktopManager
@@ -30,8 +30,8 @@ kde4_add_unit_test( testVirtualDesktops TESTNAME kwin-TestVirtualDesktops ${test
 
 target_link_libraries( testVirtualDesktops
                        ${KDE4_KDEUI_LIBS}
-                       ${QT_QTCORE_LIBRARY}
-                       ${QT_QTTEST_LIBRARY}
+                       Qt4::QtCore
+                       Qt4::QtTest
 )
 
 ########################################################
@@ -47,8 +47,8 @@ set( testClientMachine_SRCS
 kde4_add_unit_test( testClientMachine TESTNAME kwin-TestClientMachine ${testClientMachine_SRCS} )
 
 target_link_libraries( testClientMachine
-                       ${QT_QTTEST_LIBRARY}
-                       ${QT_QTCORE_LIBRARY}
+                       Qt4::QtTest
+                       Qt4::QtCore
                        ${KDE4_KDEUI_LIBS}
                        ${XCB_XCB_LIBRARIES}
                        ${XCB_XFIXES_LIBRARIES}
@@ -66,9 +66,9 @@ set( testXcbWrapper_SRCS
 kde4_add_unit_test( testXcbWrapper TESTNAME kwin-TestXcbWrapper ${testXcbWrapper_SRCS} )
 
 target_link_libraries( testXcbWrapper
-                       ${QT_QTTEST_LIBRARY}
-                       ${QT_QTCORE_LIBRARY}
-                       ${QT_QTGUI_LIBRARY}
+                       Qt4::QtTest
+                       Qt4::QtCore
+                       Qt4::QtGui
                        ${XCB_XCB_LIBRARIES}
                        ${X11_XCB_LIBRARIES}
 )
@@ -82,9 +82,9 @@ set( testXcbWindow_SRCS
 kde4_add_unit_test( testXcbWindow TESTNAME kwin-TestXcbWindow ${testXcbWindow_SRCS} )
 
 target_link_libraries( testXcbWindow
-                       ${QT_QTTEST_LIBRARY}
-                       ${QT_QTCORE_LIBRARY}
-                       ${QT_QTGUI_LIBRARY}
+                       Qt4::QtTest
+                       Qt4::QtCore
+                       Qt4::QtGui
                        ${XCB_XCB_LIBRARIES}
                        ${X11_XCB_LIBRARIES}
 )

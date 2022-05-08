@@ -11,7 +11,7 @@ target_link_libraries(plasma_applet_pager
                       ${KDE4_PLASMA_LIBS}
                       ${KDE4_KCMUTILS_LIBRARY}
                       ${KACTIVITIES_LIBRARY}
-                      ${QT_QTDECLARATIVE_LIBRARY}
+                      Qt4::QtDeclarative
                       taskmanager)
 
 install(TARGETS plasma_applet_pager DESTINATION ${PLUGIN_INSTALL_DIR})

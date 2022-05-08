@@ -20,7 +20,7 @@ target_link_libraries(
     ${KDE4_KMIME_LIBS}
     ${KDE4_AKONADI_KMIME_LIBS}
     ${KDE4_KABC_LIBS}
-    ${QT_QTXML_LIBRARY}
+    Qt4::QtXml
     ${KDE4_MICROBLOG_LIBS}
 )
 

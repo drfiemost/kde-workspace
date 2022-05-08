@@ -32,9 +32,9 @@ if(X11_XRes_FOUND)
   include_directories(${X11_XRes_INCLUDE_PATH})
 endif(X11_XRes_FOUND)
 
-target_link_libraries(processui ${KDE4_KDEUI_LIBS} ${QT_QTSCRIPT_LIBRARY} processcore)
+target_link_libraries(processui ${KDE4_KDEUI_LIBS} Qt4::QtScript processcore)
 if(QT_QTWEBKIT_FOUND)
-    target_link_libraries(processui ${QT_QTWEBKIT_LIBRARY})
+    target_link_libraries(processui Qt4::QtWebKit)
 endif(QT_QTWEBKIT_FOUND)
 
 

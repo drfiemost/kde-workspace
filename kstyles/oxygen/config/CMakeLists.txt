@@ -32,8 +32,8 @@ kde4_add_executable( oxygen-settings ${oxygen_settings_SOURCES} )
 
 target_link_libraries( oxygen-settings
     ${KDE4_KDEUI_LIBS}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTGUI_LIBRARY})
+    Qt4::QtCore
+    Qt4::QtGui)
 
 ########### install files ###############
 install (TARGETS oxygen-settings ${INSTALL_TARGETS_DEFAULT_ARGS} )

@@ -89,7 +89,7 @@ target_link_libraries(
     kcm_hotkeys
     khotkeysprivate
     ${KDE4_KIO_LIBS}
-    ${QT_QTGUI_LIBRARY}
+    Qt4::QtGui
     ${X11_X11_LIB}
     )
 

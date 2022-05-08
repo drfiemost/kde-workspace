@@ -12,9 +12,9 @@ kde4_add_executable(ksplashqml ${ksplashqml_SRCS})
 
 target_link_libraries(ksplashqml
    ${X11_LIBRARIES}
-   ${QT_QTCORE_LIBRARY}
-   ${QT_QTDECLARATIVE_LIBRARY}
-   ${QT_QTGUI_LIBRARY}
+   Qt4::QtCore
+   Qt4::QtDeclarative
+   Qt4::QtGui
    )
 
 install(TARGETS ksplashqml ${INSTALL_TARGETS_DEFAULT_ARGS})

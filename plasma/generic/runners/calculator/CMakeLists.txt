@@ -26,7 +26,7 @@ if ( QALCULATE_FOUND )
     target_link_libraries(krunner_calculatorrunner ${QALCULATE_LIBRARIES} ${CLN_LIBRARIES} ${KDE4_SOLID_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_PLASMA_LIBS} )
 else ( QALCULATE_FOUND )
     kde4_add_plugin(krunner_calculatorrunner ${krunner_calculatorrunner_SRCS})
-    target_link_libraries(krunner_calculatorrunner ${KDE4_KDEUI_LIBS} ${QT_QTSCRIPT_LIBRARY} ${KDE4_PLASMA_LIBS})	
+    target_link_libraries(krunner_calculatorrunner ${KDE4_KDEUI_LIBS} Qt4::QtScript ${KDE4_PLASMA_LIBS})	
 endif ( QALCULATE_FOUND )
 
 install(TARGETS krunner_calculatorrunner DESTINATION ${PLUGIN_INSTALL_DIR} )

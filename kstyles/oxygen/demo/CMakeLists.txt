@@ -31,9 +31,9 @@ kde4_add_executable( oxygen-demo ${oxygen_demo_SOURCES} )
 
 target_link_libraries( oxygen-demo
     ${KDE4_KDEUI_LIBS}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTTEST_LIBRARY}
-    ${QT_QTGUI_LIBRARY})
+    Qt4::QtCore
+    Qt4::QtTest
+    Qt4::QtGui)
 
 ########### install files ###############
 install (TARGETS oxygen-demo ${INSTALL_TARGETS_DEFAULT_ARGS} )

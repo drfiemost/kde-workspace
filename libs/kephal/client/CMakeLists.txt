@@ -37,7 +37,7 @@ set(more_unused_SRCS
 
 KDE4_ADD_LIBRARY(kephal SHARED ${libkephal_SRCS})
 
-TARGET_LINK_LIBRARIES (kephal ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS})
+TARGET_LINK_LIBRARIES (kephal Qt4::QtCore Qt4::QtGui ${KDE4_KDEUI_LIBS})
 
 set_target_properties(kephal PROPERTIES
    VERSION ${GENERIC_LIB_VERSION}
