@@ -6,11 +6,6 @@ check_include_files(byteswap.h HAVE_BYTESWAP_H)
 
 set(ksysguard_WIDGETS "ksysguard.widgets")
 
-if(QT_QTWEBKIT_FOUND)
-    add_definitions(-DENABLE_QTWEBKIT)
-    set(scripting_src scripting.cpp)
-endif(QT_QTWEBKIT_FOUND)
-
 set(processui_LIB_SRCS
    ksysguardprocesslist.cpp
    ProcessFilter.cpp
@@ -33,9 +28,6 @@ if(X11_XRes_FOUND)
 endif(X11_XRes_FOUND)
 
 target_link_libraries(processui ${KDE4_KDEUI_LIBS} Qt4::QtScript processcore)
-if(QT_QTWEBKIT_FOUND)
-    target_link_libraries(processui Qt4::QtWebKit)
-endif(QT_QTWEBKIT_FOUND)
 
 
 set_target_properties(processui

@@ -108,14 +108,14 @@ class KDE_EXPORT KSysGuardProcessList : public QWidget
         /** @param visible defines whether the Kill Process button is shown or not. */
         void setKillButtonVisible(bool visible);
 
-        /** Whether scripting support is enabled.
-         *
-         *  Default is false. */
-        bool scriptingEnabled() const;
-        /** Set whether scripting support is enabled.
-         *
-         *  Default is false. */
-        void setScriptingEnabled(bool enabled);
+        /**
+         * @deprecated
+         **/
+        KDE_DEPRECATED bool scriptingEnabled() const;
+        /**
+         * @deprecated
+         **/
+        KDE_DEPRECATED void setScriptingEnabled(bool enabled);
 
     Q_SIGNALS:
         /** Emitted when the display has been updated */

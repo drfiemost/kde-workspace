@@ -14,10 +14,6 @@ add_subdirectory(devicenotifier)
 add_subdirectory(digital-clock)
 add_subdirectory(quicklaunch)
 
-if(QT_QTWEBKIT_FOUND)
-   add_subdirectory(webbrowser)
-endif(QT_QTWEBKIT_FOUND)
-
 if(NOT WIN32)
    add_subdirectory(system-monitor)
    #notifications
