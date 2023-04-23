@@ -16,10 +16,6 @@ target_link_libraries(kcm_kwin_scripts
     ${KDE4_KCMUTILS_LIBS}
     ${KDE4_PLASMA_LIBS}
 )
-if(LIBATTICA_FOUND)
-    add_definitions(-DENABLE_KNEWSTUFF3)
-    target_link_libraries(kcm_kwin_scripts ${KDE4_KNEWSTUFF3_LIBS})
-endif(LIBATTICA_FOUND)
 
 install(TARGETS kcm_kwin_scripts DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES kwinscripts.desktop DESTINATION ${SERVICES_INSTALL_DIR})

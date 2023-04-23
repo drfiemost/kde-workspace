@@ -87,10 +87,6 @@ kde4_add_plugin(kcm_cursortheme ${kcm_cursortheme_PART_SRCS})
 
 
 target_link_libraries(kcm_cursortheme ${KDE4_KIO_LIBS} ${X11_LIBRARIES})
-if(LIBATTICA_FOUND)
-    add_definitions(-DENABLE_KNEWSTUFF3)
-    target_link_libraries(kcm_cursortheme ${KDE4_KNEWSTUFF3_LIBS})
-endif(LIBATTICA_FOUND)
 
 if (X11_Xcursor_FOUND)
    target_link_libraries(kcm_cursortheme ${X11_Xcursor_LIB})

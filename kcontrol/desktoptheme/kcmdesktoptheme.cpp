@@ -33,9 +33,6 @@
 #include <kaboutdata.h>
 #include <kautostart.h>
 #include <KStandardDirs>
-#ifdef ENABLE_KNEWSTUFF3
-#include <knewstuff3/downloaddialog.h>
-#endif
 
 #include <Plasma/Theme>
 
@@ -75,9 +72,7 @@ KCMDesktopTheme::KCMDesktopTheme( QWidget* parent, const QVariantList& )
     about->addAuthor(ki18n("Daniel Molkentin"), KLocalizedString(), "molkentin@kde.org");
     about->addAuthor(ki18n("Ralf Nolden"), KLocalizedString(), "nolden@kde.org");
     setAboutData( about );
-#ifdef ENABLE_KNEWSTUFF3
-    m_newThemeButton->setIcon(KIcon("get-hot-new-stuff"));
-#endif
+
     m_themeModel = new ThemeModel(this);
     m_theme->setModel(m_themeModel);
     m_theme->setItemDelegate(new ThemeDelegate(m_theme));
@@ -87,9 +82,6 @@ KCMDesktopTheme::KCMDesktopTheme( QWidget* parent, const QVariantList& )
 
     connect(m_theme->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this, SLOT(setDesktopThemeDirty()));
-#ifdef ENABLE_KNEWSTUFF3
-    connect(m_newThemeButton, SIGNAL(clicked()), this, SLOT(getNewThemes()));
-#endif
 }
 
 
@@ -149,18 +141,7 @@ void KCMDesktopTheme::setDesktopThemeDirty()
     m_bDesktopThemeDirty = true;
     emit changed(true);
 }
-#ifdef ENABLE_KNEWSTUFF3
-void KCMDesktopTheme::getNewThemes()
-{
-    KNS3::DownloadDialog dialog("plasma-themes.knsrc", this);
-    dialog.exec();
-    KNS3::Entry::List entries = dialog.changedEntries();
 
-    if (entries.size() > 0) {
-        loadDesktopTheme();
-    }
-}
-#endif
 void KCMDesktopTheme::loadDesktopTheme()
 {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));

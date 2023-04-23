@@ -31,9 +31,6 @@
 #include <kacceleratormanager.h>
 #include <kactioncollection.h>
 #include <kmenu.h>
-#ifdef ENABLE_KNEWSTUFF3
-#include <knewstuff3/downloaddialog.h>
-#endif
 
 #include "WorkSheet.h"
 #include "WorkSheetSettings.h"
@@ -302,22 +299,7 @@ void Workspace::uploadHotNewWorksheet()
 
     KMessageBox::information(this, i18n("<qt>To propose the current custom tab as a new System Monitor tab, email <br><a href=\"file:%1\">%2</a><br> to <a href=\"mailto:john.tapsell@kde.org?subject='System Monitor Tab'&attach='file://%2'\">john.tapsell@kde.org</a></qt>", currentWorksheet->fullFileName().section('/',0,-2), currentWorksheet->fullFileName()), i18n("Upload custom System Monitor tab"), QString::null, KMessageBox::AllowLink);
 }
-#ifdef ENABLE_KNEWSTUFF3
-void Workspace::getHotNewWorksheet()
-{
-    KNS3::DownloadDialog dialog("ksysguard.knsrc");
-    if( dialog.exec() == QDialog::Rejected )
-        return;
 
-    KNS3::Entry::List entries = dialog.installedEntries();
-    foreach(KNS3::Entry entry, entries) {
-        if(!entry.installedFiles().isEmpty()) {
-            QString filename = entry.installedFiles().first();
-            restoreWorkSheet(filename, true);
-        }
-    }
-}
-#endif
 bool Workspace::restoreWorkSheet( const QString &fileName, bool switchToTab)
 {
   // extract filename without path

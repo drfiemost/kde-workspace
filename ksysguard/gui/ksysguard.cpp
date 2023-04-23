@@ -126,11 +126,6 @@ TopLevel::TopLevel()
   mMonitorRemoteAction = actionCollection()->addAction( "connect_host" );
   mMonitorRemoteAction->setIcon( KIcon("network-connect") );
   connect(mMonitorRemoteAction, SIGNAL(triggered(bool)), SLOT(connectHost()));
-#ifdef ENABLE_KNEWSTUFF3
-  mHotNewWorksheetAction = actionCollection()->addAction( "get_new_worksheet" );
-  mHotNewWorksheetAction->setIcon( KIcon("network-server") );
-  connect(mHotNewWorksheetAction, SIGNAL(triggered(bool)), mWorkSpace, SLOT(getHotNewWorksheet()));
-#endif
   mHotNewWorksheetUploadAction = actionCollection()->addAction( "upload_worksheet" );
   mHotNewWorksheetUploadAction->setIcon( KIcon("network-server") );
   connect(mHotNewWorksheetUploadAction, SIGNAL(triggered(bool)), mWorkSpace, SLOT(uploadHotNewWorksheet()));
@@ -233,12 +228,7 @@ void TopLevel::removeWorkSheet( const QString &fileName )
 {
   mWorkSpace->removeWorkSheet( fileName );
 }
-#ifdef ENABLE_KNEWSTUFF3
-void TopLevel::getHotNewWorksheet()
-{
-  mWorkSpace->getHotNewWorksheet( );
-}
-#endif
+
 QStringList TopLevel::listSensors( const QString &hostName )
 {
   if(!mSensorBrowser) {

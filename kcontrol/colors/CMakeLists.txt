@@ -6,10 +6,6 @@ kde4_add_ui_files(kcm_colors_PART_SRCS colorsettings.ui preview.ui setpreview.ui
 
 kde4_add_plugin(kcm_colors ${kcm_colors_PART_SRCS})
 target_link_libraries(kcm_colors ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} ${X11_LIBRARIES})
-if(LIBATTICA_FOUND)
-    add_definitions(-DENABLE_KNEWSTUFF3)
-    target_link_libraries(kcm_colors ${KDE4_KNEWSTUFF3_LIBS})
-endif(LIBATTICA_FOUND)
 
 install(TARGETS kcm_colors  DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES colors.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

@@ -68,9 +68,6 @@
 #include <KDE/KPluginLoader>
 #include <KDE/KStandardAction>
 #include <KDE/KZip>
-#ifdef ENABLE_KNEWSTUFF3
-#include <KDE/KNS3/DownloadDialog>
-#endif
 
 #define CFG_GROUP                  "Main Settings"
 #define CFG_PREVIEW_SPLITTER_SIZES "PreviewSplitterSizes"
@@ -408,10 +405,6 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const QVariantList&)
     connect(itsDeleteFontControl, SIGNAL(clicked()), SLOT(deleteFonts()));
     connect(duplicateFontsAct, SIGNAL(triggered(bool)), SLOT(duplicateFonts()));
     //connect(validateFontsAct, SIGNAL(triggered(bool)), SLOT(validateFonts()));
-#ifdef ENABLE_KNEWSTUFF3
-    if(itsDownloadFontsAct)
-        connect(itsDownloadFontsAct, SIGNAL(triggered(bool)), SLOT(downloadFonts()));
-#endif
     connect(itsPreview, SIGNAL(customContextMenuRequested(QPoint)), SLOT(previewMenu(QPoint)));
     connect(itsPreviewList, SIGNAL(showMenu(QPoint)), SLOT(previewMenu(QPoint)));
     connect(itsPreviewSplitter, SIGNAL(splitterMoved(int,int)), SLOT(splitterMoved()));
@@ -854,32 +847,7 @@ void CKCmFontInst::duplicateFonts()
 //void CKCmFontInst::validateFonts()
 //{
 //}
-#ifdef ENABLE_KNEWSTUFF3
-void CKCmFontInst::downloadFonts()
-{
-    KNS3::DownloadDialog *newStuff = new KNS3::DownloadDialog("kfontinst.knsrc", this);
-    newStuff->exec();
 
-    if(newStuff->changedEntries().count())  // We have new fonts, so need to reconfigure fontconfig...
-    {
-        // Ask dbus helper for the current fonts folder name...
-        // We then sym-link our knewstuff3 download folder into the fonts folder...
-        QString destFolder=CJobRunner::folderName(false);
-                
-        if(!destFolder.isEmpty())
-        {
-            destFolder+="kfontinst";
-    
-            if(!QFile::exists(destFolder))
-                QFile::link(KStandardDirs::locateLocal("data", "kfontinst"), destFolder);
-        }
-
-        doCmd(CJobRunner::CMD_UPDATE, CJobRunner::ItemList());
-    }
-    
-    delete newStuff;
-}
-#endif
 void CKCmFontInst::print()
 {
     print(false);

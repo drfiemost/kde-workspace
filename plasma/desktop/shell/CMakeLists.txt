@@ -71,10 +71,6 @@ endif(UNIX AND Q_WS_X11)
 
 target_link_libraries(kdeinit_plasma-desktop kephal)
 target_link_libraries(kdeinit_plasma-desktop)
-if(LIBATTICA_FOUND)
-    add_definitions(-DENABLE_KNEWSTUFF3)
-    target_link_libraries(kdeinit_plasma-desktop ${KDE4_KNEWSTUFF3_LIBS})
-endif(LIBATTICA_FOUND)
 
 install(TARGETS kdeinit_plasma-desktop DESTINATION ${LIB_INSTALL_DIR})
 install(TARGETS plasma-desktop ${INSTALL_TARGETS_DEFAULT_ARGS})

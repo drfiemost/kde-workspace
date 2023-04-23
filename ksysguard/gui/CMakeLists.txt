@@ -55,10 +55,6 @@ set(ksysguard_KDEINIT_SRCS ${libsensordisplays_SRCS}
 kde4_add_kdeinit_executable(ksysguard ${ksysguard_KDEINIT_SRCS})
 
 target_link_libraries(kdeinit_ksysguard processui ksignalplotter ${KDE4_KIO_LIBS} ksgrd)
-if(LIBATTICA_FOUND)
-    add_definitions(-DENABLE_KNEWSTUFF3)
-    target_link_libraries(kdeinit_ksysguard ${KDE4_KNEWSTUFF3_LIBS})
-endif(LIBATTICA_FOUND)
 
 install(TARGETS kdeinit_ksysguard ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(TARGETS ksysguard         ${INSTALL_TARGETS_DEFAULT_ARGS})

@@ -7,10 +7,6 @@ include_directories(  ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${
 set(kcm_ksplashthemes_PART_SRCS installer.cpp main.cpp )
 kde4_add_plugin(kcm_ksplashthemes ${kcm_ksplashthemes_PART_SRCS})
 target_link_libraries(kcm_ksplashthemes ${KDE4_KIO_LIBS})
-if(LIBATTICA_FOUND)
-    add_definitions(-DENABLE_KNEWSTUFF3)
-    target_link_libraries(kcm_ksplashthemes ${KDE4_KNEWSTUFF3_LIBS})
-endif(LIBATTICA_FOUND)
 install(TARGETS kcm_ksplashthemes  DESTINATION ${PLUGIN_INSTALL_DIR} )
 
 ########### install files ###############

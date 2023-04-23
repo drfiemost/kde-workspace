@@ -20,10 +20,6 @@ kde4_add_ui_files( kcm_kwintabbox_PART_SRCS main.ui )
 kde4_add_plugin(kcm_kwintabbox ${kcm_kwintabbox_PART_SRCS})
 
 target_link_libraries(kcm_kwintabbox ${KDE4_KDEUI_LIBS} ${KDE4_KCMUTILS_LIBS} ${KDE4_PLASMA_LIBS} ${X11_LIBRARIES} Qt4::QtDeclarative ${KDECLARATIVE_LIBRARIES})
-if(LIBATTICA_FOUND)
-    add_definitions(-DENABLE_KNEWSTUFF3)
-    target_link_libraries(kcm_kwintabbox ${KDE4_KNEWSTUFF3_LIBS})
-endif(LIBATTICA_FOUND)
 
 install(TARGETS kcm_kwintabbox  DESTINATION ${PLUGIN_INSTALL_DIR} )
 

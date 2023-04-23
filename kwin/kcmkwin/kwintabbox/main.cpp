@@ -37,9 +37,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <KServiceTypeTrader>
 #include <KShortcutsEditor>
 #include <KStandardDirs>
-#ifdef ENABLE_KNEWSTUFF3
-#include <KNS3/DownloadDialog>
-#endif
 
 // own
 #include "tabboxconfig.h"
@@ -110,10 +107,7 @@ KWinTabBoxConfig::KWinTabBoxConfig(QWidget* parent, const QVariantList& args)
     KWinTabBoxConfigForm *ui[2] = { m_primaryTabBoxUi, m_alternativeTabBoxUi };
     for (int i = 0; i < 2; ++i) {
         ui[i]->effectConfigButton->setIcon(KIcon("view-preview"));
-#ifdef ENABLE_KNEWSTUFF3
-        ui[i]->ghns->setIcon(KIcon("get-hot-new-stuff"));
-        connect(ui[i]->ghns, SIGNAL(clicked(bool)), SLOT(slotGHNS()));
-#endif
+
         connect(ui[i]->highlightWindowCheck, SIGNAL(clicked(bool)), SLOT(changed()));
         connect(ui[i]->showTabBox, SIGNAL(clicked(bool)), SLOT(tabBoxToggled(bool)));
         connect(ui[i]->effectCombo, SIGNAL(currentIndexChanged(int)), SLOT(changed()));
@@ -535,16 +529,5 @@ void KWinTabBoxConfig::shortcutChanged(const QKeySequence &seq)
         a->setGlobalShortcut(KShortcut(seq), KAction::ActiveShortcut, KAction::NoAutoloading);
     m_actionCollection->writeSettings();
 }
-#ifdef ENABLE_KNEWSTUFF3
-void KWinTabBoxConfig::slotGHNS()
-{
-    QPointer<KNS3::DownloadDialog> downloadDialog = new KNS3::DownloadDialog("kwinswitcher.knsrc", this);
-    if (downloadDialog->exec() == KDialog::Accepted) {
-        if (!downloadDialog->changedEntries().isEmpty()) {
-            initLayoutLists();
-        }
-    }
-    delete downloadDialog;
-}
-#endif
+
 } // namespace

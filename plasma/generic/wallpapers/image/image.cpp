@@ -27,9 +27,6 @@
 #include <KStandardDirs>
 #include <KIO/Job>
 #include <krun.h>
-#ifdef ENABLE_KNEWSTUFF3
-#include <knewstuff3/downloaddialog.h>
-#endif
 
 #include <Plasma/Theme>
 #include "backgroundlistmodel.h"
@@ -188,20 +185,12 @@ QWidget* Image::createConfigurationInterface(QWidget* parent)
         //Color button is useless with some resize methods
         m_uiImage.m_color->setEnabled(resizeMethodHint() == MaxpectResize || resizeMethodHint() == CenteredResize);
         connect(m_uiImage.m_color, SIGNAL(changed(QColor)), this, SLOT(colorChanged(QColor)));
-#ifdef ENABLE_KNEWSTUFF3
-        m_uiImage.m_newStuff->setIcon(KIcon("get-hot-new-stuff"));
-        connect(m_uiImage.m_newStuff, SIGNAL(clicked()), this, SLOT(getNewWallpaper()));
-#endif
         connect(m_uiImage.m_color, SIGNAL(changed(QColor)), this, SLOT(modified()));
         connect(m_uiImage.m_resizeMethod, SIGNAL(currentIndexChanged(int)), this, SLOT(modified()));
         connect(m_uiImage.m_view, SIGNAL(clicked(QModelIndex)), this, SLOT(modified()));
 
     } else {
         m_uiSlideshow.setupUi(m_configWidget);
-#ifdef ENABLE_KNEWSTUFF3
-        m_uiSlideshow.m_newStuff->setIcon(KIcon("get-hot-new-stuff"));
-        connect(m_uiSlideshow.m_newStuff, SIGNAL(clicked()), this, SLOT(getNewWallpaper()));
-#endif
         m_uiSlideshow.m_dirlist->clear();
         m_uiSlideshow.m_systemCheckBox->setChecked(false);
         m_uiSlideshow.m_downloadedCheckBox->setChecked(false);
@@ -618,23 +607,7 @@ void Image::updateWallpaperActions()
         m_openImageAction->setEnabled(!m_slideshowBackgrounds.isEmpty());
     }
 }
-#ifdef ENABLE_KNEWSTUFF3
-void Image::getNewWallpaper()
-{
-    if (!m_newStuffDialog) {
-        m_newStuffDialog = new KNS3::DownloadDialog( "wallpaper.knsrc", m_configWidget );
-        connect(m_newStuffDialog.data(), SIGNAL(accepted()), SLOT(newStuffFinished()));
-    }
-    m_newStuffDialog.data()->show();
-}
 
-void Image::newStuffFinished()
-{
-    if (m_model && (!m_newStuffDialog || m_newStuffDialog.data()->changedEntries().size() > 0)) {
-        m_model->reload();
-    }
-}
-#endif
 void Image::colorChanged(const QColor& color)
 {
     m_color = color;

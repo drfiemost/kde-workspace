@@ -34,9 +34,6 @@
 #include <KDE/KPluginInfo>
 #include <KDE/KServiceTypeTrader>
 #include <KDE/Plasma/Package>
-#ifdef ENABLE_KNEWSTUFF3
-#include <KNS3/DownloadDialog>
-#endif
 
 #include "version.h"
 
@@ -59,10 +56,7 @@ Module::Module(QWidget *parent, const QVariantList &args) :
     KGlobal::locale()->insertCatalog("kwin_scripting");
 
     ui->setupUi(this);
-#ifdef ENABLE_KNEWSTUFF3
-    ui->ghnsButton->setIcon(KIcon("get-hot-new-stuff"));
-    connect(ui->ghnsButton, SIGNAL(clicked(bool)), SLOT(slotGHNSClicked()));
-#endif
+
     connect(ui->scriptSelector, SIGNAL(changed(bool)), this, SLOT(changed()));
     connect(ui->importScriptButton, SIGNAL(clicked()), SLOT(importScript()));
 
@@ -121,16 +115,3 @@ void Module::save()
 
     emit changed(false);
 }
-#ifdef ENABLE_KNEWSTUFF3
-void Module::slotGHNSClicked()
-{
-    QPointer<KNS3::DownloadDialog> downloadDialog = new KNS3::DownloadDialog("kwinscripts.knsrc", this);
-    if (downloadDialog->exec() == KDialog::Accepted) {
-        if (!downloadDialog->changedEntries().isEmpty()) {
-            updateListViewContents();
-        }
-    }
-    delete downloadDialog;
-}
-#endif
-

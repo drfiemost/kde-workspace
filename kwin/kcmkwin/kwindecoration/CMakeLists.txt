@@ -25,10 +25,7 @@ kde4_add_ui_files(kcm_kwindecoration_PART_SRCS
 
 kde4_add_plugin(kcm_kwindecoration ${kcm_kwindecoration_PART_SRCS})
 target_link_libraries(kcm_kwindecoration kdecorations ${KDE4_PLASMA_LIBS} Qt4::QtDeclarative Qt4::QtUiTools ${X11_LIBRARIES})
-if(LIBATTICA_FOUND)
-    add_definitions(-DENABLE_KNEWSTUFF3)
-    target_link_libraries(kcm_kwindecoration ${KDE4_KNEWSTUFF3_LIBS})
-endif(LIBATTICA_FOUND)
+
 install(TARGETS kcm_kwindecoration  DESTINATION ${PLUGIN_INSTALL_DIR} )
 
 ########### install files ###############

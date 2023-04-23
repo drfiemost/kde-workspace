@@ -53,9 +53,6 @@ protected slots:
      * Called when the import script button is clicked.
      */
     void importScript();
-#ifdef ENABLE_KNEWSTUFF3
-    void slotGHNSClicked();
-#endif
 
 private:
     /**

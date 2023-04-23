@@ -50,9 +50,6 @@
 #include <kwindowsystem.h>
 #include <kdesktopfile.h>
 #include <kimagefilepreview.h>
-#ifdef ENABLE_KNEWSTUFF3
-#include <knewstuff3/downloaddialog.h>
-#endif
 
 #include <stdlib.h>
 
@@ -140,10 +137,7 @@ BGDialog::BGDialog(QWidget *parent, const KSharedConfigPtr &_config)
     // advanced options
     connect(m_buttonAdvanced, SIGNAL(clicked()),
             SLOT(slotAdvanced()));
-#ifdef ENABLE_KNEWSTUFF3
-    connect(m_buttonGetNew, SIGNAL(clicked()),
-            SLOT(slotGetNewStuff()));
-#endif
+
     // renderers
     if (m_numScreens > 1) {
         // Setup the merged-screen renderer
@@ -1029,22 +1023,7 @@ void BGDialog::slotAdvanced()
     updateUI();
     emit changed(true);
 }
-#ifdef ENABLE_KNEWSTUFF3
-void BGDialog::slotGetNewStuff()
-{
-    // We use the more complicated KNewStuff2 API here because these settings
-    // might affect both kcmshell and kcontrol
 
-    KNS3::DownloadDialog dialog("background.knsrc", this);
-    dialog.exec();
-    //FIXME (KNS2): monday change
-    //engine->setTitle(i18n("Get New Wallpapers"));
-
-    // FIXME (KNS2): engine->download gives us meta infos, write those into
-    // the .desktop files
-    loadWallpaperFilesList();
-}
-#endif
 void BGDialog::slotBlendMode(int mode)
 {
     if (mode == eRenderer()->blendMode())
