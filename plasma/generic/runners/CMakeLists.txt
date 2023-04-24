@@ -1,6 +1,3 @@
-if(KActivities_FOUND)
-  add_subdirectory(activities)
-endif(KActivities_FOUND)
 add_subdirectory(bookmarks)
 add_subdirectory(calculator)
 add_subdirectory(locations)

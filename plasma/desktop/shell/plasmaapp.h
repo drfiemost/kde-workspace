@@ -80,21 +80,7 @@ public:
     void hideController(int screen);
 
     void prepareContainment(Plasma::Containment *containment);
-#if ENABLE_KACTIVITIES
-        /**
-     * create a new activity based on the active one
-     */
-    void cloneCurrentActivity();
-    /**
-     * create a new blank activity with @p plugin containment type
-     */
-    void createActivity(const QString &plugin);
-    /**
-     * create a new activity from @p script
-     */
-    void createActivityFromScript(const QString &script, const QString &name = QString(), const QString &icon = QString(),
- const QStringList &startupApps = QStringList());
-#endif
+
     static bool isPanelContainment(Plasma::Containment *containment);
 
 #ifdef Q_WS_X11

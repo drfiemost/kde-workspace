@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
 #include "scripting_model.h"
-#include "activities.h"
 #include "client.h"
 #include "screens.h"
 #include "workspace.h"
@@ -311,20 +310,7 @@ AbstractLevel *AbstractLevel::create(const QList< ClientModel::LevelRestriction 
     }
     switch (restriction) {
     case ClientModel::ActivityRestriction: {
-#ifdef KWIN_BUILD_ACTIVITIES
-        const QStringList &activities = Activities::self()->all();
-        for (QStringList::const_iterator it = activities.begin(); it != activities.end(); ++it) {
-            AbstractLevel *childLevel = create(childRestrictions, childrenRestrictions, model, currentLevel);
-            if (!childLevel) {
-                continue;
-            }
-            childLevel->setActivity(*it);
-            currentLevel->addChild(childLevel);
-        }
-        break;
-#else
         return NULL;
-#endif
     }
     case ClientModel::ScreenRestriction:
         for (int i=0; i<screens()->count(); ++i) {
@@ -402,11 +388,6 @@ ForkLevel::ForkLevel(const QList<ClientModel::LevelRestriction> &childRestrictio
 {
     connect(VirtualDesktopManager::self(), SIGNAL(countChanged(uint,uint)), SLOT(desktopCountChanged(uint,uint)));
     connect(screens(), SIGNAL(countChanged(int,int)), SLOT(screenCountChanged(int,int)));
-#ifdef KWIN_BUILD_ACTIVITIES
-    Activities *activities = Activities::self();
-    connect(activities, SIGNAL(added(QString)), SLOT(activityAdded(QString)));
-    connect(activities, SIGNAL(removed(QString)), SLOT(activityRemoved(QString)));
-#endif
 }
 
 ForkLevel::~ForkLevel()
@@ -477,46 +458,10 @@ void ForkLevel::screenCountChanged(int previousCount, int newCount)
 }
 
 void ForkLevel::activityAdded(const QString &activityId)
-{
-#ifdef KWIN_BUILD_ACTIVITIES
-    if (restriction() != ClientModel::ClientModel::ActivityRestriction) {
-        return;
-    }
-    // verify that our children do not contain this activity
-    foreach (AbstractLevel *child, m_children) {
-        if (child->activity() == activityId) {
-            return;
-        }
-    }
-    emit beginInsert(m_children.count(), m_children.count(), id());
-    AbstractLevel *childLevel = AbstractLevel::create(m_childRestrictions, restrictions(), model(), this);
-    if (!childLevel) {
-        emit endInsert();
-        return;
-    }
-    childLevel->setActivity(activityId);
-    childLevel->init();
-    addChild(childLevel);
-    emit endInsert();
-#endif
-}
+{}
 
 void ForkLevel::activityRemoved(const QString &activityId)
-{
-#ifdef KWIN_BUILD_ACTIVITIES
-    if (restriction() != ClientModel::ClientModel::ActivityRestriction) {
-        return;
-    }
-    for (int i=0; i<m_children.length(); ++i) {
-        if (m_children.at(i)->activity() == activityId) {
-            emit beginRemove(i, i, id());
-            delete m_children.takeAt(i);
-            emit endRemove();
-            break;
-        }
-    }
-#endif
-}
+{}
 
 int ForkLevel::count() const
 {

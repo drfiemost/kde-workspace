@@ -25,9 +25,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // Own
 #include "taskitem.h"
 
-#ifdef ENABLE_KACTIVITIES
-#include <kactivities/info.h>
-#endif
 #include <KConfig>
 #include <KConfigGroup>
 #include <KDebug>
@@ -230,14 +227,6 @@ QStringList TaskItem::activityNames(bool includeCurrent) const
     if (!includeCurrent) {
         activities.removeOne(TaskManager::self()->currentActivity());
     }
-#ifdef ENABLE_KACTIVITIES
-    Q_FOREACH(QString activity, activities) {
-        KActivities::Info info(activity);
-        if (info.state() != KActivities::Info::Invalid) {
-            names << info.name();
-        }
-    }
-#endif
     return names;
 }
 

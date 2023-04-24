@@ -75,9 +75,6 @@ void ContextMenu::init(const KConfigGroup &config)
     } else {
         actions.insert("configure shortcuts", false);
         m_actionOrder << "_context" << "_run_command" << "add widgets" << "_add panel"
-#ifdef ENABLE_KACTIVITIES
-                      << "manage activities"
-#endif
                       << "remove" << "lock widgets" << "_sep1"
                       <<"_lock_screen" << "_logout" << "_sep2" << "configure"
                       << "configure shortcuts" << "_sep3" << "_wallpaper";
@@ -183,12 +180,6 @@ QAction *ContextMenu::action(const QString &name)
         if (KAuthorized::authorizeKAction("logout")) {
             return m_logoutAction;
         }
-#ifdef ENABLE_KACTIVITIES
-    } else if (name == "manage activities") {
-        if (c->corona()) {
-            return c->corona()->action("manage activities");
-        }
-#endif
     } else {
         //FIXME: remove action: make removal of current activity possible
         return c->action(name);

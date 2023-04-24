@@ -4,7 +4,3 @@ add_subdirectory(paste)
 add_subdirectory(switchwindow)
 add_subdirectory(applauncher)
 add_subdirectory(minimalcontextmenu)
-
-if(KActivities_FOUND)
-   add_subdirectory(switchactivity)
-endif(KActivities_FOUND)

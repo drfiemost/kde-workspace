@@ -1,10 +1,5 @@
 project(plasma-containmentactions-contextmenu)
 
-
-if(KActivities_FOUND)
-  add_definitions(-DENABLE_KACTIVITIES)
-endif(KActivities_FOUND)
-
 set(contextmenu_SRCS
     menu.cpp
 )

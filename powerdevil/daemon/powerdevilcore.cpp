@@ -42,10 +42,6 @@
 #include <KServiceTypeTrader>
 #include <KStandardDirs>
 
-#ifdef ENABLE_KACTIVITIES
-#include <KActivities/Consumer>
-#endif
-
 #include <QtCore/QTimer>
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusConnectionInterface>
@@ -58,9 +54,6 @@ Core::Core(QObject* parent, const KComponentData &componentData)
     , m_backend(0)
     , m_applicationData(componentData)
     , m_criticalBatteryTimer(new QTimer(this))
-#ifdef ENABLE_KACTIVITIES
-    , m_activityConsumer(new KActivities::Consumer(this))
-#endif
     , m_pendingWakeupEvent(true)
 {
 }
@@ -134,10 +127,6 @@ void Core::onBackendReady()
             this, SLOT(onKIdleTimeoutReached(int,int)));
     connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()),
             this, SLOT(onResumingFromIdle()));
-#ifdef ENABLE_KACTIVITIES
-    connect(m_activityConsumer, SIGNAL(currentActivityChanged(QString)),
-            this, SLOT(loadProfile()));
-#endif
     // Set up the policy agent
     PowerDevil::PolicyAgent::instance()->init();
 
@@ -243,46 +232,6 @@ void Core::loadProfile(bool force)
     }
 
     KConfigGroup config;
-#ifdef ENABLE_KACTIVITIES
-    // Check the activity in which we are in
-    QString activity = m_activityConsumer->currentActivity();
-    if (activity.isEmpty()) {
-        activity = "default";
-    }
-    kDebug() << "We are now into activity " << activity;
-    KConfigGroup activitiesConfig(m_profilesConfig, "Activities");
-    kDebug() << activitiesConfig.groupList() << activitiesConfig.keyList();
-
-    // Are we mirroring an activity?
-    if (activitiesConfig.group(activity).readEntry("mode", "None") == "ActLike" &&
-        activitiesConfig.group(activity).readEntry("actLike", QString()) != "AC" &&
-        activitiesConfig.group(activity).readEntry("actLike", QString()) != "Battery" &&
-        activitiesConfig.group(activity).readEntry("actLike", QString()) != "LowBattery") {
-        // Yes, let's use that then
-        activity = activitiesConfig.group(activity).readEntry("actLike", QString());
-        kDebug() << "Activity is a mirror";
-    }
-
-    KConfigGroup activityConfig = activitiesConfig.group(activity);
-    kDebug() << activityConfig.groupList() << activityConfig.keyList();
-
-    // See if this activity has priority
-    if (activityConfig.readEntry("mode", "None") == "SeparateSettings") {
-        // Prioritize this profile over anything
-        config = activityConfig.group("SeparateSettings");
-        kDebug() << "Activity is enforcing a different profile";
-        profileId = activity;
-    } else if (activityConfig.readEntry("mode", "None") == "ActLike") {
-        if (activityConfig.readEntry("actLike", QString()) == "AC" ||
-            activityConfig.readEntry("actLike", QString()) == "Battery" ||
-            activityConfig.readEntry("actLike", QString()) == "LowBattery") {
-            // Same as above, but with an existing profile
-            config = m_profilesConfig.data()->group(activityConfig.readEntry("actLike", QString()));
-            profileId = activityConfig.readEntry("actLike", QString());
-            kDebug() << "Activity is mirroring a different profile";
-        }
-    } else
-#endif
     {
         // It doesn't, let's load the current state's profile
         if (m_loadedBatteriesUdi.isEmpty()) {
@@ -376,43 +325,6 @@ void Core::loadProfile(bool force)
         m_currentProfile = profileId;
         emit profileChanged(m_currentProfile);
     }
-
-#ifdef ENABLE_KACTIVITIES
-    // Now... any special behaviors we'd like to consider?
-    if (activityConfig.readEntry("mode", "None") == "SpecialBehavior") {
-        kDebug() << "Activity has special behaviors";
-        KConfigGroup behaviorGroup = activityConfig.group("SpecialBehavior");
-        if (behaviorGroup.readEntry("performAction", false)) {
-            // Let's override the configuration for this action at all times
-            ActionPool::instance()->loadAction("SuspendSession", behaviorGroup.group("ActionConfig"), this);
-            kDebug() << "Activity overrides suspend session action";
-        }
-
-        if (behaviorGroup.readEntry("noSuspend", false)) {
-            kDebug() << "Activity triggers a suspend inhibition";
-            // Trigger a special inhibition - if we don't have one yet
-            if (!m_sessionActivityInhibit.contains(activity)) {
-                int cookie =
-                PolicyAgent::instance()->AddInhibition(PolicyAgent::InterruptSession, i18n("Activity Manager"),
-                                                       i18n("This activity's policies prevent the system from suspending"));
-
-                m_sessionActivityInhibit.insert(activity, cookie);
-            }
-        }
-
-        if (behaviorGroup.readEntry("noScreenManagement", false)) {
-            kDebug() << "Activity triggers a screen management inhibition";
-            // Trigger a special inhibition - if we don't have one yet
-            if (!m_screenActivityInhibit.contains(activity)) {
-                int cookie =
-                PolicyAgent::instance()->AddInhibition(PolicyAgent::ChangeScreenSettings, i18n("Activity Manager"),
-                                                       i18n("This activity's policies prevent screen power management"));
-
-                m_screenActivityInhibit.insert(activity, cookie);
-            }
-        }
-    }
-#endif
 
     // If the lid is closed, retrigger the lid close signal
     if (m_backend->isLidClosed()) {

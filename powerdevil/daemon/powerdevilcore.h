@@ -28,12 +28,6 @@
 
 #include <KComponentData>
 
-#ifdef ENABLE_KACTIVITIES
-namespace KActivities
-{
-    class Consumer;
-} // namespace KActivities
-#endif
 typedef QMap< QString, QString > StringStringMap;
 
 class KDirWatch;
@@ -111,9 +105,7 @@ private:
     QHash< QString, bool > m_batteriesCharged;
 
     QTimer *m_criticalBatteryTimer;
-#ifdef ENABLE_KACTIVITIES
-    KActivities::Consumer *m_activityConsumer;
-#endif
+
     // Idle time management
     QHash< Action*, QList< int > > m_registeredActionTimeouts;
     QList< Action* > m_pendingResumeFromIdleActions;

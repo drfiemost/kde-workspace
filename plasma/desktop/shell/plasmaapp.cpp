@@ -571,14 +571,8 @@ ControllerWindow *PlasmaApp::showController(int screen, Plasma::Containment *con
 
     if (widgetExplorerMode) {
         controller->showWidgetExplorer();
-    } else {
-#ifdef ENABLE_KACTIVITIES
-        controller->showActivityManager();
-#endif
     }
-#ifdef ENABLE_KACTIVITIES
-    connect(m_corona->activityController(), SIGNAL(currentActivityChanged(QString)), controller, SLOT(close()));
-#endif
+
     controller->show();
     Plasma::WindowEffects::slideWindow(controller, controller->location());
     QTimer::singleShot(0, controller, SLOT(activate()));
@@ -844,25 +838,12 @@ DesktopCorona* PlasmaApp::corona(bool createIfMissing)
                     view, SLOT(screenOwnerChanged(int,int,Plasma::Containment*)));
         }
 
-        //actions!
-        KAction *activityAction = c->addAction("manage activities");
-        connect(activityAction, SIGNAL(triggered()), this, SLOT(toggleActivityManager()));
-        activityAction->setText(i18n("Activities..."));
-        activityAction->setIcon(KIcon("preferences-activities"));
-        activityAction->setData(Plasma::AbstractToolBox::ConfigureTool);
-        activityAction->setShortcut(KShortcut("alt+d, alt+a"));
-        activityAction->setShortcutContext(Qt::ApplicationShortcut);
-        activityAction->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_Q));
-
         c->updateShortcuts();
 
         m_corona = c;
         c->setItemIndexMethod(QGraphicsScene::NoIndex);
         c->initializeLayout();
         c->processUpdateScripts();
-#ifdef ENABLE_KACTIVITIES
-        c->checkActivities();
-#endif
         c->checkScreens();
         foreach (Plasma::Containment *containment, c->containments()) {
             if (containment->screen() != -1 && containment->wallpaper()) {
@@ -1149,18 +1130,7 @@ void PlasmaApp::prepareContainment(Plasma::Containment *containment)
          containment->containmentType() == Plasma::Containment::CustomContainment)) {
         QAction *a = containment->action("remove");
         delete a; //activities handle removal now
-#ifdef ENABLE_KACTIVITIES
-        if (!(m_loadingActivity.isEmpty() || m_corona->offscreenWidgets().contains(containment))) {
-            Plasma::Context *context = containment->context();
-            if (context->currentActivityId().isEmpty()) {
-                //kDebug() << "@#$%@#$%@#$%@#$%#@$#@%@$#^%$&^$^$%#%$";
-                //kDebug() << "script->containment->activity";
-                Activity *activity = m_corona->activity(m_loadingActivity);
-                Q_ASSERT(activity);
-                activity->replaceContainment(containment);
-            }
-        }
-#endif
+
         if (containment->containmentType() == Plasma::Containment::DesktopContainment) {
             foreach (QAction *action, m_corona->actions()) {
                 containment->addToolBoxAction(action);
@@ -1248,13 +1218,6 @@ void PlasmaApp::configureContainment(Plasma::Containment *containment)
 
         if (isDashboardContainment) {
             configDialog->setLayoutChangeable(false);
-        } else {
-#ifdef ENABLE_KACTIVITIES
-            Activity *activity = m_corona->activity(containment->context()->currentActivityId());
-            Q_ASSERT(activity);
-            connect(configDialog, SIGNAL(containmentPluginChanged(Plasma::Containment*)),
-                    activity, SLOT(replaceContainment(Plasma::Containment*)));
-#endif
         }
 
         connect(configDialog, SIGNAL(destroyed(QObject*)), nullManager, SLOT(deleteLater()));
@@ -1264,30 +1227,7 @@ void PlasmaApp::configureContainment(Plasma::Containment *containment)
     KWindowSystem::setOnDesktop(configDialog->winId(), KWindowSystem::currentDesktop());
     KWindowSystem::activateWindow(configDialog->winId());
 }
-#ifdef ENABLE_KACTIVITIES
-void PlasmaApp::cloneCurrentActivity()
-{
-    if (!m_corona) {
-        return;
-    }
 
-    KActivities::Controller *controller = m_corona->activityController();
-    //getting the current activity is *so* much easier than the current containment(s) :) :)
-    const QString oldId = controller->currentActivity();
-    Activity *oldActivity = m_corona->activity(oldId);
-    const QString newId = controller->addActivity(i18nc("%1 is the activity name", "Copy of %1", oldActivity->name()));
-
-    const QString file = "activities/" + newId;
-    KConfig external(file, KConfig::SimpleConfig, "appdata");
-
-    //copy the old config to the new location
-    oldActivity->save(external);
-    //kDebug() << "saved to" << file;
-
-    //load the new one
-    controller->setCurrentActivity(newId);
-}
-#endif
 void PlasmaApp::setPerVirtualDesktopViews(bool perDesktopViews)
 {
     if (perDesktopViews == perVirtualDesktopViews()) {
@@ -1468,82 +1408,7 @@ void PlasmaApp::plasmoidAccessFinished(Plasma::AccessAppletJob *job)
         c->addApplet(job->applet(), QPointF(-1, -1), false);
     }
 }
-#ifdef ENABLE_KACTIVITIES
-void PlasmaApp::createActivity(const QString &plugin)
-{
-    if (!m_corona) {
-        return;
-    }
 
-    KActivities::Controller *controller = m_corona->activityController();
-    QString id = controller->addActivity(i18nc("Default name for a new activity", "New Activity"));
-
-    Activity *a = m_corona->activity(id);
-    Q_ASSERT(a);
-    a->setDefaultPlugin(plugin);
-
-    controller->setCurrentActivity(id);
-}
-
-void PlasmaApp::createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps)
-{
-    if (!m_corona) {
-        return;
-    }
-
-    KActivities::Controller *controller = m_corona->activityController();
-    m_loadingActivity = controller->addActivity(name);
-    Activity *a = m_corona->activity(m_loadingActivity);
-    Q_ASSERT(a);
-    if (!icon.isEmpty()) {
-        a->setIcon(icon);
-    }
-
-    //kDebug() << "$$$$$$$$$$$$$$$$ begin script for" << m_loadingActivity;
-    m_corona->evaluateScripts(QStringList() << script, false);
-    //kDebug() << "$$$$$$$$$$$$$$$$ end script for" << m_loadingActivity;
-
-    controller->setCurrentActivity(m_loadingActivity);
-    m_loadingActivity.clear();
-
-    if (startupApps.isEmpty()) {
-        return;
-    }
-
-    KListConfirmationDialog * confirmDialog = new KListConfirmationDialog(
-            i18n("Run applications"),
-            i18n("This activity template requests to run the following applications"),
-            i18n("Run selected"),
-            i18n("Run none")
-            );
-    connect(confirmDialog, SIGNAL(selected(QList<QVariant>)),
-            this, SLOT(executeCommands(QList<QVariant>)));
-
-    foreach (QString exec, startupApps) {
-        exec = exec.replace("$desktop",   KGlobalSettings::desktopPath());
-        exec = exec.replace("$autostart", KGlobalSettings::autostartPath());
-        exec = exec.replace("$documents", KGlobalSettings::documentPath());
-        exec = exec.replace("$music",     KGlobalSettings::musicPath());
-        exec = exec.replace("$video",     KGlobalSettings::videosPath());
-        exec = exec.replace("$downloads", KGlobalSettings::downloadPath());
-        exec = exec.replace("$pictures",  KGlobalSettings::picturesPath());
-
-        QString name = exec.split(" ")[0];
-
-        KService::Ptr service = KService::serviceByDesktopName(name);
-
-        if (service) {
-            confirmDialog->addItem(KIcon(service->icon()), service->name(),
-                    ((exec == name) ? QString() : exec), exec, exec.split(" ").size() <= 2);
-        } else {
-            confirmDialog->addItem(KIcon("dialog-warning"), name,
-                    ((exec == name) ? QString() : exec), exec, false);
-        }
-    }
-
-    confirmDialog->exec();
-}
-#endif
 void PlasmaApp::executeCommands(const QList < QVariant > & commands)
 {
     foreach (const QVariant & command, commands) {

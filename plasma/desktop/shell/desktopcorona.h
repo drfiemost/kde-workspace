@@ -29,12 +29,7 @@ class QMenu;
 class QAction;
 
 class Activity;
-#ifdef ENABLE_KACTIVITIES
-namespace KActivities
-{
-    class Controller;
-} // namespace 
-#endif
+
 namespace Plasma
 {
     class Applet;
@@ -77,31 +72,13 @@ public:
 
     bool loadDefaultLayoutScripts();
     void processUpdateScripts();
-#ifdef ENABLE_KACTIVITIES
-    /**
-     * Ensures activities exist for the containments
-     */
-    void checkActivities();
 
-    /**
-     * @return the Activity object for the given activity id
-     */
-    Activity* activity(const QString &id);
-
-    KActivities::Controller *activityController();
-#endif
 public Q_SLOTS:
     QRect availableScreenRect(int id) const;
     void addPanel();
     void addPanel(QAction *action);
     void addPanel(const QString &plugin);
     void populateAddPanelsMenu();
-#ifdef ENABLE_KACTIVITIES
-    void activateNextActivity();
-    void activatePreviousActivity();
-    /** If there are more than 1 active activities, stop the current activity*/
-    void stopCurrentActivity();
-#endif
     void evaluateScripts(const QStringList &scripts, bool isStartup = true);
 
 protected Q_SLOTS:
@@ -111,25 +88,14 @@ protected Q_SLOTS:
     void printScriptMessage(const QString &error);
     void updateImmutability(Plasma::ImmutabilityType immutability);
     void checkAddPanelAction(const QStringList &sycocaChanges = QStringList());
-#ifdef ENABLE_KACTIVITIES
-    void currentActivityChanged(const QString &activity);
-    void activityAdded(const QString &id);
-    void activityRemoved(const QString &id);
-#endif
+
 private:
     void init();
 
     Plasma::Applet *loadDefaultApplet(const QString &pluginName, Plasma::Containment *c);
-#ifdef ENABLE_KACTIVITIES
-    void checkDesktop(Activity *activity, bool signalWhenExists, int screen, int desktop = -1);
-#endif
     QAction *m_addPanelAction;
     QMenu *m_addPanelsMenu;
     QTimer *m_delayedUpdateTimer;
-#ifdef ENABLE_KACTIVITIES
-    KActivities::Controller *m_activityController;
-    QHash<QString, Activity*> m_activities;
-#endif
 };
 
 #endif

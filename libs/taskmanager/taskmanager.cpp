@@ -574,11 +574,7 @@ int TaskManager::currentDesktop() const
 
 QString TaskManager::currentActivity() const
 {
-#ifdef ENABLE_KACTIVITIES
-    return d->activityConsumer.currentActivity();
-#else
     return QString();
-#endif
 }
 
 } // TaskManager namespace

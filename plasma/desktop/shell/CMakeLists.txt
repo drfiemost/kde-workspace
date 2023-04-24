@@ -6,15 +6,6 @@ include_directories(${KDEBASE_WORKSPACE_SOURCE_DIR}/libs
 
 add_subdirectory(configupdates)
 
-if(KActivities_FOUND)
-  add_definitions(-DENABLE_KACTIVITIES)
-  set(activitymanager_SRCS
-    activity.cpp
-    activitymanager/activitymanager.cpp
-    activitymanager/kidenticongenerator.cpp
-  )
-endif(KActivities_FOUND)
-
 set(plasma_SRCS
     accessibility/accessiblefactory.cpp
     accessibility/accessibleplasmaview.cpp
@@ -57,10 +48,6 @@ kde4_add_kdeinit_executable(plasma-desktop ${plasma_SRCS})
 
 target_link_libraries(kdeinit_plasma-desktop ${KDE4_PLASMA_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KIDLETIME_LIBS} Qt4::QtScript kworkspace plasmagenericshell Qt4::QtDeclarative)
 
-if(KActivities_FOUND)
-    target_link_libraries(kdeinit_plasma-desktop ${KACTIVITIES_LIBRARY})
-endif(KActivities_FOUND)
-
 if(UNIX AND Q_WS_X11)
     target_link_libraries(kdeinit_plasma-desktop ${X11_LIBRARIES})
 
@@ -81,7 +68,6 @@ install(FILES data/plasma.desktop data/plasma-desktop.desktop DESTINATION ${AUTO
 endif(WIN32)
 install(FILES data/plasma-shell-desktop.kcfg  DESTINATION  ${KCFG_INSTALL_DIR})
 install(FILES data/plasma-themes.knsrc DESTINATION  ${CONFIG_INSTALL_DIR})
-install(FILES activitymanager/activities.knsrc DESTINATION  ${CONFIG_INSTALL_DIR})
 install(FILES data/plasma-desktop.notifyrc DESTINATION ${DATA_INSTALL_DIR}/plasma-desktop)
 install(FILES data/layouts/00-defaultLayout.js DESTINATION ${DATA_INSTALL_DIR}/plasma-desktop/init)
 install(FILES data/plasma-desktop-js.xml DESTINATION ${DATA_INSTALL_DIR}/katepart/syntax/)
