@@ -67,8 +67,8 @@ const int rgbTblSize = 657;
 
 static int qstricmp( const char *str1, const char *str2 )
 {
-    register const uchar *s1 = (const uchar *)str1;
-    register const uchar *s2 = (const uchar *)str2;
+    const uchar *s1 = (const uchar *)str1;
+    const uchar *s2 = (const uchar *)str2;
     int res;
     uchar c;
     if ( !s1 || !s2 )
