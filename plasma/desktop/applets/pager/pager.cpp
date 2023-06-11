@@ -48,10 +48,6 @@
 #include <Plasma/DeclarativeWidget>
 #include <Plasma/Package>
 
-#ifdef ENABLE_KACTIVITIES
-#include <KActivities/Consumer>
-#endif
-
 #include <taskmanager/task.h>
 
 const int FAST_UPDATE_DELAY = 100;

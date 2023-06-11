@@ -75,11 +75,6 @@
 #include <Plasma/Wallpaper>
 #include <Plasma/WindowEffects>
 
-#ifdef ENABLE_KACTIVITIES
-#include <KActivities/Controller>
-#include "activity.h"
-#endif
-
 #include <kephal/screens.h>
 
 #include <plasmagenericshell/backgrounddialog.h>

@@ -48,10 +48,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <windows.h>
 #endif
 
-#ifdef ENABLE_KACTIVITIES
-#include <KActivities/Consumer>
-#endif
-
 namespace TaskManager
 {
 
@@ -102,9 +98,6 @@ public:
     QList<Startup *> startups;
     WindowList skiptaskbarWindows;
     QSet<QUuid> trackGeometryTokens;
-#ifdef ENABLE_KACTIVITIES
-    KActivities::Consumer activityConsumer;
-#endif
 };
 
 TaskManager::TaskManager()
@@ -122,16 +115,9 @@ TaskManager::TaskManager()
             this,       SLOT(currentDesktopChanged(int)));
     connect(KWindowSystem::self(), SIGNAL(windowChanged(WId, const ulong*)),
             this,       SLOT(windowChanged(WId, const ulong*)));
-#ifdef ENABLE_KACTIVITIES
-    connect(&d->activityConsumer, SIGNAL(currentActivityChanged(QString)),
-            this,       SIGNAL(activityChanged(QString)));
-#endif
     if (QCoreApplication::instance()) {
         connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()), this, SLOT(onAppExitCleanup()));
     }
-#ifdef ENABLE_KACTIVITIES
-    emit activityChanged(d->activityConsumer.currentActivity());
-#endif
     // register existing windows
     const QList<WId> windows = KWindowSystem::windows();
     QList<WId>::ConstIterator end(windows.end());

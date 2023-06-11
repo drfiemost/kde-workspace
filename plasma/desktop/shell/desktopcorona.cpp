@@ -44,12 +44,6 @@
 #include <Plasma/DataEngineManager>
 #include <Plasma/Package>
 
-#ifdef ENABLE_KACTIVITIES
-#include <KActivities/Controller>
-#include <KActivities/Info>
-#include "activity.h"
-#endif
-
 #include <kephal/screens.h>
 
 #include <scripting/layouttemplatepackagestructure.h>

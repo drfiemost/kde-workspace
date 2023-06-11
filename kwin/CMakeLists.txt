@@ -275,10 +275,6 @@ if(KWIN_BUILD_SCRIPTING)
     set(kwin_QT_LIBS ${kwin_QT_LIBS} ${QT_QTSCRIPT_LIBRARY})
 endif()
 
-if(KWIN_BUILD_ACTIVITIES)
-    set(kwin_KDE_LIBS ${kwin_KDE_LIBS} ${KACTIVITIES_LIBRARY})
-endif()
-
 if(OPENGL_EGL_FOUND)
     set(kwin_OPENGL_LIBS ${kwin_OPENGL_LIBS} ${OPENGLES_EGL_LIBRARY})
 endif()
