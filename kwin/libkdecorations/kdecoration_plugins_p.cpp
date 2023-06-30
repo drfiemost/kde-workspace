@@ -41,11 +41,11 @@ DEALINGS IN THE SOFTWARE.
 #include "kdecorationfactory.h"
 
 KDecorationPlugins::KDecorationPlugins(const KSharedConfigPtr &cfg)
-    :   create_ptr(NULL),
-        library(NULL),
-        fact(NULL),
-        old_library(NULL),
-        old_fact(NULL),
+    :   create_ptr(nullptr),
+        library(nullptr),
+        fact(nullptr),
+        old_library(nullptr),
+        old_fact(nullptr),
         pluginStr("kwin3_undefined "),
         config(cfg)
 {
@@ -54,14 +54,12 @@ KDecorationPlugins::KDecorationPlugins(const KSharedConfigPtr &cfg)
 KDecorationPlugins::~KDecorationPlugins()
 {
     if (library) {
-        assert(fact != NULL);
+        assert(fact != nullptr);
         delete fact;
-        library->unload();
     }
     if (old_library) {
-        assert(old_fact != NULL);
+        assert(old_fact != nullptr);
         delete old_fact;
-        old_library->unload();
     }
 }
 
@@ -78,8 +76,8 @@ bool KDecorationPlugins::reset(unsigned long changed)
     if ((!loadPlugin("") && library)     // "" = read the one in cfg file
             || oldPlugin == pluginStr) {
         // no new plugin loaded, reset the old one
-//       assert( fact != NULL );
-        if (fact != NULL) {
+//       assert( fact != nullptr );
+        if (fact != nullptr) {
             ret = fact->reset(changed);
         }
 
@@ -100,9 +98,9 @@ const KDecorationFactory *KDecorationPlugins::factory() const
 // convenience
 KDecoration* KDecorationPlugins::createDecoration(KDecorationBridge* bridge)
 {
-    if (fact != NULL)
+    if (fact != nullptr)
         return fact->createDecoration(bridge);
-    return NULL;
+    return nullptr;
 }
 
 // tests whether the plugin can be loaded
@@ -149,11 +147,8 @@ bool KDecorationPlugins::canLoad(QString nameStr, KLibrary **loadedLib)
         return true;
     }
 #endif
-    // so we check whether this lib was loaded before and don't unload it in case
-    bool wasLoaded = lib->isLoaded();
-
-    KDecorationFactory*(*cptr)() = NULL;
-    int (*vptr)()  = NULL;
+    KDecorationFactory*(*cptr)() = nullptr;
+    int (*vptr)()  = nullptr;
     int deco_version = 0;
     KLibrary::void_function_ptr version_func = lib->resolveFunction("decoration_version");
     if (version_func) {
@@ -176,7 +171,6 @@ bool KDecorationPlugins::canLoad(QString nameStr, KLibrary **loadedLib)
     if (deco_version != KWIN_DECORATION_API_VERSION) {
         if (version_func)
             kWarning(1212) << i18n("The library %1 has wrong API version %2", path, deco_version);
-        lib->unload();
         delete lib;
         return false;
     }
@@ -187,7 +181,6 @@ bool KDecorationPlugins::canLoad(QString nameStr, KLibrary **loadedLib)
 
     if (!cptr) {
         kDebug(1212) << i18n("The library %1 is not a KWin plugin.", path);
-        lib->unload();
         delete lib;
         return false;
     }
@@ -195,8 +188,6 @@ bool KDecorationPlugins::canLoad(QString nameStr, KLibrary **loadedLib)
     if (loadedLib) {
         *loadedLib = lib;
     } else {
-        if (!wasLoaded)
-            lib->unload();
         delete lib;
     }
     return true;
@@ -272,10 +263,9 @@ void KDecorationPlugins::destroyPreviousPlugin()
     // Destroy the old plugin
     if (old_library) {
         delete old_fact;
-        old_fact = NULL;
-        old_library->unload();
+        old_fact = nullptr;
         delete old_library;
-        old_library = NULL;
+        old_library = nullptr;
     }
 }
 

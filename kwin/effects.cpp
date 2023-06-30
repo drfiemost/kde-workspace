@@ -1404,7 +1404,6 @@ bool EffectsHandlerImpl::loadEffect(const QString& name, bool checkDefault)
         t_supportedfunc supported = reinterpret_cast<t_supportedfunc>(supported_func);
         if (!supported()) {
             kWarning(1212) << "EffectsHandler::loadEffect : Effect " << name << " is not supported" ;
-            library->unload();
             return false;
         }
     }
@@ -1414,14 +1413,12 @@ bool EffectsHandlerImpl::loadEffect(const QString& name, bool checkDefault)
         t_enabledByDefaultfunc enabledByDefault = reinterpret_cast<t_enabledByDefaultfunc>(enabledByDefault_func);
 
         if (!enabledByDefault()) {
-            library->unload();
             return false;
         }
     }
 
     if (!create_func) {
         kError(1212) << "EffectsHandler::loadEffect : effect_create function not found" << endl;
-        library->unload();
         return false;
     }
 
@@ -1435,7 +1432,6 @@ bool EffectsHandlerImpl::loadEffect(const QString& name, bool checkDefault)
     foreach (const QString & depName, dependencies) {
         if (!loadEffect(depName)) {
             kError(1212) << "EffectsHandler::loadEffect : Couldn't load dependencies for effect " << name << endl;
-            library->unload();
             return false;
         }
     }
@@ -1497,9 +1493,6 @@ void EffectsHandlerImpl::unloadEffect(const QString& name)
             delete it.value().second;
             effect_order.erase(it);
             effectsChanged();
-            if (effect_libraries.contains(name)) {
-                effect_libraries[ name ]->unload();
-            }
             return;
         }
     }
