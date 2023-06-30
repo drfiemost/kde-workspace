@@ -72,7 +72,7 @@ int currentRefreshRate()
                     dotclock *= 2;
                 if (modeline.flags & 0x0020) // V_DBLSCAN
                     vtotal *= 2;
-                if (modeline.htotal*vtotal) // BUG 313996
+                if ((modeline.htotal*vtotal) != 0) // avoid DIV by 0 BUG 313996
                     rate = 1000*dotclock/(modeline.htotal*vtotal); // WTF was wikipedia 1998 when I nedded it?
                 kDebug(1212) << "Vertical Refresh Rate (as detected by XF86VM): " << rate << "Hz";
             }
