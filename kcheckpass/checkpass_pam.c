@@ -85,7 +85,7 @@ PAM_conv (int num_msg, pam_message_type **msg,
         goto conv_err;
       }
       if (!repl[count].resp) {
-        pd->abort = 1;
+        pd->abort = -1;
         goto conv_err;
       }
       repl[count].resp_retcode = PAM_SUCCESS;
