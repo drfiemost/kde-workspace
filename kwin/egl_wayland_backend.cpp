@@ -276,7 +276,11 @@ static const struct wl_pointer_listener s_pointerListener = {
     pointerHandleLeave,
     pointerHandleMotion,
     pointerHandleButton,
-    pointerHandleAxis
+    pointerHandleAxis,
+    nullptr, //frame
+    nullptr, //axis_source
+    nullptr, //axis_stop
+    nullptr, //axis_discrete
 };
 
 static const struct wl_keyboard_listener s_keyboardListener = {
@@ -285,10 +289,12 @@ static const struct wl_keyboard_listener s_keyboardListener = {
     keyboardHandleLeave,
     keyboardHandleKey,
     keyboardHandleModifiers,
+    nullptr, // repeat_info
 };
 
 static const struct wl_seat_listener s_seatListener = {
-    seatHandleCapabilities
+    seatHandleCapabilities,
+    nullptr // name
 };
 
 CursorData::CursorData(ShmPool *pool)
