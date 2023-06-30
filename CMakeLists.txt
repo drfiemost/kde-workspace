@@ -68,6 +68,7 @@ set_package_properties(UDev PROPERTIES DESCRIPTION "The UDev Libraries"
                        PURPOSE "Allows support for UPower backend in PowerDevil - STRONGLY RECOMMENDED"
                       )
 
+set(FPHSA_NAME_MISMATCHED TRUE)
 macro_optional_find_package(Wayland)
 set_package_properties(Wayland PROPERTIES DESCRIPTION "The Wayland Client and Server libraries"
                        URL "http://wayland.freedesktop.org"

@@ -2,6 +2,7 @@
 add_subdirectory( pics )
 KDE4_NO_ENABLE_FINAL(input)
 
+set(FPHSA_NAME_MISMATCHED TRUE)
 macro_optional_find_package(USB)
 macro_bool_to_01(LIBUSB_FOUND HAVE_LIBUSB)
 set_package_properties(USB PROPERTIES DESCRIPTION "User level access to USB devices"
