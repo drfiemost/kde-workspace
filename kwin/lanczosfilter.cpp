@@ -156,24 +156,26 @@ void LanczosFilter::createKernel(float delta, int *size)
         values[i] = val;
     }
 
-    memset(m_kernel, 0, 16 * sizeof(QVector4D));
-
     // Normalize the kernel
     for (int i = 0; i < kernelSize; i++) {
         const float val = values[i] / sum;
         m_kernel[i] = QVector4D(val, val, val, val);
     }
 
+    for (int i = kernelSize; i < 16; i++)
+        m_kernel[i] = QVector4D();
+
     *size = kernelSize;
 }
 
 void LanczosFilter::createOffsets(int count, float width, Qt::Orientation direction)
 {
-    memset(m_offsets, 0, 16 * sizeof(QVector2D));
     for (int i = 0; i < count; i++) {
         m_offsets[i] = (direction == Qt::Horizontal) ?
                        QVector2D(i / width, 0) : QVector2D(0, i / width);
     }
+    for (int i = count; i < 16; i++)
+        m_offsets[i] = QVector2D();
 }
 
 void LanczosFilter::performPaint(EffectWindowImpl* w, int mask, QRegion region, WindowPaintData& data)
