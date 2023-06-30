@@ -443,7 +443,8 @@ ToggleLauncherActionImpl::ToggleLauncherActionImpl(QObject *parent, AbstractGrou
                 break;
             }
 
-        } // fallthrough to TaskItemType below
+            [[fallthrough]];
+        }
 
         case TaskItemType:
             setText(i18n("&Show A Launcher When Not Running"));

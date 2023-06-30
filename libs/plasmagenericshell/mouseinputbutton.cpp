@@ -87,6 +87,7 @@ bool MouseInputButton::event(QEvent *event)
                 //kDebug() << "wheel@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
             case QEvent::MouseButtonRelease:
                 changeTrigger(Plasma::ContainmentActions::eventToString(event));
+                [[fallthrough]];
             case QEvent::MouseButtonPress:
                 event->accept();
                 return true;
@@ -97,6 +98,7 @@ bool MouseInputButton::event(QEvent *event)
                     event->accept();
                     return true;
                 }
+                [[fallthrough]];
             case QEvent::KeyRelease:
                 showModifiers((static_cast<QKeyEvent*>(event))->modifiers());
                 break;

@@ -265,7 +265,22 @@ bool ProcessesLocal::Private::readProcStat(const QString &dir, Process *ps)
                                 ps->setTty(QByteArray("pts/") + QByteArray::number(minor));
                                 break;
                             case 5:
-                                ps->setTty(QByteArray("tty"));
+                                if(minor < 64) {
+                                    switch(minor) {
+                                        default:
+                                        case 0:
+                                            ps->setTty(QByteArray("tty"));
+                                            break;
+                                        case 1:
+                                            ps->setTty(QByteArray("console"));
+                                            break;
+                                        case 2:
+                                            ps->setTty(QByteArray("ptmx"));
+                                            break;
+                                    }
+                                } else
+                                    ps->setTty(QByteArray("cua") + QByteArray::number(minor-64));
+                                break;
                             case 4:
                                 if(minor < 64)
                                     ps->setTty(QByteArray("tty") + QByteArray::number(minor));
@@ -407,25 +422,26 @@ bool ProcessesLocal::Private::getNiceness(long pid, Process *process) {
   int sched = sched_getscheduler(pid);
   switch(sched) {
       case (SCHED_OTHER):
-	    process->scheduler = KSysGuard::Process::Other;
+            process->scheduler = KSysGuard::Process::Other;
             break;
       case (SCHED_RR):
-	    process->scheduler = KSysGuard::Process::RoundRobin;
+            process->scheduler = KSysGuard::Process::RoundRobin;
             break;
       case (SCHED_FIFO):
-	    process->scheduler = KSysGuard::Process::Fifo;
+            process->scheduler = KSysGuard::Process::Fifo;
             break;
 #ifdef SCHED_IDLE
       case (SCHED_IDLE):
-	    process->scheduler = KSysGuard::Process::SchedulerIdle;
+            process->scheduler = KSysGuard::Process::SchedulerIdle;
+            break;
 #endif
 #ifdef SCHED_BATCH
       case (SCHED_BATCH):
-	    process->scheduler = KSysGuard::Process::Batch;
+            process->scheduler = KSysGuard::Process::Batch;
             break;
 #endif
       default:
-	    process->scheduler = KSysGuard::Process::Other;
+            process->scheduler = KSysGuard::Process::Other;
     }
   if(sched == SCHED_FIFO || sched == SCHED_RR) {
     struct sched_param param;
