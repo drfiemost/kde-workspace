@@ -184,14 +184,15 @@ void KSMServer::performLegacySessionSave()
                 break;
             }
             /* Wait for more events */
-            fd_set fds;
+            fd_set fds, fdse;
             FD_ZERO(&fds);
             int fd = ConnectionNumber(newdisplay);
             FD_SET(fd, &fds);
+            FD_SET(fd, &fdse);
             struct timeval tmwait;
             tmwait.tv_sec = (wmSaveYourselfTimeout - msecs) / 1000;
             tmwait.tv_usec = ((wmSaveYourselfTimeout - msecs) % 1000) * 1000;
-            ::select(fd+1, &fds, NULL, &fds, &tmwait);
+            ::select(fd+1, &fds, NULL, &fdse, &tmwait);
         }
     }
     // Terminate work in new display
