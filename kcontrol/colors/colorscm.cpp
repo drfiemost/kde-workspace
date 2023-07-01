@@ -1244,7 +1244,7 @@ void KColorCm::defaults()
     m_config->setReadDefaults(true);
     loadOptions();
     m_config->setReadDefaults(false);
-    applyToAlien->setChecked(Qt::Checked);
+    applyToAlien->setChecked(true);
 
     KCModule::defaults();
     emit changed(true);
