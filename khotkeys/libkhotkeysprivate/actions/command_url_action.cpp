@@ -126,7 +126,7 @@ void CommandUrlAction::execute()
                   break;
                     }
                 }
-            // fall though
+            [[fallthrough]];
             }
         case KUriFilterData::Shell:
             {
