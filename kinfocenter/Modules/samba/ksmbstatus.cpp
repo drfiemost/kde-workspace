@@ -121,9 +121,9 @@ void NetMon::readFromProcess() {
 	if (!process || !process->canReadLine())
 		return;
 
-	qint64 buflen = 8046; // 8k enough?
-	char buffer[buflen];
-	buflen = process->readLine(buffer, buflen);
+	constexpr qint64 bufsize = 8046; // 8k enough?
+	char buffer[bufsize];
+	[[maybe_unused]] qint64 buflen = process->readLine(buffer, bufsize);
 	//kDebug()<<"received stuff";
 	char s[250], *start, *end;
 	size_t len;
