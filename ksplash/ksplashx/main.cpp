@@ -41,7 +41,7 @@ int main( int argc, char* argv[] )
         usage( argv[ 0 ] );
     bool test = false;
     bool print_pid = false;
-    int* cpid;
+    int* cpid = nullptr;
     for( int i = 2; // 1 is the theme
          i < argc;
          ++i )
@@ -149,9 +149,10 @@ int main( int argc, char* argv[] )
         XSynchronize( qt_xdisplay(), True );
     runSplash( theme, test, parent_pipe );
     closeDisplay();
-    if (number_of_screens > 1)
+    if ((number_of_screens > 1) && cpid)
         {
         for (int i = 1; i < number_of_screens; i++)
             kill(cpid[i], SIGTERM);
         }
+    free(cpid);
     }
