@@ -190,7 +190,6 @@ Greeter::~Greeter()
         if (m_pluginHandle.info->done) {
             m_pluginHandle.info->done();
         }
-        m_pluginHandle.library->unload();
     }
 }
 
@@ -248,19 +247,16 @@ bool Greeter::loadGreetPlugin()
         plugin.info = (KGreeterPluginInfo *)lib->resolveSymbol( "kgreeterplugin_info" );
         if (!plugin.info ) {
             kWarning() << "GreeterPlugin " << *it << " (" << lib->fileName() << ") is no valid greet widget plugin" ;
-            lib->unload();
             delete lib;
             continue;
         }
         if (plugin.info->method && !m_method.isEmpty() && m_method != QLatin1String(  plugin.info->method )) {
             kDebug() << "GreeterPlugin " << *it << " (" << lib->fileName() << ") serves " << plugin.info->method << ", not " << m_method;
-            lib->unload();
             delete lib;
             continue;
         }
         if (!plugin.info->init( m_method, getConf, this )) {
             kDebug() << "GreeterPlugin " << *it << " (" << lib->fileName() << ") refuses to serve " << m_method;
-            lib->unload();
             delete lib;
             continue;
         }

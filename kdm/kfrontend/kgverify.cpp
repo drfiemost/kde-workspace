@@ -974,7 +974,6 @@ KGVerify::init(const QStringList &plugins)
         if (!plugin.info) {
             logError("GreeterPlugin %s (%s) is no valid greet widget plugin\n",
                      qPrintable(pg), qPrintable(lib->fileName()));
-            lib->unload();
             delete lib;
             continue;
         }
@@ -982,7 +981,6 @@ KGVerify::init(const QStringList &plugins)
         if (!plugin.info->init(QString(), getConf, 0)) {
             logError("GreeterPlugin %s (%s) refuses to serve\n",
                      qPrintable(pg), qPrintable(lib->fileName()));
-            lib->unload();
             delete lib;
             continue;
         }
@@ -1001,7 +999,6 @@ KGVerify::done()
     for (int i = 0; i < greetPlugins.count(); i++) {
         if (greetPlugins[i].info->done)
             greetPlugins[i].info->done();
-        greetPlugins[i].library->unload();
     }
 }
 
