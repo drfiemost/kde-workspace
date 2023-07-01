@@ -243,7 +243,10 @@ void NetToolBox::setShowing(const bool show)
     }
 
     if (show) {
-        qreal left, top, right, bottom = 0;
+        qreal left = 0.;
+        qreal top = 0.;
+        qreal right = 0.;
+        qreal bottom = 0.;
 
         switch (m_location) {
         case Plasma::TopEdge:

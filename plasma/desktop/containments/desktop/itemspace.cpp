@@ -833,7 +833,7 @@ void ItemSpace::resizeItem(int resizeGroupId, int resizeItemInGroup, const QSize
 
                 if (direction) {
                     PushPower power = PushAwayFromPreferred;
-                    qreal push;
+                    qreal push = 0.;
 
                     switch (direction) {
                     case DirRight:
