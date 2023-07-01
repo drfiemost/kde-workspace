@@ -634,8 +634,9 @@ KdmItem::addChildItem(KdmItem *item)
 {
     m_children.append(item);
     switch (currentManager) {
-    case MNone: // fallback to the 'fixed' case
+    case MNone:
         setFixedLayout();
+        [[fallthrough]];
     case MFixed:
         fixedManager->addItem(item);
         break;

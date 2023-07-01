@@ -301,6 +301,7 @@ MenuLauncherApplet::MenuLauncherApplet(QObject *parent, const QVariantList &args
             d->delayedConfigLoad = true;
             //Do not "break;", as we may need the default views configuration
             //(if SimpleLauncher was never used before)
+            [[fallthrough]];
         }
         default: { //Default configuration
             d->viewtypes << "RecentlyUsedApplications" << "Applications" << "Favorites";

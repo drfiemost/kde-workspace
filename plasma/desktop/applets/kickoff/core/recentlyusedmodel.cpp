@@ -189,6 +189,7 @@ QVariant RecentlyUsedModel::headerData(int section, Qt::Orientation orientation,
         } else if (d->recenttype == ApplicationsOnly) {
             return i18n("Recently Used Applications");
         }
+        [[fallthrough]];
     default:
         return QVariant();
     }

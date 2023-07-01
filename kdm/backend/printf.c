@@ -447,12 +447,14 @@ doPrint(OutCh dopr_outch, void *bp, const char *format, va_list args)
 #endif
         case 'u':
             flags |= DP_F_UNSIGNED;
+            // fallthrough
         case 'd':
         case 'i':
             radix = 10;
             goto printit;
         case 'X':
             flags |= DP_F_UPCASE;
+            // fallthrough
         case 'x':
             flags |= DP_F_UNSIGNED;
             radix = 16;
