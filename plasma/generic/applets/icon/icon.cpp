@@ -362,7 +362,7 @@ void IconApplet::cancelledPropertiesDialog()
 QSizeF IconApplet::sizeHint(Qt::SizeHint which, const QSizeF & constraint) const
 {
     if (which == Qt::PreferredSize) {
-        int iconSize;
+        int iconSize = 0;
 
         switch (formFactor()) {
             case Plasma::Planar:
