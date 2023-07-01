@@ -270,12 +270,14 @@ void KlipperPopup::keyPressEvent( QKeyEvent* e ) {
         QApplication::sendEvent(m_filterWidget, e);
 
         if (m_filterWidget->text().isEmpty()) {
-            if (m_filterWidgetAction->isVisible())
+            if (m_filterWidgetAction->isVisible()) {
                 m_filterWidget->setVisible(false);
                 m_filterWidgetAction->setVisible(false);
+            }
         }
-        else if (!m_filterWidgetAction->isVisible() )
+        else if (!m_filterWidgetAction->isVisible() ) {
             m_filterWidgetAction->setVisible(true);
+        }
 
         if (m_filterWidget->text() != lastString) {
             m_dirty = true;
