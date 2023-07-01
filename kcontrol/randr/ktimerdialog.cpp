@@ -215,6 +215,9 @@ void KTimerDialog::slotInternalTimeout()
             break;
         case NoDefault:
             slotButtonClicked(KDialog::NoDefault);
-            break;     
+            break;    
+        case Reset:
+            slotButtonClicked(KDialog::Reset);
+            break;      
     }
 }
