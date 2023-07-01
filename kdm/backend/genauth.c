@@ -424,6 +424,10 @@ addPreGetEntropy(void)
 }
 #endif
 
+#ifdef HAVE_ARC4RANDOM
+# include <stdint.h>
+#endif
+
 /* len MUST be multiple of sizeof(unsigned) and not more than 16! */
 /* auth MUST be sizeof(unsigned)-aligned! */
 int
@@ -437,7 +441,7 @@ generateAuthData(char *auth, int len)
             rnd[i / 4] = arc4random();
     else
         for (i = 0; i < len; i += 8)
-            rnd[i / 8] = arc4random() | (arc4random() << 32);
+            rnd[i / 8] = ((uint64_t)arc4random()) | (((uint64_t)arc4random()) << 32);
     return True;
 #else
     int fd;
