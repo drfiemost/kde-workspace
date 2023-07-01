@@ -231,7 +231,7 @@ void View1394::rescanBus() {
 			else {
 				QString guidStr;
 				char buf[32];
-				snprintf(buf, 32, "%llX", guid);
+				snprintf(buf, 32, "%lX", guid);
 				guidStr=buf;
 				guidStr="0x"+guidStr.rightJustified(16, '0');
 				QString local=((j | 0xffc0) == localNodeId) ? "X" : "";
