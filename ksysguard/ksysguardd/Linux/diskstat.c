@@ -117,8 +117,9 @@ void exitDiskStat( void )
     }
 
     destr_ctnr( DiskStatList, free );
-    if(OldDiskStatList)
+    if(OldDiskStatList) {
         destr_ctnr( OldDiskStatList, free );
+    }
 }
 
 void checkDiskStat( void )
