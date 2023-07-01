@@ -244,7 +244,7 @@ static int processNetDev_( void )
 						}
 					}
 				    unsigned int wifiStatus;
-				    sscanf(strchr(buf, ':') + 1, " %d %lli. %lli. %lli. %lli %lli %lli %lli %lli %lli",
+				    sscanf(strchr(buf, ':') + 1, " %u %lli. %lli. %lli. %lli %lli %lli %lli %lli %lli",
                            &wifiStatus, &linkQuality, &signalLevel, &noiseLevel, &nwid,
                            &RxCrypt, &frag, &retry, &misc, &beacon);
 					signalLevel -= 256; /*the units are dBm*/
@@ -329,8 +329,8 @@ void initNetDev( struct SensorModul* sm )
         strncpy( NetDevs[ i ].name, tag, sizeof( NetDevs[ i ].name ) );
         NetDevs[ i ].name[ sizeof( NetDevs[ i ].name )-1] = 0;
         FORALL( REGISTERSENSOR );
-        sscanf( pos + 1, "%lli %lli %lli %lli %lli %lli %lli %lli"
-                "%lli %lli %lli %lli %lli %lli %lli %lli",
+        sscanf( pos + 1, "%llu %llu %llu %llu %llu %llu %llu %llu"
+                "%llu %llu %llu %llu %llu %llu %llu %llu",
                 &NetDevs[ i ].recBytes, &NetDevs[ i ].recPacks,
                 &NetDevs[ i ].recErrs, &NetDevs[ i ].recDrop,
                 &NetDevs[ i ].recFifo, &NetDevs[ i ].recFrame,
