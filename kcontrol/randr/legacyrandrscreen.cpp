@@ -384,8 +384,8 @@ void LegacyRandRScreen::save(KConfig& config) const
 	group.writeEntry("size", currentPixelSize());
 	group.writeEntry("refresh", refreshRateIndexToHz(size(), refreshRate()));
 	group.writeEntry("rotation", rotationIndexToDegree(rotation()));
-	group.writeEntry("reflectX", (bool)(rotation() & RandR::ReflectMask) == RandR::ReflectX);
-	group.writeEntry("reflectY", (bool)(rotation() & RandR::ReflectMask) == RandR::ReflectY);
+	group.writeEntry("reflectX", (bool)((rotation() & RandR::ReflectMask) == RandR::ReflectX));
+	group.writeEntry("reflectY", (bool)((rotation() & RandR::ReflectMask) == RandR::ReflectY));
 }
 
 QStringList LegacyRandRScreen::startupCommands() const
@@ -405,7 +405,7 @@ QStringList LegacyRandRScreen::startupCommands() const
 	}
 	if((rotation() & RandR::ReflectMask) == RandR::ReflectX)
 		command += " -x ";
-	if((bool)(rotation() & RandR::ReflectMask) == RandR::ReflectY)
+	if((rotation() & RandR::ReflectMask) == RandR::ReflectY)
 		command += " -y ";
 	return QStringList() << command;
 }
