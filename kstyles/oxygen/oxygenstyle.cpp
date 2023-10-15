@@ -678,8 +678,6 @@ namespace Oxygen
             case PM_IndicatorHeight: return CheckBox_Size;
             case PM_ExclusiveIndicatorWidth: return CheckBox_Size;
             case PM_ExclusiveIndicatorHeight: return CheckBox_Size;
-            case PM_CheckListControllerSize: return CheckBox_Size;
-            case PM_CheckListButtonSize: return CheckBox_Size;
 
             // splitters and dock widgets
             case PM_SplitterWidth: return Splitter_Width;
@@ -1054,8 +1052,6 @@ namespace Oxygen
             case PE_PanelTipLabel: fcn = &Style::drawPanelTipLabelPrimitive; break;
 
             case PE_IndicatorMenuCheckMark: fcn = &Style::drawIndicatorMenuCheckMarkPrimitive; break;
-            case PE_Q3CheckListIndicator: fcn = &Style::drawQ3CheckListIndicatorPrimitive; break;
-            case PE_Q3CheckListExclusiveIndicator: fcn = &Style::drawQ3CheckListExclusiveIndicatorPrimitive; break;
             case PE_IndicatorBranch: fcn = &Style::drawIndicatorBranchPrimitive; break;
             case PE_IndicatorButtonDropDown: fcn = &Style::drawIndicatorButtonDropDownPrimitive; break;
             case PE_IndicatorCheckBox: fcn = &Style::drawIndicatorCheckBoxPrimitive; break;
@@ -1158,7 +1154,6 @@ namespace Oxygen
             case CC_ComboBox: fcn = &Style::drawComboBoxComplexControl; break;
             case CC_Dial: fcn = &Style::drawDialComplexControl; break;
             case CC_GroupBox: fcn = &Style::drawGroupBoxComplexControl; break;
-            case CC_Q3ListView: fcn = &Style::drawQ3ListViewComplexControl; break;
             case CC_Slider: fcn = &Style::drawSliderComplexControl; break;
             case CC_SpinBox: fcn = &Style::drawSpinBoxComplexControl; break;
             case CC_TitleBar: fcn = &Style::drawTitleBarComplexControl; break;
@@ -1226,7 +1221,6 @@ namespace Oxygen
         // cast to QWidget
         QWidget *widget = static_cast<QWidget*>( object );
 
-        if( widget->inherits( "Q3ListView" ) ) { return eventFilterQ3ListView( widget, event ); }
         if( widget->inherits( "QComboBoxPrivateContainer" ) ) { return eventFilterComboBoxContainer( widget, event ); }
 
         return QCommonStyle::eventFilter( object, event );
@@ -1366,20 +1360,6 @@ namespace Oxygen
 
         // continue with normal painting
         return false;
-
-    }
-
-    //__________________________________________________________________________________
-    bool Style::eventFilterQ3ListView( QWidget* widget, QEvent* event )
-    {
-        // this apparently fixes a Qt bug with Q3ListView, consisting in
-        // the fact that Focus events do not trigger repaint of these
-        switch( event->type() )
-        {
-            case QEvent::FocusIn: widget->update(); return false;
-            case QEvent::FocusOut: widget->update(); return false;
-            default: return false;
-        }
 
     }
 
@@ -3590,7 +3570,7 @@ namespace Oxygen
         return true;
 
     }
-
+#if 0
     //___________________________________________________________________________________
     bool Style::drawQ3CheckListIndicatorPrimitive( const QStyleOption *option, QPainter *painter, const QWidget *widget ) const
     {
@@ -3620,7 +3600,7 @@ namespace Oxygen
         drawIndicatorRadioButtonPrimitive( &buttonOption, painter, widget );
         return true;
     }
-
+#endif
     //___________________________________________________________________________________
     bool Style::drawIndicatorBranchPrimitive( const QStyleOption* option, QPainter* painter, const QWidget* ) const
     {
@@ -7608,7 +7588,7 @@ namespace Oxygen
 
         } else return false;
     }
-
+#if 0
     //______________________________________________________________
     bool Style::drawQ3ListViewComplexControl( const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget ) const
     {
@@ -7663,9 +7643,8 @@ namespace Oxygen
         }
 
         return true;
-
     }
-
+#endif
     //______________________________________________________________
     bool Style::drawSliderComplexControl( const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget ) const
     {
