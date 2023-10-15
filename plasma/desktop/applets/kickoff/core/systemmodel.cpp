@@ -135,7 +135,7 @@ QModelIndex SystemModel::mapToSource(const QModelIndex &proxyIndex) const
 QModelIndex SystemModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!parent.isValid()) {
-        return createIndex(row, column, 0);
+        return createIndex(row, column, quintptr(0));
     }
 
     // We use the row+1 of the parent as internal Id.
