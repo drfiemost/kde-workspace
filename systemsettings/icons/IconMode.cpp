@@ -40,9 +40,8 @@ K_EXPORT_PLUGIN( IconModeFactory( "icon_mode" ) )
 
 class IconMode::Private {
 public:
-    Private() : categoryDrawer( 0 ),  categoryView( 0 ), moduleView( 0 ) {}
+    Private() : categoryDrawer( nullptr ),  categoryView( nullptr ), moduleView( nullptr ) {}
     virtual ~Private() {
-        delete categoryDrawer;
         delete aboutIcon;
     }
 
@@ -119,7 +118,7 @@ void IconMode::initEvent()
     d->moduleView = new ModuleView( d->mainWidget );
     connect( d->moduleView, SIGNAL(moduleChanged(bool)), this, SLOT(moduleLoaded()) );
     connect( d->moduleView, SIGNAL(closeRequest()), this, SLOT(backToOverview()) );
-    d->categoryView = 0;
+    d->categoryView = nullptr;
 }
 
 void IconMode::searchChanged( const QString& text )
@@ -166,8 +165,8 @@ void IconMode::backToOverview()
 void IconMode::initWidget()
 {
     // Create the widget
-    d->categoryDrawer = new CategoryDrawer();
     d->categoryView = new CategorizedView( d->mainWidget );
+    d->categoryDrawer = new CategoryDrawer( d->categoryView );
 
     d->categoryView->setSelectionMode( QAbstractItemView::SingleSelection );
     d->categoryView->setSpacing( KDialog::spacingHint() );
