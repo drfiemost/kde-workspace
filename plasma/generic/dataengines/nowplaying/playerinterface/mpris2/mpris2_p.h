@@ -21,6 +21,7 @@
 #include "../player.h"
 
 #include <QTime>
+#include <QVariant>
 #include <QVariantMap>
 class QDBusInterface;
 

@@ -1,5 +1,7 @@
 #include "playerfactory.h"
 
+#include <QVariant>
+
 PlayerFactory::PlayerFactory(QObject* parent)
     : QObject(parent)
 {
