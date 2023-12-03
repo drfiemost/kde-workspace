@@ -52,7 +52,7 @@ void KeyboardLayout::generateLayout(QString a,const QString& cname)
     i=n.indexOf("\"",1);
     layoutName=n.left(i);
     layoutName.remove("\"");
-    layoutName.simplified();
+    layoutName=layoutName.simplified();
     i=n.indexOf("key");
     n=n.mid(i);
 
@@ -112,7 +112,7 @@ void KeyboardLayout::includeSymbol(QString a,const QString& cname)
     QString r;
     for(int o=1;o<tobeinclude.size();o++){
         QString d=tobeinclude.at(o);
-        d.simplified();
+        d=d.simplified();
         int k=d.indexOf("\"",2);
 
         QString incsym=d.left(k);
