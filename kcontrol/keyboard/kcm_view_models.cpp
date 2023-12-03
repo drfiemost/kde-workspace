@@ -120,15 +120,15 @@ QMimeData *LayoutsTableModel::mimeData(const QModelIndexList &indexes) const
 
 QVariant LayoutsTableModel::data(const QModelIndex &index, int role) const
 {
-     if (!index.isValid())
-         return QVariant();
+    if (!index.isValid())
+        return QVariant();
 
-     if (index.row() >= keyboardConfig->layouts.size())
-         return QVariant();
+    if (index.row() >= keyboardConfig->layouts.size())
+        return QVariant();
 
-	 const LayoutUnit& layoutUnit = keyboardConfig->layouts.at(index.row());
+    const LayoutUnit& layoutUnit = keyboardConfig->layouts.at(index.row());
 
-     if (role == Qt::DecorationRole) {
+    if (role == Qt::DecorationRole) {
     	 switch( index.column() ) {
     	 case DISPLAY_NAME_COLUMN: {
 //    			if( keyboardConfig->isFlagShown() ) {
@@ -149,16 +149,16 @@ QVariant LayoutsTableModel::data(const QModelIndex &index, int role) const
 //    	 }
     	 break;
     	 }
-     }
-     else
-     if( role == Qt::BackgroundRole ) {
+    }
+    else
+    if( role == Qt::BackgroundRole ) {
     	 if( keyboardConfig->layoutLoopCount != KeyboardConfig::NO_LOOPING
     			 && index.row() >= keyboardConfig->layoutLoopCount ) {
     		 return QBrush(Qt::lightGray);
     	 }
-     }
-     else
-     if (role == Qt::DisplayRole) {
+    }
+    else
+    if (role == Qt::DisplayRole) {
     	 switch( index.column() ) {
     	 case MAP_COLUMN:
     		 return layoutUnit.layout;
@@ -187,8 +187,8 @@ QVariant LayoutsTableModel::data(const QModelIndex &index, int role) const
     	 }
     	 break;
     	 }
-     }
-     else if (role==Qt::EditRole ) {
+    }
+    else if (role==Qt::EditRole ) {
     	 switch( index.column() ) {
     	 case DISPLAY_NAME_COLUMN:
     		 return layoutUnit.getDisplayName();
@@ -201,8 +201,8 @@ QVariant LayoutsTableModel::data(const QModelIndex &index, int role) const
     	 break;
     	 default:;
     	 }
-     }
-     else if( role == Qt::TextAlignmentRole ) {
+    }
+    else if( role == Qt::TextAlignmentRole ) {
     	 switch( index.column() ) {
     	 case MAP_COLUMN:
     	 case DISPLAY_NAME_COLUMN:
@@ -211,8 +211,8 @@ QVariant LayoutsTableModel::data(const QModelIndex &index, int role) const
     	 break;
     	 default:;
     	 }
-     }
-     return QVariant();
+    }
+    return QVariant();
 }
 
 QVariant LayoutsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
