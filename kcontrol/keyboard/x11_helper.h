@@ -83,6 +83,7 @@ struct LayoutUnit {
 		displayName = layoutUnit.displayName;
 		shortcut = layoutUnit.shortcut;
 	}
+	LayoutUnit& operator=(const LayoutUnit&) = default;
 
 	QString getRawDisplayName() const { return displayName; }
 	QString getDisplayName() const { return !displayName.isEmpty() ? displayName :  layout; }
