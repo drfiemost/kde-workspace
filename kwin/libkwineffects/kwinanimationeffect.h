@@ -40,6 +40,7 @@ public:
     explicit FPx2(const QPointF &other) { f[0] = other.x(); f[1] = other.y(); valid = true; }
     explicit FPx2(const QSize &other) { f[0] = other.width(); f[1] = other.height(); valid = true; }
     explicit FPx2(const QSizeF &other) { f[0] = other.width(); f[1] = other.height(); valid = true; }
+    constexpr FPx2& operator=(const FPx2&) = default;
     inline void invalidate() { valid = false; }
     inline bool isValid() const { return valid; }
     inline float operator[](int n) const { return f[n]; }
