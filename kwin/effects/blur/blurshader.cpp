@@ -30,6 +30,8 @@
 
 #include <cmath>
 
+#include <algorithm>
+
 using namespace KWin;
 
 
@@ -103,7 +105,7 @@ QList<KernelValue> BlurShader::gaussianKernel() const
         total += (g1 + g2) * 2;
     }
 
-    qSort(kernel);
+    std::sort(kernel.begin(), kernel.end());
 
     // Normalize the kernel
     for (int i = 0; i < kernel.count(); i++)

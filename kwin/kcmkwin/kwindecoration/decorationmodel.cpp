@@ -39,6 +39,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <KPluginInfo>
 #include "kwindecoration.h"
 
+#include <algorithm>
+
 /* WARNING -------------------------------------------------------------------------
 * it is *ABSOLUTELY* mandatory to manage loadPlugin() and destroyPreviousPlugin()
 * using disablePreview()
@@ -150,7 +152,7 @@ void DecorationModel::findDecorations()
         data.website = info.website();
         m_decorations.append(data);
     }
-    qSort(m_decorations.begin(), m_decorations.end(), DecorationModelData::less);
+    std::sort(m_decorations.begin(), m_decorations.end(), DecorationModelData::less);
     endResetModel();
 }
 

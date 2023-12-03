@@ -61,6 +61,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kjob.h>
 
+#include <algorithm>
+
 #define FONTCOLOR "#bfbfbf"
 
 KSMShutdownFeedback * KSMShutdownFeedback::s_pSelf = 0L;
@@ -117,7 +119,7 @@ void KSMShutdownFeedback::start()
             KXErrorHandler handler;
             int cnt;
             Atom* props = XListProperties( dpy, sel, &cnt );
-            if( !handler.error( false ) && props != NULL && qFind( props, props + cnt, hack ) != props + cnt )
+            if( !handler.error( false ) && props != NULL && std::find( props, props + cnt, hack ) != props + cnt )
                 wmsupport = true;
             if( props != NULL )
                 XFree( props );
