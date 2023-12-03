@@ -32,6 +32,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "options.h"
 #include "utils.h"
 
+#include <algorithm>
+
 class KConfig;
 class KXMessages;
 
@@ -355,13 +357,13 @@ WindowRules::WindowRules()
 inline
 bool WindowRules::contains(const Rules* rule) const
 {
-    return qFind(rules.begin(), rules.end(), rule) != rules.end();
+    return std::find(rules.begin(), rules.end(), rule) != rules.end();
 }
 
 inline
 void WindowRules::remove(Rules* rule)
 {
-    QVector< Rules* >::Iterator pos = qFind(rules.begin(), rules.end(), rule);
+    QVector< Rules* >::Iterator pos = std::find(rules.begin(), rules.end(), rule);
     if (pos != rules.end())
         rules.erase(pos);
 }

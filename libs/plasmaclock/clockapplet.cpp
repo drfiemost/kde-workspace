@@ -67,6 +67,8 @@
 #include "ui_timezonesConfig.h"
 #include "ui_generalConfig.h"
 
+#include <algorithm>
+
 class ClockApplet::Private
 {
 public:
@@ -293,7 +295,7 @@ void ClockApplet::updateTipContent()
         }
     }
 
-    qSort(tzs.begin(), tzs.end(), sortTzByData);
+    std::sort(tzs.begin(), tzs.end(), sortTzByData);
     QDate currentDate;
     foreach (const Plasma::DataEngine::Data &data, tzs) {
         bool shouldHighlight = highlightLocal && (data["Timezone"].toString() == localTz);

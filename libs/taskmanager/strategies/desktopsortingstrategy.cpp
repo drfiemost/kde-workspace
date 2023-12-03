@@ -33,6 +33,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "abstractgroupableitem.h"
 #include "groupmanager.h"
 
+#include <algorithm>
+
 namespace TaskManager
 {
 
@@ -54,7 +56,7 @@ DesktopSortingStrategy::DesktopSortingStrategy(QObject *parent)
 void DesktopSortingStrategy::sortItems(ItemList &items)
 {
     GroupManager *gm = qobject_cast<GroupManager *>(parent());
-    qStableSort(items.begin(), items.end(), (gm && gm->separateLaunchers()) ?
+    std::stable_sort(items.begin(), items.end(), (gm && gm->separateLaunchers()) ?
                                                 DesktopSortingStrategy::lessThanSeperateLaunchers :
                                                 DesktopSortingStrategy::lessThan);
 }

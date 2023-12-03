@@ -22,6 +22,8 @@
 #include <taskmanager/taskitem.h>
 #include <taskmanager/taskgroup.h>
 
+#include <algorithm>
+
 namespace TaskManager
 {
 
@@ -93,7 +95,7 @@ private:
 
     void addToCache(const AbstractGroupableItem *item) {
         QList<int> cacheEntry = getActivitiesIndexes(item);
-        qSort(cacheEntry.begin(), cacheEntry.end());
+        std::sort(cacheEntry.begin(), cacheEntry.end());
         m_priorityCache[item->id()] = cacheEntry;
     }
 
@@ -113,7 +115,7 @@ void ActivitySortingStrategy::sortItems(ItemList& items)
 
     Comparator comparator(&m_activitiesOrder);
 
-    qStableSort(items.begin(), items.end(), comparator);
+    std::stable_sort(items.begin(), items.end(), comparator);
 }
 
 void ActivitySortingStrategy::handleItem(AbstractGroupableItem* item)
@@ -165,7 +167,7 @@ bool ActivitySortingStrategy::checkActivitiesOrder(ItemList& items)
     Q_FOREACH(QString activity, activityCount.keys()) {
         activityData << QPair<QString, int>(activity, activityCount[activity]);
     }
-    qSort(activityData.begin(), activityData.end(), lessThanActivityData);
+    std::sort(activityData.begin(), activityData.end(), lessThanActivityData);
 
 
     QStringList newActivitiesOrder;

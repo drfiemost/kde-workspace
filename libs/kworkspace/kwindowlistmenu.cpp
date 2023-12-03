@@ -43,6 +43,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kwindowlistmenu.moc"
 #include "kwin_interface.h"
 
+#include <algorithm>
+
 static bool compareKWinWindowInfo( KWindowInfo* firstInfo, KWindowInfo* secondInfo )
 {
   QString firstTitle, secondTitle;
@@ -132,7 +134,7 @@ void KWindowListMenu::init()
       }
     }
 
-    qStableSort( list.begin(), list.end(), compareKWinWindowInfo );
+    std::stable_sort( list.begin(), list.end(), compareKWinWindowInfo );
 
     foreach ( KWindowInfo* info, list ) {
       ++i;

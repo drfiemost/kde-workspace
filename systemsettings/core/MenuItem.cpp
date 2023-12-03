@@ -26,6 +26,8 @@
 
 #include <KCModuleInfo>
 
+#include <algorithm>
+
 static bool childIsLessThan( MenuItem *left, MenuItem *right )
 {
     return left->weight() < right->weight();
@@ -64,7 +66,7 @@ MenuItem::~MenuItem()
 
 void MenuItem::sortChildrenByWeight()
 {
-    qSort( d->children.begin(), d->children.end(), childIsLessThan );
+    std::sort( d->children.begin(), d->children.end(), childIsLessThan );
 }
 
 MenuItem * MenuItem::child( int index )
