@@ -322,14 +322,14 @@ KDecoration *B2ClientFactory::createDecoration(KDecorationBridge *b)
 
 bool B2ClientFactory::reset(unsigned long changed)
 {
-    bool needsReset = SettingColors ? true : false;
+    bool needsReset = changed & SettingColors;
     // TODO Do not recreate decorations if it is not needed. Look at
     // ModernSystem for how to do that
     read_config(this);
     if (changed & SettingFont) {
-    	delete_pixmaps();
-    	create_pixmaps();
-	needsReset = true;
+        delete_pixmaps();
+        create_pixmaps();
+        needsReset = true;
     }
     redraw_pixmaps();
     // For now just return true.
