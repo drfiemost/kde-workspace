@@ -31,6 +31,8 @@
 
 #include "xcursortheme.h"
 
+#include <algorithm>
+
 
 // Static variable holding alternative names for some cursors
 QHash<QString, QString> XCursorTheme::alternatives;
@@ -57,7 +59,7 @@ XCursorTheme::XCursorTheme(const QDir &themeDir)
                 sizeList.append(images->images[i]->size);
         };
         XcursorImagesDestroy(images);
-        qSort(sizeList.begin(), sizeList.end());
+        std::sort(sizeList.begin(), sizeList.end());
         m_availableSizes = sizeList;
     };
     if (!sizeList.isEmpty())
