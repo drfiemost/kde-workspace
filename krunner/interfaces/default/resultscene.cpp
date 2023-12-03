@@ -41,6 +41,8 @@
 
 #include "selectionbar.h"
 
+#include <algorithm>
+
 ResultScene::ResultScene(SharedResultData *resultData, Plasma::RunnerManager *manager, QWidget *focusBase, QObject *parent)
     : QGraphicsScene(parent),
       m_runnerManager(manager),
@@ -180,7 +182,7 @@ void ResultScene::setQueryMatches(const QList<Plasma::QueryMatch> &m)
     }
 
     QList<Plasma::QueryMatch> matches = m;
-    qSort(matches.begin(), matches.end());
+    std::sort(matches.begin(), matches.end());
     QListIterator<Plasma::QueryMatch> mit(matches);
     mit.toBack();
     QListIterator<ResultItem *> rit(m_items);

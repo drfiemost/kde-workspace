@@ -52,6 +52,8 @@
 #include "Misc.h"
 #include "KfiConstants.h"
 
+#include <algorithm>
+
 namespace KFI
 {
 
@@ -706,7 +708,7 @@ void CGroupList::sort(int, Qt::SortOrder order)
 {
     itsSortOrder=order;
 
-    qSort(itsGroups.begin(), itsGroups.end(),
+    std::sort(itsGroups.begin(), itsGroups.end(),
           Qt::AscendingOrder==order ? groupNameLessThan : groupNameGreaterThan);
 
     emit layoutChanged();

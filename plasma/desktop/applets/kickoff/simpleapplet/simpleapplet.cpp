@@ -74,6 +74,8 @@
 #include "core/urlitemlauncher.h"
 #include "ui/contextmenufactory.h"
 
+#include <algorithm>
+
 #ifndef KDE_USE_FINAL
 Q_DECLARE_METATYPE(QPersistentModelIndex)
 #endif
@@ -590,7 +592,7 @@ inline bool sortServiceItemsByWeight(const KService::Ptr left, const KService::P
 }
 KService::List sortServices(KService::List list)
 {
-    qSort(list.begin(), list.end(), sortServiceItemsByWeight);
+    std::sort(list.begin(), list.end(), sortServiceItemsByWeight);
     return list;
 }
 

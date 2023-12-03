@@ -48,6 +48,8 @@
 #include "qs_matchview.h"
 #include "qs_querymatchitem.h"
 
+#include <algorithm>
+
 //Widget dimensions
 const int WIDTH = 390;
 const int HEIGHT = 80; //10px overlap with text
@@ -219,7 +221,7 @@ void QsMatchView::setItems(const QList<MatchItem*> &items, bool popup, bool appe
         }*/
         d->m_items << items;
     }
-    qStableSort(d->m_items.begin(), d->m_items.end(), queryMatchCompare);
+    std::stable_sort(d->m_items.begin(), d->m_items.end(), queryMatchCompare);
     d->m_compBox->clear();
 
     foreach(MatchItem *item, d->m_items) {

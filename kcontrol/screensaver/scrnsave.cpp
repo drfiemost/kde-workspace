@@ -77,6 +77,8 @@
 #include "scrnsave.h"
 #include <QX11Info>
 
+#include <algorithm>
+
 template class QList<SaverConfig*>;
 
 const uint widgetEventMask =                 // X event mask
@@ -417,7 +419,7 @@ void KScreenSaver::findSavers()
     mLoadTimer->stop();
     delete mLoadTimer;
 
-    qSort(mSaverList.begin(), mSaverList.end());
+    std::sort(mSaverList.begin(), mSaverList.end());
 
     mSaverListView->clear();
     //Create the treewidget items

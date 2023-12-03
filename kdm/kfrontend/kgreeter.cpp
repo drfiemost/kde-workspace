@@ -66,6 +66,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 
+#include <algorithm>
+
 class UserListView : public QListWidget {
   public:
     UserListView(QWidget *parent = 0)
@@ -482,7 +484,7 @@ KGreeter::insertSessions()
     putSession("default", i18nc("@item:inlistbox session type", "Default"), false, "default");
     putSession("custom", i18nc("@item:inlistbox session type", "Custom"), false, "custom");
     putSession("failsafe", i18nc("@item:inlistbox session type", "Failsafe"), false, "failsafe");
-    qSort(sessionTypes);
+    std::sort(sessionTypes.begin(), sessionTypes.end());
     for (int i = 0; i < sessionTypes.size() && !sessionTypes[i].hid; i++) {
         sessionTypes[i].action = sessGroup->addAction(sessionTypes[i].name);
         sessionTypes[i].action->setData(i);

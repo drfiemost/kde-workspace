@@ -31,6 +31,8 @@
 // Local
 #include "core/models.h"
 
+#include <algorithm>
+
 using namespace Kickoff;
 
 class RecentApplications::Private
@@ -62,7 +64,7 @@ public:
         KConfigGroup recentGroup = componentData().config()->group("RecentlyUsed");
 
         QList<ServiceInfo> services = serviceInfo.values();
-        qSort(services.begin(), services.end());
+        std::sort(services.begin(), services.end());
 
         // TESTING
         //      only the desktop file used is currently recorded, information such
@@ -112,6 +114,9 @@ public:
         bool operator<(const ServiceInfo& rhs) const {
             return this->lastStartedTime < rhs.lastStartedTime;
         }
+        bool operator>(const ServiceInfo& rhs) const {
+            return this->lastStartedTime > rhs.lastStartedTime;
+        }
     };
 
     static const int DEFAULT_MAX_SERVICES = 5;
@@ -136,7 +141,7 @@ RecentApplications::RecentApplications()
 QList<KService::Ptr> RecentApplications::recentApplications() const
 {
     QList<Private::ServiceInfo> services = privateSelf->serviceInfo.values();
-    qSort(services.begin(), services.end(), qGreater<Private::ServiceInfo>());
+    std::sort(services.begin(), services.end(), std::greater<Private::ServiceInfo>());
 
     QList<KService::Ptr> servicePtrs;
     foreach(const Private::ServiceInfo& info, services) {

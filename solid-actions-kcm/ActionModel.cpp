@@ -25,6 +25,8 @@
 #include <KStandardDirs>
 #include <KIcon>
 
+#include <algorithm>
+
 class ActionModel::Private {
 public:
     Private() {}
@@ -109,7 +111,7 @@ void ActionModel::buildActionList()
             d->actions.append( actionItem );
         }
     }
-    qSort( d->actions.begin(), d->actions.end(), sortAction );
+    std::sort( d->actions.begin(), d->actions.end(), sortAction );
     reset();
 }
 

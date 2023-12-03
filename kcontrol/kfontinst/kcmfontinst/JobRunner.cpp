@@ -53,6 +53,8 @@
 #include <unistd.h>
 #include "config-fontinst.h"
 
+#include <algorithm>
+
 #define CFG_GROUP                  "Runner Dialog"
 #define CFG_DONT_SHOW_FINISHED_MSG "DontShowFinishedMsg"
 
@@ -333,7 +335,7 @@ int CJobRunner::exec(ECommand cmd, const ItemList &urls, bool destIsSystem)
     itsDestIsSystem=destIsSystem;
     itsUrls=urls;
     if(CMD_INSTALL==cmd)
-        qSort(itsUrls.begin(), itsUrls.end());  // Sort list of fonts so that we have type1 fonts followed by their metrics...
+        std::sort(itsUrls.begin(), itsUrls.end());  // Sort list of fonts so that we have type1 fonts followed by their metrics...
     else if(CMD_MOVE==cmd)
         addEnableActions(itsUrls);
     itsIt=itsUrls.constBegin();

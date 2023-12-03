@@ -42,6 +42,8 @@
 #include <QDBusError>
 #include <QDBusReply>
 
+#include <algorithm>
+
 
 /*
  * README
@@ -311,7 +313,7 @@ static bool compare(const QString &a, const QString &b)
 void KGlobalShortcutsEditor::exportScheme()
 {
     QStringList keys = d->components.keys();
-    qSort(keys.begin(), keys.end(), compare);
+    std::sort(keys.begin(), keys.end(), compare);
     ExportSchemeDialog dia(keys);
 
     if (dia.exec() != KMessageBox::Ok) {
@@ -327,7 +329,7 @@ void KGlobalShortcutsEditor::exportScheme()
             // do not overwrite the Settings group. That makes it possible to
             // update the standard scheme kksrc file with the editor.
             if (group == "Settings") continue;
-            config.deleteGroup(group);
+                config.deleteGroup(group);
             }
         exportConfiguration(dia.selectedComponents(), &config);
     }

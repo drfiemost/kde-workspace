@@ -37,6 +37,8 @@
 // Local
 #include "core/recentapplications.h"
 
+#include <algorithm>
+
 #define DELAY_TIME 50
 
 using namespace Kickoff;
@@ -218,7 +220,7 @@ void KRunnerModel::matchesChanged(const QList< Plasma::QueryMatch > & m)
 {
     QList< Plasma::QueryMatch > matches = m;
 
-    qSort(matches.begin(), matches.end());
+    std::sort(matches.begin(), matches.end());
 
     clear();
 
