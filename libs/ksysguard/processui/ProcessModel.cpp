@@ -316,8 +316,8 @@ bool ProcessModel::lessThan(const QModelIndex &left, const QModelIndex &right) c
                     return processLeft->ioReadSyscallsRate > processRight->ioReadSyscallsRate;
                 case ProcessModel::ActualBytesRate:
                     return processLeft->ioCharactersActuallyReadRate > processRight->ioCharactersActuallyReadRate;
-
             }
+            break;
         case HeadingIoWrite:
             switch(d->mIoInformation) {
                 case ProcessModel::Bytes:
@@ -332,7 +332,8 @@ bool ProcessModel::lessThan(const QModelIndex &left, const QModelIndex &right) c
                     return processLeft->ioWriteSyscallsRate > processRight->ioWriteSyscallsRate;
                 case ProcessModel::ActualBytesRate:
                     return processLeft->ioCharactersActuallyWrittenRate > processRight->ioCharactersActuallyWrittenRate;
-        }
+            }
+            break;
     }
     //Sort by the display string if we do not have an explicit sorting here
     return data(left, Qt::DisplayRole).toString() < data(right, Qt::DisplayRole).toString();
@@ -1230,6 +1231,7 @@ QVariant ProcessModel::data(const QModelIndex &index, int role) const
               case KSysGuard::Process::Interactive:
                   return i18nc("scheduler", "(IA) %1", process->niceLevel);
             }
+            [[fallthrough]];
         case HeadingTty:
             return process->tty;
         case HeadingCPUUsage:
@@ -1632,8 +1634,8 @@ QVariant ProcessModel::data(const QModelIndex &index, int role) const
                     return (qlonglong)process->ioReadSyscallsRate;
                 case ProcessModel::ActualBytesRate:
                     return (qlonglong)process->ioCharactersActuallyReadRate;
-
             }
+            break;
         case HeadingIoWrite:
             switch(d->mIoInformation) {
                 case ProcessModel::Bytes:
@@ -1648,8 +1650,8 @@ QVariant ProcessModel::data(const QModelIndex &index, int role) const
                     return (qlonglong)process->ioWriteSyscallsRate;
                 case ProcessModel::ActualBytesRate:
                     return (qlonglong)process->ioCharactersActuallyWrittenRate;
-
             }
+            break;
         case HeadingXMemory:
             return (qulonglong)process->pixmapBytes;
 #ifdef Q_WS_X11
