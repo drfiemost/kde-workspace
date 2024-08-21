@@ -37,8 +37,6 @@ void CategoryDrawer::drawCategory(const QModelIndex &index,
                                             const QStyleOption &option,
                                             QPainter *painter) const
 {
-    Q_UNUSED( option )
-    Q_UNUSED( painter )
     Q_UNUSED( sortRole )
 
     painter->setRenderHint(QPainter::Antialiasing);
