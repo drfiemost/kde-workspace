@@ -36,6 +36,8 @@
 #include <Plasma/AbstractRunner>
 #include <Plasma/RunnerManager>
 
+#include <algorithm>
+
 
 FavouritesModel::FavouritesModel(QObject *parent)
         : QStandardItemModel(parent)
@@ -67,7 +69,7 @@ void FavouritesModel::restore(KConfigGroup &cg)
     clear();
     // get all the favourites
     QStringList groupNames(stripGroup.groupList());
-    qSort(groupNames);
+    std::sort(groupNames.begin(), groupNames.end());
     QMap<uint, KConfigGroup> favouritesConfigs;
     foreach (const QString &favouriteGroup, stripGroup.groupList()) {
         if (favouriteGroup.startsWith("favourite-")) {
