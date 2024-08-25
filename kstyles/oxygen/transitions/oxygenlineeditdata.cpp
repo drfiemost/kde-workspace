@@ -35,7 +35,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QSpinBox>
 #include <QtGui/QStyle>
-#include <QtGui/QStyleOptionFrameV2>
+#include <QtGui/QStyleOptionFrame>
 
 namespace Oxygen
 {
