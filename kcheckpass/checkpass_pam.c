@@ -162,7 +162,11 @@ AuthReturn Authenticate(const char *caller, const char *method,
   }
 
 # ifdef PAM_FAIL_DELAY
-  pam_set_item (pamh, PAM_FAIL_DELAY, (void *)fail_delay);
+#ifdef __GNUC__
+ // Silence pedantic warning for casting between function pointer and ‘void *’
+  __extension__
+#endif
+  pam_set_item (pamh, PAM_FAIL_DELAY, &fail_delay);
 # endif
 
   pam_error = pam_authenticate(pamh, 0);
