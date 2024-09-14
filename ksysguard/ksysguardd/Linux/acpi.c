@@ -256,7 +256,7 @@ void initAcpiThermal(struct SensorModul *sm)
   d = opendir("/sys/class/thermal/");
   if (d != NULL) {
       while ( (de = readdir(d)) != NULL ) {
-          if (!de->d_name || de->d_name[0] == '.')
+          if (de->d_name[0] == '.')
               continue;
           if (strncmp( de->d_name, "thermal_zone", sizeof("thermal_zone")-1) == 0) {
               snprintf(th_ref, sizeof(th_ref),
@@ -284,7 +284,7 @@ void initAcpiThermal(struct SensorModul *sm)
       d = opendir(OLD_THERMAL_ZONE_DIR);
       if (d != NULL) {
           while ( (de = readdir(d)) != NULL ) {
-              if (!de->d_name || de->d_name[0] == '.')
+              if (de->d_name[0] == '.')
                   continue;
 
               snprintf(th_ref, sizeof(th_ref),
@@ -298,7 +298,7 @@ void initAcpiThermal(struct SensorModul *sm)
       d = opendir(OLD_FAN_DIR);
       if (d != NULL) {
           while ( (de = readdir(d)) != NULL ) {
-              if (!de->d_name || de->d_name[0] == '.')
+              if (de->d_name[0] == '.')
                   continue;
 
               snprintf(th_ref, sizeof(th_ref),
