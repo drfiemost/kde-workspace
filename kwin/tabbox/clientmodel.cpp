@@ -72,7 +72,7 @@ QVariant ClientModel::data(const QModelIndex& index, int role) const
     case CaptionRole: {
         QString caption = client->caption();
         if (Qt::mightBeRichText(caption)) {
-            caption = Qt::escape(caption);
+            caption = caption.toHtmlEscaped();
         }
         return caption;
     }
