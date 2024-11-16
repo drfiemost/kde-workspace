@@ -847,7 +847,7 @@ void Pager::updateToolTip(int hoverDesktopId)
             int iconSize = KIconLoader::global()->currentSize(KIconLoader::Small);
             QPixmap icon = KWindowSystem::icon(id, iconSize, iconSize, true);
             if (icon.isNull()) {
-                 subtext += "<br />&bull;" + Qt::escape(visibleName);
+                 subtext += "<br />&bull;" + visibleName.toHtmlEscaped();
             } else {
                 data.addResource(Plasma::ToolTipContent::ImageResource,
                                  QUrl("wicon://" + QString::number(taskCounter)),
@@ -858,7 +858,7 @@ void Pager::updateToolTip(int hoverDesktopId)
 
             QFontMetricsF metrics(KGlobalSettings::taskbarFont());
             const QString combined = (active ? "<u>" : "")
-                                     + Qt::escape(visibleName).replace(' ', "&nbsp;")
+                                     + visibleName.toHtmlEscaped().replace(' ', "&nbsp;")
                                      + (active ? "</u>" : "");
             // elide text that is too long
             subtext += metrics.elidedText(combined, Qt::ElideMiddle,

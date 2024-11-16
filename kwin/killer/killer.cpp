@@ -71,9 +71,9 @@ int main(int argc, char* argv[])
     }
     bool isLocal = hostname == "localhost";
 
-    caption = Qt::escape(caption);
-    appname = Qt::escape(appname);
-    hostname = Qt::escape(hostname);
+    caption = caption.toHtmlEscaped();
+    appname = appname.toHtmlEscaped();
+    hostname = hostname.toHtmlEscaped();
     QString pidString = QString::number(pid); // format pid ourself as it does not make sense to format an ID according to locale settings
 
     QString question = i18nc("@info", "<b>Application \"%1\" is not responding</b>", appname);

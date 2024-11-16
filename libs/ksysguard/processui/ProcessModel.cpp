@@ -2008,7 +2008,7 @@ QMimeData *ProcessModel::mimeData(const QModelIndexList &indexes) const
                     textCsv += ',';
                     textPlain += ", ";
                 }
-                textHtml += "<td>" + Qt::escape(display) + "</td>";
+                textHtml += "<td>" + display.toHtmlEscaped() + "</td>";
                 textPlain += display;
                 display.replace('"',"\"\"");
                 textCsv += '"' + display + '"';

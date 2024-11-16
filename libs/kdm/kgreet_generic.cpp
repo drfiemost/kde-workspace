@@ -267,7 +267,7 @@ KGenericGreeter::failed()
     if (!m_infoMsgs.isEmpty()) {
         QString text = "<qt>";
         foreach (const QString &msg, m_infoMsgs)
-            text += "<p>" + Qt::escape(msg) + "</p>";
+            text += "<p>" + msg.toHtmlEscaped() + "</p>";
         text += "</qt>";
         revive();
         handler->gplugMsgBox(QMessageBox::Information, text);
