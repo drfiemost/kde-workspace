@@ -36,6 +36,8 @@
 #include <KDE/Plasma/ToolTipManager>
 #include <KDE/Plasma/Applet>
 
+#include <kdebug.h>
+
 namespace SystemTray
 {
 

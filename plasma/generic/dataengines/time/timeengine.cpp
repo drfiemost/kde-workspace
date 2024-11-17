@@ -30,6 +30,8 @@
 #include <KDateTime>
 #include <Solid/PowerManagement>
 
+#include <kdebug.h>
+
 #include "timesource.h"
 
 //timezone is defined in msvc

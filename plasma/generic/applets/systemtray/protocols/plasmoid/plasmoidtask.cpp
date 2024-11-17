@@ -31,6 +31,8 @@
 #include <plasma/popupapplet.h>
 #include <plasma/plasma.h>
 
+#include <kdebug.h>
+
 
 namespace SystemTray
 {

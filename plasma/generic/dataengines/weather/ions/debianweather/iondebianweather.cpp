@@ -31,6 +31,7 @@
 #include <KIO/Job>
 
 #include <KUnitConversion/Converter>
+#include <kdebug.h>
 
 #include <QXmlStreamReader>
 

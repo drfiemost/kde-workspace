@@ -21,6 +21,7 @@
 #define DEFAULTANIMATOR_H
 
 #include <Plasma/AnimationDriver>
+#include <QVariantList>
 
 class DefaultAnimator : public Plasma::AnimationDriver
 {
