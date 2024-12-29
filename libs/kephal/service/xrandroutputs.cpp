@@ -162,7 +162,7 @@ namespace Kephal {
         XFree(data);
     }
 
-    void XRandROutput::outputChanged(RROutput id, int changes) {
+    void XRandROutput::outputChanged(RROutput id, int /*changes*/) {
         Q_ASSERT(id == m_rrId);
         kDebug() << isConnected() << isActivated() << geom();
         if (isConnected() != m_previousConnected) {

@@ -606,13 +606,13 @@ QPoint Effect::cursorPos()
 double Effect::animationTime(const KConfigGroup& cfg, const QString& key, int defaultTime)
 {
     int time = cfg.readEntry(key, 0);
-    return time != 0 ? time : qMax(defaultTime * effects->animationTimeFactor(), 1.);
+    return time != 0 ? time : std::max(defaultTime * effects->animationTimeFactor(), 1.);
 }
 
 double Effect::animationTime(int defaultTime)
 {
     // at least 1ms, otherwise 0ms times can break some things
-    return qMax(defaultTime * effects->animationTimeFactor(), 1.);
+    return std::max(defaultTime * effects->animationTimeFactor(), 1.);
 }
 
 //****************************************
@@ -1014,10 +1014,10 @@ WindowQuadList WindowQuadList::makeGrid(int maxQuadSize) const
         if (quad.isTransformed())
             kFatal(1212) << "Splitting quads is allowed only in pre-paint calls!" ;
 #endif
-        left   = qMin(left,   quad.left());
-        right  = qMax(right,  quad.right());
-        top    = qMin(top,    quad.top());
-        bottom = qMax(bottom, quad.bottom());
+        left   = std::min(left,   quad.left());
+        right  = std::max(right,  quad.right());
+        top    = std::min(top,    quad.top());
+        bottom = std::max(bottom, quad.bottom());
     }
 
     WindowQuadList ret;
@@ -1034,12 +1034,12 @@ WindowQuadList WindowQuadList::makeGrid(int maxQuadSize) const
 
         // Loop over all intersecting cells and add sub-quads
         for (double y = yBegin; y < quadBottom; y += maxQuadSize) {
-            const double y0 = qMax(y, quadTop);
-            const double y1 = qMin(quadBottom, y + maxQuadSize);
+            const double y0 = std::max(y, quadTop);
+            const double y1 = std::min(quadBottom, y + maxQuadSize);
 
             for (double x = xBegin; x < quadRight; x += maxQuadSize) {
-                const double x0 = qMax(x, quadLeft);
-                const double x1 = qMin(quadRight, x + maxQuadSize);
+                const double x0 = std::max(x, quadLeft);
+                const double x1 = std::min(quadRight, x + maxQuadSize);
 
                 ret.append(quad.makeSubQuad(x0, y0, x1, y1));
             }
@@ -1065,10 +1065,10 @@ WindowQuadList WindowQuadList::makeRegularGrid(int xSubdivisions, int ySubdivisi
         if (quad.isTransformed())
             kFatal(1212) << "Splitting quads is allowed only in pre-paint calls!";
 #endif
-        left   = qMin(left,   quad.left());
-        right  = qMax(right,  quad.right());
-        top    = qMin(top,    quad.top());
-        bottom = qMax(bottom, quad.bottom());
+        left   = std::min(left,   quad.left());
+        right  = std::max(right,  quad.right());
+        top    = std::min(top,    quad.top());
+        bottom = std::max(bottom, quad.bottom());
     }
 
     double xIncrement = (right - left) / xSubdivisions;
@@ -1088,12 +1088,12 @@ WindowQuadList WindowQuadList::makeRegularGrid(int xSubdivisions, int ySubdivisi
 
         // Loop over all intersecting cells and add sub-quads
         for (double y = yBegin; y < quadBottom; y += yIncrement) {
-            const double y0 = qMax(y, quadTop);
-            const double y1 = qMin(quadBottom, y + yIncrement);
+            const double y0 = std::max(y, quadTop);
+            const double y1 = std::min(quadBottom, y + yIncrement);
 
             for (double x = xBegin; x < quadRight; x += xIncrement) {
-                const double x0 = qMax(x, quadLeft);
-                const double x1 = qMin(quadRight, x + xIncrement);
+                const double x0 = std::max(x, quadLeft);
+                const double x1 = std::min(quadRight, x + xIncrement);
 
                 ret.append(quad.makeSubQuad(x0, y0, x1, y1));
             }

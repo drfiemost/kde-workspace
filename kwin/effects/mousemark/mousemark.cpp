@@ -83,10 +83,10 @@ void MouseMarkEffect::reconfigure(ReconfigureFlags)
 #ifdef KWIN_HAVE_XRENDER_COMPOSITING
 void MouseMarkEffect::addRect(const QPoint &p1, const QPoint &p2, xcb_rectangle_t *r, xcb_render_color_t *c)
 {
-    r->x = qMin(p1.x(), p2.x()) - width_2;
-    r->y = qMin(p1.y(), p2.y()) - width_2;
-    r->width = qAbs(p1.x()-p2.x()) + 1 + width_2;
-    r->height = qAbs(p1.y()-p2.y()) + 1 + width_2;
+    r->x = std::min(p1.x(), p2.x()) - width_2;
+    r->y = std::min(p1.y(), p2.y()) - width_2;
+    r->width = std::abs(p1.x()-p2.x()) + 1 + width_2;
+    r->height = std::abs(p1.y()-p2.y()) + 1 + width_2;
     // fast move -> large rect, <strike>tess...</strike> interpolate a line
     if (r->width > 3*width/2 && r->height > 3*width/2) {
         const int n = sqrt(r->width*r->width + r->height*r->height) / width;
@@ -195,8 +195,8 @@ void MouseMarkEffect::slotMouseChanged(const QPoint& pos, const QPoint&,
             return;
         QPoint pos2 = drawing.last();
         drawing.append(pos);
-        QRect repaint = QRect(qMin(pos.x(), pos2.x()), qMin(pos.y(), pos2.y()),
-                              qMax(pos.x(), pos2.x()), qMax(pos.y(), pos2.y()));
+        QRect repaint = QRect(std::min(pos.x(), pos2.x()), std::min(pos.y(), pos2.y()),
+                              std::max(pos.x(), pos2.x()), std::max(pos.y(), pos2.y()));
         repaint.adjust(-width, -width, width, width);
         effects->addRepaint(repaint);
     } else if (!drawing.isEmpty()) {

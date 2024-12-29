@@ -111,7 +111,7 @@ QSize TabBar::tabSize(int index) const
     QSize hint;
     const QFontMetrics metrics(KGlobalSettings::smallestReadableFont());
     const QSize textSize = metrics.size(Qt::TextHideMnemonic, tabText(index));
-    hint.rwidth() = qMax(iconSize().width(), textSize.width());
+    hint.rwidth() = std::max(iconSize().width(), textSize.width());
     hint.rheight() = iconSize().height() + textSize.height();
     hint.rwidth() += 4 * TAB_CONTENTS_MARGIN;
     hint.rheight() += 2 * TAB_CONTENTS_MARGIN;
@@ -166,7 +166,7 @@ QSize TabBar::tabSizeHint(int index) const
                 hint.rheight() += (height() - minheight) / count();
             }
         }
-        hint.rwidth() = qMax(hint.width(), width());
+        hint.rwidth() = std::max(hint.width(), width());
         break;
     }
     return hint;

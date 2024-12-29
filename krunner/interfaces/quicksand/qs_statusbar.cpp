@@ -61,7 +61,7 @@ void QsStatusBar::paintEvent(QPaintEvent *)
     opt.orientation = Qt::Horizontal;
 
     QFont font = painter.font();
-    font.setPointSize(qMax(font.pointSize() - 2,
+    font.setPointSize(std::max(font.pointSize() - 2,
                               KGlobalSettings::smallestReadableFont().pointSize()));
     painter.setFont(font);
 

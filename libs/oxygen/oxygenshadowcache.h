@@ -187,7 +187,7 @@ namespace Oxygen
 
             //! value
             virtual qreal operator() ( qreal x ) const
-            { return qMax( 0.0, amplitude_*(1.0 - square(x/width_) ) ); }
+            { return std::max( 0.0, amplitude_*(1.0 - square(x/width_) ) ); }
 
             private:
 
@@ -213,7 +213,7 @@ namespace Oxygen
 
             //! value
             virtual qreal operator() ( qreal x ) const
-            { return qMax( 0.0, amplitude_*(std::exp( -square(x/width_) -0.05 ) ) ); }
+            { return std::max( 0.0, amplitude_*(std::exp( -square(x/width_) -0.05 ) ) ); }
 
             private:
 

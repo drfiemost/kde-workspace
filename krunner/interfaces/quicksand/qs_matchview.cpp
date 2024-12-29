@@ -558,7 +558,7 @@ void QsMatchView::scrollToItem(int index)
 
     int times = index - oldIndex;
     bool isRight = times > 0;
-    times = qAbs(times);
+    times = std::abs(times);
 
     while (times) {
         if (isRight) {

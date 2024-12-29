@@ -61,7 +61,7 @@ void BackgroundDelegate::paint(QPainter *painter,
 
         // calculate point
         const int bx = (option.rect.width() - blur.width()) / 2;
-        const int by = MARGIN + qMax(0, m_maxHeight - blur.height());
+        const int by = MARGIN + std::max(0, m_maxHeight - blur.height());
         QRect shadowRect = QRect(option.rect.topLeft(), blur.size()).translated(bx, by);
         // draw the blur
         painter->drawImage(shadowRect.topLeft(), blur);
@@ -100,7 +100,7 @@ void BackgroundDelegate::paint(QPainter *painter,
     document.setTextWidth(m_maxWidth);
 
     //Center text on the row
-    int y = option.rect.top() + m_maxHeight + MARGIN * 2; //qMax(0 ,(int)((option.rect.height() - document.size().height()) / 2));
+    int y = option.rect.top() + m_maxHeight + MARGIN * 2; //std::max(0 ,(int)((option.rect.height() - document.size().height()) / 2));
 
     //Draw text
     painter->save();

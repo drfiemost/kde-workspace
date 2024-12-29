@@ -1740,7 +1740,7 @@ void GLVertexBufferPrivate::reallocateBuffer(size_t size)
 {
     // Round the size up to 4 Kb for streaming/dynamic buffers.
     const size_t minSize = 32768; // Minimum size for streaming buffers
-    const size_t alloc = usage != GL_STATIC_DRAW ? align(qMax(size, minSize), 4096) : size;
+    const size_t alloc = usage != GL_STATIC_DRAW ? align(std::max(size, minSize), 4096) : size;
 
     glBufferData(GL_ARRAY_BUFFER, alloc, 0, usage);
 

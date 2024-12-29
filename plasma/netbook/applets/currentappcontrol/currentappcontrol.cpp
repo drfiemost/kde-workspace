@@ -134,7 +134,7 @@ void CurrentAppControl::constraintsEvent(Plasma::Constraints constraints)
             m_currentTask->setMinimumSize(0, 0);
         } else {
             m_currentTask->setOrientation(Qt::Horizontal);
-            const int width = qMin((qreal)(KIconLoader::SizeSmallMedium*2 + fm.width('M')*30), containment()->size().width()/4);
+            const int width = std::min((qreal)(KIconLoader::SizeSmallMedium*2 + fm.width('M')*30), containment()->size().width()/4);
             m_currentTask->setMaximumSize(width, QWIDGETSIZE_MAX);
             m_currentTask->setMinimumSize(width, 0);
         }
@@ -193,7 +193,7 @@ void CurrentAppControl::syncActiveWindow()
     if (applicationActive && m_pendingActiveWindow > 0) {
         m_activeWindow = 0;
         m_currentTask->setIcon("preferences-system-windows");
-        const int activeWindows = qMax(0, windowsCount()-1);
+        const int activeWindows = std::max(0, windowsCount()-1);
         if (activeWindows) {
             m_currentTask->setText(i18np("%1 running app", "%1 running apps", activeWindows));
         } else {

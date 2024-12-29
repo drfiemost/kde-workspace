@@ -130,7 +130,7 @@ static float lanczos(float x, float a)
     if (qFuzzyCompare(x + 1.0, 1.0))
         return 1.0;
 
-    if (qAbs(x) >= a)
+    if (std::abs(x) >= a)
         return 0.0;
 
     return sinc(x) * sinc(x / a);

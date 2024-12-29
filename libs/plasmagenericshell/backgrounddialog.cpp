@@ -157,8 +157,8 @@ int AppletDelegate::calcItemHeight(const QStyleOptionViewItem& option) const
 {
     // Painting main column
     int textHeight = QFontInfo(option.font).pixelSize() * 2;
-    //kDebug() << textHeight << qMax(textHeight, MAIN_ICON_SIZE) + 2 * UNIVERSAL_PADDING;
-    return qMax(textHeight, MAIN_ICON_SIZE) + 2 * UNIVERSAL_PADDING;
+    //kDebug() << textHeight << std::max(textHeight, MAIN_ICON_SIZE) + 2 * UNIVERSAL_PADDING;
+    return std::max(textHeight, MAIN_ICON_SIZE) + 2 * UNIVERSAL_PADDING;
 }
 
 QSize AppletDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const

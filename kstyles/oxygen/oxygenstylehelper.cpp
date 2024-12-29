@@ -170,7 +170,7 @@ namespace Oxygen
         // to handle both window contents and window decoration
         QRect r = w->rect();
         const int height( w->frameGeometry().height() );
-        const int splitY( qMin( 200, ( 3*height )/4 ) );
+        const int splitY( std::min( 200, ( 3*height )/4 ) );
 
         const QRect upperRect( QRect( 0, 0, r.width(), splitY ) );
         const QPixmap tile( verticalGradient( color, splitY ) );
@@ -417,7 +417,7 @@ namespace Oxygen
             p.end();
 
             // generate tileSet and save in cache
-            const int radius = qMin( 3, pixmap.width()/2 );
+            const int radius = std::min( 3, pixmap.width()/2 );
             tileSet = new TileSet( pixmap, radius, radius, pixmap.width()-2*radius, pixmap.height()-2*radius, true );
             _progressBarCache.insert( key, tileSet );
         }

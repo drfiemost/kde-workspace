@@ -366,7 +366,7 @@ void FdoSelectionManagerPrivate::handleMessageData(const XClientMessageEvent &ev
     }
 
     MessageRequest &request = messageRequests[winId];
-    const int messageSize = qMin(request.bytesRemaining, 20l);
+    const int messageSize = std::min(request.bytesRemaining, 20l);
     request.bytesRemaining -= messageSize;
     request.message += QByteArray(messageData, messageSize);
 

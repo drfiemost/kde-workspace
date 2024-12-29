@@ -187,8 +187,8 @@ int KBackgroundRenderer::doBackground(bool quit)
         int w = m_Background.width();
         int h = m_Background.height();
         if ((w > m_Size.width()) || (h > m_Size.height())) {
-            w = qMin(w, m_Size.width());
-            h = qMin(h, m_Size.height());
+            w = std::min(w, m_Size.width());
+            h = std::min(h, m_Size.height());
             m_Background = m_Background.copy(0, 0, w, h);
         }
         Blitz::flatten(m_Background, colorA(), colorB());
@@ -594,7 +594,7 @@ void KBackgroundRenderer::fullWallpaperBlend()
         for (int y = m_WallpaperRect.top(); y < m_WallpaperRect.bottom(); y += wh) {
             for (int x = m_WallpaperRect.left(); x < m_WallpaperRect.right(); x += ww) {
                 blend(m_Image, QRect(x, y, ww, wh), m_Wallpaper,
-                      QPoint(-qMin(x, 0), -qMin(y, 0)), blendFactor);
+                      QPoint(-std::min(x, 0), -std::min(y, 0)), blendFactor);
             }
         }
     }

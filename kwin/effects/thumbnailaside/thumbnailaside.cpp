@@ -151,12 +151,12 @@ void ThumbnailAsideEffect::arrange()
     int mwidth = 0;
     foreach (const Data & d, windows) {
         height += d.window->height();
-        mwidth = qMax(mwidth, d.window->width());
+        mwidth = std::max(mwidth, d.window->width());
         pos[ d.index ] = d.window->height();
     }
     QRect area = effects->clientArea(MaximizeArea, screen, effects->currentDesktop());
     double scale = area.height() / double(height);
-    scale = qMin(scale, maxwidth / double(mwidth));    // don't be wider than maxwidth pixels
+    scale = std::min(scale, maxwidth / double(mwidth));    // don't be wider than maxwidth pixels
     int add = 0;
     for (int i = 0;
             i < windows.size();

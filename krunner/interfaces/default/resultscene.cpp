@@ -219,7 +219,7 @@ void ResultScene::setQueryMatches(const QList<Plasma::QueryMatch> &m)
         emit ensureVisibility(first);
     }
 
-    emit matchCountChanged(qMin(m.count(), maxItemsAllowed));
+    emit matchCountChanged(std::min(m.count(), maxItemsAllowed));
     if (viewableHeight != m_viewableHeight) {
         emit viewableHeightChanged();
     }

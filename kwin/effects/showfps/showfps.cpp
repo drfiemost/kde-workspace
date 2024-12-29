@@ -323,7 +323,7 @@ void ShowFpsEffect::paintDrawSizeGraph(int x, int y)
 {
     int max_drawsize = 0;
     for (int i = 0; i < NUM_PAINTS; i++)
-        max_drawsize = qMax(max_drawsize, paint_size[ i ]);
+        max_drawsize = std::max(max_drawsize, paint_size[ i ]);
 
     // Log of min/max values shown on graph
     const float max_pixels_log = 7.2f;
@@ -344,7 +344,7 @@ void ShowFpsEffect::paintDrawSizeGraph(int x, int y)
         int h = 0;
         if (value > 0) {
             h = (int)((log10((double)value) - min_pixels_log) * drawscale);
-            h = qMin(qMax(0, h) + minh, MAX_TIME);
+            h = std::min(std::max(0, h) + minh, MAX_TIME);
         }
         drawvalues.append(h);
     }

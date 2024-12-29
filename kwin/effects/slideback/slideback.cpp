@@ -128,16 +128,16 @@ QRect SlideBackEffect::getSlideDestination(const QRect &windowUnderGeometry, con
     int downSlide = windowUnderGeometry.bottom() - windowOverGeometry.top() + 20;
 
     int horizSlide = leftSlide;
-    if (qAbs(horizSlide) > qAbs(rightSlide)) {
+    if (std::abs(horizSlide) > std::abs(rightSlide)) {
         horizSlide = rightSlide;
     }
     int vertSlide = upSlide;
-    if (qAbs(vertSlide) > qAbs(downSlide)) {
+    if (std::abs(vertSlide) > std::abs(downSlide)) {
         vertSlide = downSlide;
     }
 
     QRect slideRect = windowOverGeometry;
-    if (qAbs(horizSlide) < qAbs(vertSlide)) {
+    if (std::abs(horizSlide) < std::abs(vertSlide)) {
         slideRect.moveLeft(slideRect.x() + horizSlide);
     } else {
         slideRect.moveTop(slideRect.y() + vertSlide);
@@ -287,7 +287,7 @@ void SlideBackEffect::slotTabBoxAdded()
 
 void SlideBackEffect::slotTabBoxClosed()
 {
-    m_tabboxActive = qMax(m_tabboxActive-1, 0);
+    m_tabboxActive = std::max(m_tabboxActive-1, 0);
 }
 
 bool SlideBackEffect::isWindowUsable(EffectWindow* w)

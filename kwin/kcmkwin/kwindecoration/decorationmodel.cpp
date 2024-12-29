@@ -334,7 +334,7 @@ void DecorationModel::regenerateNextPreview()
     ++m_nextPreviewIndex;
     if (m_nextPreviewIndex >= m_lastUpdateIndex && m_firstUpdateIndex > 0) {
         // do the above ones
-        m_lastUpdateIndex = qMin(m_firstUpdateIndex, m_decorations.count());
+        m_lastUpdateIndex = std::min(m_firstUpdateIndex, m_decorations.count());
         m_firstUpdateIndex = m_nextPreviewIndex = 0;
     }
     if (m_nextPreviewIndex < m_lastUpdateIndex)

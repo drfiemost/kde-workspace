@@ -335,7 +335,7 @@ namespace Oxygen
         _viewDrawTreeBranchLines->setChecked(StyleConfigData::viewDrawTreeBranchLines() );
 
         _scrollBarWidth->setValue(
-            qMin(SCROLLBAR_MAXIMUM_WIDTH, qMax(SCROLLBAR_MINIMUM_WIDTH,
+            std::min(SCROLLBAR_MAXIMUM_WIDTH, std::max(SCROLLBAR_MINIMUM_WIDTH,
             StyleConfigData::scrollBarWidth())) );
 
         _scrollBarAddLineButtons->setCurrentIndex( StyleConfigData::scrollBarAddLineButtons() );

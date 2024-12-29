@@ -261,7 +261,7 @@ KGVerify::scheduleAutoLogin(bool initial)
             timedLeft = _autoLoginDelay;
             deadTicks = 0;
         } else {
-            timedLeft = qMax(_autoLoginDelay - TIMED_GREET_TO, MIN_TIMED_TO);
+            timedLeft = std::max(_autoLoginDelay - TIMED_GREET_TO, MIN_TIMED_TO);
             deadTicks = DEAD_TIMED_TO;
         }
         updateStatus();

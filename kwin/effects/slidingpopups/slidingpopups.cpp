@@ -298,17 +298,17 @@ void SlidingPopupsEffect::slotPropertyNotify(EffectWindow* w, long a)
     if (animData.start == -1) {
         switch (animData.from) {
         case West:
-            animData.start = qMax(w->x() - screenRect.x(), 0);
+            animData.start = std::max(w->x() - screenRect.x(), 0);
             break;
         case North:
-            animData.start = qMax(w->y() - screenRect.y(), 0);
+            animData.start = std::max(w->y() - screenRect.y(), 0);
             break;
         case East:
-            animData.start = qMax(screenRect.x() + screenRect.width() - (w->x() + w->width()), 0);
+            animData.start = std::max(screenRect.x() + screenRect.width() - (w->x() + w->width()), 0);
             break;
         case South:
         default:
-            animData.start = qMax(screenRect.y() + screenRect.height() - (w->y() + w->height()), 0);
+            animData.start = std::max(screenRect.y() + screenRect.height() - (w->y() + w->height()), 0);
             break;
         }
     }
@@ -329,7 +329,7 @@ void SlidingPopupsEffect::slotPropertyNotify(EffectWindow* w, long a)
         difference = w->y() + w->height() - (screenRect.y() + screenRect.height());
         break;
     }
-    animData.start = qMax<int>(animData.start, difference);
+    animData.start = std::max<int>(animData.start, difference);
     mWindowsData[ w ] = animData;
 }
 

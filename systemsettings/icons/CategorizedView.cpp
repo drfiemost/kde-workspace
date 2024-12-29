@@ -37,8 +37,8 @@ void CategorizedView::setModel( QAbstractItemModel *model )
     for ( int i = 0; i < model->rowCount(); ++i ) {
         const QModelIndex index = model->index(i, modelColumn(), rootIndex());
         const QSize size = sizeHintForIndex( index );
-        maxWidth = qMax( maxWidth, size.width() );
-        maxHeight = qMax( maxHeight, size.height() );
+        maxWidth = std::max( maxWidth, size.width() );
+        maxHeight = std::max( maxHeight, size.height() );
     }
     setGridSize( QSize( maxWidth, maxHeight ) );
     static_cast<KFileItemDelegate*>( itemDelegate() )->setMaximumSize( QSize( maxWidth, maxHeight ) );

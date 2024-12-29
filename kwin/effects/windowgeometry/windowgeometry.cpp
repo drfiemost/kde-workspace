@@ -170,7 +170,7 @@ void WindowGeometry::slotWindowStepUserMovedResized(EffectWindow *w, const QRect
         else
             myMeasure[0]->setText( i18nc(myCoordString_0, r.x(), r.y() ) );
         QPoint pos = expandedGeometry.topLeft();
-        pos = QPoint(qMax(pos.x(), screen.x()), qMax(pos.y(), screen.y()));
+        pos = QPoint(std::max(pos.x(), screen.x()), std::max(pos.y(), screen.y()));
         myMeasure[0]->setPosition(pos + QPoint(6,6)); // "6" is magic number because the unstyled effectframe has 5px padding
 
         // center ----------------------
@@ -194,10 +194,10 @@ void WindowGeometry::slotWindowStepUserMovedResized(EffectWindow *w, const QRect
             myMeasure[1]->setText( i18nc(myCoordString_0, number(dx), number(dy) ) );
         const int cdx = myMeasure[1]->geometry().width() / 2 + 3; // "3" = 6/2 is magic number because
         const int cdy = myMeasure[1]->geometry().height() / 2 + 3; // the unstyled effectframe has 5px padding
-        center = QPoint(qMax(center.x(), screen.x() + cdx),
-                        qMax(center.y(), screen.y() + cdy));
-        center = QPoint(qMin(center.x(), screen.right() - cdx),
-                        qMin(center.y(), screen.bottom() - cdy));
+        center = QPoint(std::max(center.x(), screen.x() + cdx),
+                        std::max(center.y(), screen.y() + cdy));
+        center = QPoint(std::min(center.x(), screen.right() - cdx),
+                        std::min(center.y(), screen.bottom() - cdy));
         myMeasure[1]->setPosition(center);
 
         // lower right ----------------------
@@ -206,7 +206,7 @@ void WindowGeometry::slotWindowStepUserMovedResized(EffectWindow *w, const QRect
         else
             myMeasure[2]->setText( i18nc(myCoordString_0, r.right(), r.bottom() ) );
         pos = expandedGeometry.bottomRight();
-        pos = QPoint(qMin(pos.x(), screen.right()), qMin(pos.y(), screen.bottom()));
+        pos = QPoint(std::min(pos.x(), screen.right()), std::min(pos.y(), screen.bottom()));
         myMeasure[2]->setPosition(pos - QPoint(6,6));  // "6" is magic number because the unstyled effectframe has 5px padding
 
         myExtraDirtyArea |= myMeasure[0]->geometry();

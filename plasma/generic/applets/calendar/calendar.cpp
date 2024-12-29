@@ -86,7 +86,7 @@ void CalendarApplet::constraintsEvent(Plasma::Constraints constraints)
 
 void CalendarApplet::paintIcon()
 {
-    const int iconSize = qMin(size().width(), size().height());
+    const int iconSize = std::min(size().width(), size().height());
 
     if (iconSize <= 0) {
         return;

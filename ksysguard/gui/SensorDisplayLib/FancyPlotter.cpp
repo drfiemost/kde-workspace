@@ -464,8 +464,8 @@ bool FancyPlotter::removeBeam( uint beamId )
         else {
             if(sensor->beamId > (int)beamId)
                 sensor->beamId--;  //sensor pointer is no longer valid after removing the sensor
-            mSensorReportedMax = qMax(mSensorReportedMax, sensor->maxValue);
-            mSensorReportedMin = qMin(mSensorReportedMin, sensor->minValue);
+            mSensorReportedMax = std::max(mSensorReportedMax, sensor->maxValue);
+            mSensorReportedMin = std::min(mSensorReportedMin, sensor->minValue);
         }
     }
     //change the plotter's range to the new maximum
@@ -703,8 +703,8 @@ void FancyPlotter::answerReceived( int id, const QList<QByteArray> &answerlist )
         else if(unit != mUnit)
             mUnit = ""; //if the units don't match, then set the units on the scale to empty, to avoid any confusion
 
-        mSensorReportedMax = qMax(mSensorReportedMax, info.max());
-        mSensorReportedMin = qMin(mSensorReportedMin, info.min());
+        mSensorReportedMax = std::max(mSensorReportedMax, info.max());
+        mSensorReportedMin = std::min(mSensorReportedMin, info.min());
 
         if ( !mUseManualRange )
             mPlotter->changeRange( mSensorReportedMin, mSensorReportedMax );

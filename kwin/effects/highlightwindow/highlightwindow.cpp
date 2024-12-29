@@ -59,9 +59,9 @@ void HighlightWindowEffect::prePaintWindow(EffectWindow* w, WindowPrePaintData& 
             opacity = m_windowOpacity.insertMulti(w, 0.0f);
         float oldOpacity = *opacity;
         if (m_highlightedWindows.contains(w))
-            *opacity = qMin(1.0f, oldOpacity + time / m_fadeDuration);
+            *opacity = std::min(1.0f, oldOpacity + time / m_fadeDuration);
         else if (w->isNormalWindow() || w->isDialog())   // Only fade out windows
-            *opacity = qMax(isInitiallyHidden(w) ? 0.0f : 0.15f, oldOpacity - time / m_fadeDuration);
+            *opacity = std::max(isInitiallyHidden(w) ? 0.0f : 0.15f, oldOpacity - time / m_fadeDuration);
 
         if (*opacity < 0.98f)
             data.setTranslucent();
@@ -73,9 +73,9 @@ void HighlightWindowEffect::prePaintWindow(EffectWindow* w, WindowPrePaintData& 
             opacity = m_windowOpacity.insert(w, 0.0f);
         float oldOpacity = *opacity;
         if (isInitiallyHidden(w))
-            *opacity = qMax(0.0f, oldOpacity - time / m_fadeDuration);
+            *opacity = std::max(0.0f, oldOpacity - time / m_fadeDuration);
         else
-            *opacity = qMin(1.0f, oldOpacity + time / m_fadeDuration);
+            *opacity = std::min(1.0f, oldOpacity + time / m_fadeDuration);
 
         if (*opacity < 0.98f)
             data.setTranslucent();

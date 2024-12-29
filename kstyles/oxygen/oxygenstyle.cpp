@@ -1600,7 +1600,7 @@ namespace Oxygen
             case QTabBar::TriangularNorth:
             {
                 if( documentMode ) overlap++;
-                r.setTop( r.top() + qMax( tabOpt->tabBarSize.height() - overlap, 0 ) );
+                r.setTop( r.top() + std::max( tabOpt->tabBarSize.height() - overlap, 0 ) );
                 break;
             }
 
@@ -1608,21 +1608,21 @@ namespace Oxygen
             case QTabBar::TriangularSouth:
             {
                 if( documentMode ) overlap--;
-                r.setBottom( r.bottom() - qMax( tabOpt->tabBarSize.height() - overlap, 0 ) );
+                r.setBottom( r.bottom() - std::max( tabOpt->tabBarSize.height() - overlap, 0 ) );
                 break;
             }
 
             case QTabBar::RoundedWest:
             case QTabBar::TriangularWest:
             {
-                r.setLeft( r.left() + qMax( tabOpt->tabBarSize.width() - overlap, 0 ) );
+                r.setLeft( r.left() + std::max( tabOpt->tabBarSize.width() - overlap, 0 ) );
                 break;
             }
 
             case QTabBar::RoundedEast:
             case QTabBar::TriangularEast:
             {
-                r.setRight( r.right() - qMax( tabOpt->tabBarSize.width() - overlap, 0 ) );
+                r.setRight( r.right() - std::max( tabOpt->tabBarSize.width() - overlap, 0 ) );
                 break;
             }
 
@@ -1771,7 +1771,7 @@ namespace Oxygen
                 const bool emptyText( gbOpt->text.isEmpty() );
 
                 r.adjust( fw, fw, -fw, -fw );
-                if( checkable && !emptyText ) r.adjust( 0, qMax( th, cr.height() ), 0, 0 );
+                if( checkable && !emptyText ) r.adjust( 0, std::max( th, cr.height() ), 0, 0 );
                 else if( checkable ) r.adjust( 0, cr.height(), 0, 0 );
                 else if( !emptyText ) r.adjust( 0, th, 0, 0 );
 
@@ -1995,8 +1995,8 @@ namespace Oxygen
 
                 //Calculate the portion of this space that the slider should take up.
                 int sliderSize = space * qreal( sliderOption->pageStep ) / ( sliderOption->maximum - sliderOption->minimum + sliderOption->pageStep );
-                sliderSize = qMax( sliderSize, ( int )ScrollBar_MinimumSliderHeight );
-                sliderSize = qMin( sliderSize, space );
+                sliderSize = std::max( sliderSize, ( int )ScrollBar_MinimumSliderHeight );
+                sliderSize = std::min( sliderSize, space );
 
                 space -= sliderSize;
                 if( space <= 0 ) return groove;
@@ -2104,7 +2104,7 @@ namespace Oxygen
 
         //Make sure we can fit the indicator
         QSize size( contentsSize );
-        size.setHeight( qMax( size.height(), indicator ) );
+        size.setHeight( std::max( size.height(), indicator ) );
 
         //Add space for the indicator and the icon
         const int spacer( CheckBox_BoxTextSpace );
@@ -2156,7 +2156,7 @@ namespace Oxygen
 
         int iconSpacing = Header_TextToIconSpace;
         int w = iconSize.width() + iconSpacing + textSize.width();
-        int h = qMax( iconSize.height(), textSize.height() );
+        int h = std::max( iconSize.height(), textSize.height() );
 
         return expandSize( QSize( w, h ), Header_ContentsMargin );
 
@@ -2178,7 +2178,7 @@ namespace Oxygen
             case QStyleOptionMenuItem::DefaultItem:
             case QStyleOptionMenuItem::SubMenu:
             {
-                int iconColW = qMax( menuItemOption->maxIconWidth, ( int ) MenuItem_IconWidth );
+                int iconColW = std::max( menuItemOption->maxIconWidth, ( int ) MenuItem_IconWidth );
                 int leftColW = iconColW;
                 if( menuItemOption->menuHasCheckableItems )
                 { leftColW += MenuItem_CheckWidth + MenuItem_CheckSpace; }
@@ -2201,7 +2201,7 @@ namespace Oxygen
 
                 }
 
-                int h = qMax( contentsSize.height(), ( int ) MenuItem_MinHeight );
+                int h = std::max( contentsSize.height(), ( int ) MenuItem_MinHeight );
                 insideSize = QSize( leftColW + textW + rightColW, h );
                 break;
             }
@@ -2315,8 +2315,8 @@ namespace Oxygen
 
         // expand size
         // note: the extra pixels added to the relevant dimension are fine-tuned.
-        if( verticalTabs ) size.setWidth( qMax( size.width(), cornerSize.width() + 6 ) );
-        else size.setHeight( qMax( size.height(), cornerSize.height() + 4 ) );
+        if( verticalTabs ) size.setWidth( std::max( size.width(), cornerSize.width() + 6 ) );
+        else size.setHeight( std::max( size.height(), cornerSize.height() + 4 ) );
 
         return size;
 
@@ -2652,7 +2652,7 @@ namespace Oxygen
 
                     // left side
                     QRect slabRect( baseSlabRect );
-                    slabRect.setRight( qMax( slabRect.right() - w - lw, slabRect.left() + rw ) + 7 );
+                    slabRect.setRight( std::max( slabRect.right() - w - lw, slabRect.left() + rw ) + 7 );
                     slabRect.setHeight( 7 );
                     slabs << SlabRect( slabRect, TileSet::TopLeft );
 
@@ -2681,7 +2681,7 @@ namespace Oxygen
 
                     // right side
                     QRect slabRect( baseSlabRect );
-                    slabRect.setLeft( qMin( slabRect.left() + w + lw + 1, slabRect.right() - rw ) -7 );
+                    slabRect.setLeft( std::min( slabRect.left() + w + lw + 1, slabRect.right() - rw ) -7 );
                     slabRect.setHeight( 7 );
                     slabs << SlabRect( slabRect, TileSet::TopRight );
 
@@ -2700,7 +2700,7 @@ namespace Oxygen
 
                     // left side
                     QRect slabRect( baseSlabRect );
-                    slabRect.setRight( qMax( slabRect.right() - w - lw, slabRect.left() + rw ) + 7 );
+                    slabRect.setRight( std::max( slabRect.right() - w - lw, slabRect.left() + rw ) + 7 );
                     slabRect.setTop( slabRect.bottom() - 7 );
                     slabs << SlabRect( slabRect, TileSet::BottomLeft );
 
@@ -2728,7 +2728,7 @@ namespace Oxygen
 
                     // right side
                     QRect slabRect( baseSlabRect );
-                    slabRect.setLeft( qMin( slabRect.left() + w + lw + 1, slabRect.right() - rw ) -7 );
+                    slabRect.setLeft( std::min( slabRect.left() + w + lw + 1, slabRect.right() - rw ) -7 );
                     slabRect.setTop( slabRect.bottom() - 7 );
                     slabs << SlabRect( slabRect, TileSet::BottomRight );
 
@@ -2755,7 +2755,7 @@ namespace Oxygen
 
                 // bottom side
                 QRect slabRect( baseSlabRect );
-                slabRect.setTop( qMin( slabRect.top() + h + lh, slabRect.bottom() - rh ) -7 + 1 );
+                slabRect.setTop( std::min( slabRect.top() + h + lh, slabRect.bottom() - rh ) -7 + 1 );
                 slabRect.setWidth( 7 );
                 slabs << SlabRect( slabRect, TileSet::BottomLeft );
 
@@ -2780,7 +2780,7 @@ namespace Oxygen
 
                 // bottom side
                 QRect slabRect( baseSlabRect );
-                slabRect.setTop( qMin( slabRect.top() + h + lh, slabRect.bottom() - rh ) -7 + 1 );
+                slabRect.setTop( std::min( slabRect.top() + h + lh, slabRect.bottom() - rh ) -7 + 1 );
                 slabRect.setLeft( slabRect.right()-7 );
                 slabs << SlabRect( slabRect, TileSet::BottomRight );
                 break;
@@ -2849,7 +2849,7 @@ namespace Oxygen
         const QPolygonF a = genericArrow( orientation, ArrowNormal );
 
         const qreal penThickness = 1.6;
-        const qreal offset( qMin( penThickness, qreal( 1.0 ) ) );
+        const qreal offset( std::min( penThickness, qreal( 1.0 ) ) );
 
         QColor color;
         const QToolButton* toolButton( qobject_cast<const QToolButton*>( widget ) );
@@ -2922,7 +2922,7 @@ namespace Oxygen
         const QColor background = palette.color( QPalette::Window );
         const QColor highlight( helper().viewHoverBrush().brush( palette ).color() );
         const qreal penThickness = 1.6;
-        const qreal offset( qMin( penThickness, qreal( 1.0 ) ) );
+        const qreal offset( std::min( penThickness, qreal( 1.0 ) ) );
 
         if( animated )
         {
@@ -3620,7 +3620,7 @@ namespace Oxygen
         if ( flags & State_Children )
         {
 
-            int sizeLimit = qMin( qMin( r.width(), r.height() ), ( int ) Tree_MaxExpanderSize );
+            int sizeLimit = std::min( std::min( r.width(), r.height() ), ( int ) Tree_MaxExpanderSize );
             const bool expanderOpen( flags & State_Open );
 
             // make sure size limit is odd
@@ -3887,7 +3887,7 @@ namespace Oxygen
         painter->setRenderHint( QPainter::Antialiasing );
 
         // white reflection
-        const qreal offset( qMin( penThickness, qreal( 1.0 ) ) );
+        const qreal offset( std::min( penThickness, qreal( 1.0 ) ) );
         painter->translate( 0,offset );
         painter->setPen( QPen( helper().calcLightColor( background ), penThickness, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ) );
         painter->drawPolyline( a );
@@ -4508,7 +4508,7 @@ namespace Oxygen
         if( !menuItemOption || menuItemOption->menuItemType == QStyleOptionMenuItem::EmptyArea ) return true;
 
         //First, figure out the left column width.
-        const int iconColW = qMax( menuItemOption->maxIconWidth, ( int )MenuItem_IconWidth );
+        const int iconColW = std::max( menuItemOption->maxIconWidth, ( int )MenuItem_IconWidth );
         const int checkColW = MenuItem_CheckWidth;
         const int checkSpace = MenuItem_CheckSpace;
 
@@ -4713,7 +4713,7 @@ namespace Oxygen
             painter->setRenderHint( QPainter::Antialiasing );
 
             // white reflection
-            const qreal offset( qMin( penThickness, qreal( 1.0 ) ) );
+            const qreal offset( std::min( penThickness, qreal( 1.0 ) ) );
             painter->translate( 0,offset );
             painter->setPen( QPen( helper().calcLightColor( background ), penThickness, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ) );
             painter->drawPolyline( a );
@@ -4783,12 +4783,12 @@ namespace Oxygen
 
         if( !( progress || busyIndicator ) ) return true;
 
-        const int steps = qMax( pbOpt->maximum  - pbOpt->minimum, 1 );
+        const int steps = std::max( pbOpt->maximum  - pbOpt->minimum, 1 );
         const bool horizontal = pbOpt->orientation == Qt::Horizontal;
 
         //Calculate width fraction
         qreal widthFrac( busyIndicator ?  ProgressBar_BusyIndicatorSize/100.0 : progress/steps );
-        widthFrac = qMin( (qreal)1.0, widthFrac );
+        widthFrac = std::min( (qreal)1.0, widthFrac );
 
         // And now the pixel width
         const int indicatorSize( widthFrac*( horizontal ? r.width():r.height() ) );
@@ -4802,7 +4802,7 @@ namespace Oxygen
 
             // The space around which we move around...
             int remSize = ( ( 1.0 - widthFrac )*( horizontal ? r.width():r.height() ) );
-            remSize = qMax( remSize, 1 );
+            remSize = std::max( remSize, 1 );
 
             int pstep =  int( progress )%( 2*remSize );
             if ( pstep > remSize )
@@ -4891,13 +4891,13 @@ namespace Oxygen
         QRect progressRect;
         const QRect textRect( horizontal? r : QRect( 0, 0, r.height(), r.width() ) );
         const qreal progress = pbOpt->progress - pbOpt->minimum;
-        const int steps = qMax( pbOpt->maximum  - pbOpt->minimum, 1 );
+        const int steps = std::max( pbOpt->maximum  - pbOpt->minimum, 1 );
         const bool busyIndicator = ( steps <= 1 );
 
         int indicatorSize( 0 );
         if( !busyIndicator )
         {
-            const qreal widthFrac = qMin( (qreal)1.0, progress / steps );
+            const qreal widthFrac = std::min( (qreal)1.0, progress / steps );
             indicatorSize = widthFrac*( horizontal ? r.width() : r.height() ) - (horizontal ? 2:1);
         }
 
@@ -4965,7 +4965,7 @@ namespace Oxygen
             painter->translate( arrowRect.center() );
             painter->setRenderHint( QPainter::Antialiasing );
 
-            const qreal offset( qMin( penThickness, qreal( 1.0 ) ) );
+            const qreal offset( std::min( penThickness, qreal( 1.0 ) ) );
             painter->translate( 0,offset );
             painter->setPen( QPen( helper().calcLightColor(  background ), penThickness, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ) );
             painter->drawPolyline( a );
@@ -7489,7 +7489,7 @@ namespace Oxygen
             if( drawContrast )
             {
 
-                const qreal offset( qMin( penThickness, qreal( 1.0 ) ) );
+                const qreal offset( std::min( penThickness, qreal( 1.0 ) ) );
                 painter->translate( 0,offset );
                 painter->setPen( QPen( helper().calcLightColor( palette.color( QPalette::Window ) ), penThickness, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ) );
                 painter->drawPolyline( a );
@@ -7998,7 +7998,7 @@ namespace Oxygen
         // scrollbar button dimentions.
         /* it has to be reinitialized here because scrollbar width might have changed */
         _noButtonHeight = 0;
-        _singleButtonHeight = qMax( StyleConfigData::scrollBarWidth() * 7 / 10, 14 );
+        _singleButtonHeight = std::max( StyleConfigData::scrollBarWidth() * 7 / 10, 14 );
         _doubleButtonHeight = 2*_singleButtonHeight;
 
         // scrollbar buttons
@@ -8363,7 +8363,7 @@ namespace Oxygen
         if( !sliderOption ) return;
 
         // adjust rect to be square, and centered
-        const int dimension( qMin( r.width(), r.height() ) );
+        const int dimension( std::min( r.width(), r.height() ) );
         const QRect rect( centerRect( r, dimension, dimension ) );
 
         // calculate glow color
@@ -8758,7 +8758,7 @@ namespace Oxygen
                 painter->fillRect( r, lg );
             }
 
-            const int ngroups( qMax( 1,h / 250 ) );
+            const int ngroups( std::max( 1,h / 250 ) );
             int center( ( h - ( ngroups-1 ) * 250 ) /2 + r.top() );
             for( int k = 0; k < ngroups; k++, center += 250 )
             {
@@ -8784,7 +8784,7 @@ namespace Oxygen
 
             }
 
-            const int ngroups( qMax( 1, w / 250 ) );
+            const int ngroups( std::max( 1, w / 250 ) );
             int center = ( w - ( ngroups-1 ) * 250 ) /2 + r.left();
             for( int k = 0; k < ngroups; k++, center += 250 )
             {
@@ -9139,7 +9139,7 @@ namespace Oxygen
         AnimationMode mode ) const
     {
 
-        const int s( qMin( rect.width(), rect.height() ) );
+        const int s( std::min( rect.width(), rect.height() ) );
         const QRect r( centerRect( rect, s, s ) );
 
         if( !( options & NoFill ) )
@@ -9191,7 +9191,7 @@ namespace Oxygen
             if( !( options&Sunken ) ) painter->translate( 0, -1 );
             painter->setRenderHint( QPainter::Antialiasing );
 
-            const qreal offset( qMin( penThickness, qreal( 1.0 ) ) );
+            const qreal offset( std::min( penThickness, qreal( 1.0 ) ) );
             if( StyleConfigData::checkBoxStyle() == StyleConfigData::CS_CHECK )
             {
 
@@ -9389,7 +9389,7 @@ namespace Oxygen
         painter->translate( r.center() );
         painter->setRenderHint( QPainter::Antialiasing );
 
-        const qreal offset( qMin( penThickness, qreal( 1.0 ) ) );
+        const qreal offset( std::min( penThickness, qreal( 1.0 ) ) );
         painter->translate( 0,offset );
         painter->setPen( QPen( contrast, penThickness, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ) );
         painter->drawPolyline( a );

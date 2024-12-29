@@ -428,8 +428,8 @@ QRect Clock::tzRect(const QString &text)
 
     int width = left + right + fontMetrics.width(text) + fontMetrics.averageCharWidth() * 2;
     int height = top + bottom + fontMetrics.height();
-    width = qMin(width, rect.width());
-    height = qMin(height, rect.height());
+    width = std::min(width, rect.width());
+    height = std::min(height, rect.height());
 
     return QRect((rect.width() - width) / 2, rect.bottom() - height, width, height);
 }
@@ -449,11 +449,11 @@ void Clock::invalidateCache()
     m_repaintCache = RepaintAll;
 
     QSize pixmapSize = contentsRect().size().toSize();
-    const int squareEdge = qMin(pixmapSize.width(), pixmapSize.height());
+    const int squareEdge = std::min(pixmapSize.width(), pixmapSize.height());
 
     if (m_showingTimezone) {
         QRect tzArea = tzRect(prettyTimezone());
-        pixmapSize.setHeight(qMax(10, squareEdge - tzArea.height()));
+        pixmapSize.setHeight(std::max(10, squareEdge - tzArea.height()));
         tzFrame()->resizeFrame(tzArea.size());
     }
 

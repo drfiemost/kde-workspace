@@ -322,10 +322,10 @@ void WobblyWindowsEffect::paintWindow(EffectWindow* w, int mask, QRegion region,
                 Pair newPos = computeBezierPoint(wwi, oldPos);
                 v.move(newPos.x - tx, newPos.y - ty);
             }
-            left   = qMin(left,   data.quads[i].left());
-            top    = qMin(top,    data.quads[i].top());
-            right  = qMax(right,  data.quads[i].right());
-            bottom = qMax(bottom, data.quads[i].bottom());
+            left   = std::min(left,   data.quads[i].left());
+            top    = std::min(top,    data.quads[i].top());
+            right  = std::max(right,  data.quads[i].right());
+            bottom = std::max(bottom, data.quads[i].bottom());
         }
         m_updateRegion = m_updateRegion.united(QRect(w->x() + left, w->y() + top,
                                                right - left + 2, bottom - top + 2));

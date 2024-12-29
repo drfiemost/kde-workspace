@@ -609,8 +609,8 @@ void KCommonDecoration::resize(const QSize& s)
 
 QSize KCommonDecoration::minimumSize() const
 {
-    const int minWidth = qMax(layoutMetric(LM_TitleEdgeLeft), layoutMetric(LM_BorderLeft))
-                         + qMax(layoutMetric(LM_TitleEdgeRight), layoutMetric(LM_BorderRight))
+    const int minWidth = std::max(layoutMetric(LM_TitleEdgeLeft), layoutMetric(LM_BorderLeft))
+                         + std::max(layoutMetric(LM_TitleEdgeRight), layoutMetric(LM_BorderRight))
                          + layoutMetric(LM_TitleBorderLeft) + layoutMetric(LM_TitleBorderRight);
     return QSize(minWidth,
                  layoutMetric(LM_TitleEdgeTop) + layoutMetric(LM_TitleHeight)

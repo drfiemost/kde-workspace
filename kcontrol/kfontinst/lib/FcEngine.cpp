@@ -572,9 +572,9 @@ static void setTransparentBackground(QImage &img, const QColor &col)
         for(int y=0; y<img.height(); ++y)
         {
             int v(qRed(img.pixel(x, y)));
-            img.setPixel(x, y, qRgba(qMin(col.red()+v, 255),
-                                     qMin(col.green()+v, 255),
-                                     qMin(col.blue()+v, 255),
+            img.setPixel(x, y, qRgba(std::min(col.red()+v, 255),
+                                     std::min(col.green()+v, 255),
+                                     std::min(col.blue()+v, 255),
                                      255-v));
         }
 }

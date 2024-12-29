@@ -199,9 +199,9 @@ void PowerDevilHALBackend::brightnessKeyPressed(PowerDevil::BackendInterface::Br
     if (qFuzzyCompare(currentBrightness, cachedBrightness) && (!m_screenBrightnessInHardware || controlType == Screen)) {
         float newBrightness;
         if (type == Increase) {
-            newBrightness = qMin(100.0f, currentBrightness + 10);
+            newBrightness = std::min(100.0f, currentBrightness + 10);
         } else if (type == Decrease) {
-            newBrightness = qMax(0.0f, currentBrightness - 10);
+            newBrightness = std::max(0.0f, currentBrightness - 10);
         } else { // Toggle
             newBrightness = currentBrightness > 0 ? 0 : 100;
         }

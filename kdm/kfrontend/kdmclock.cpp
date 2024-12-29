@@ -90,7 +90,7 @@ void KdmClock::paintEvent(QPaintEvent *)
                         time.second());
         else
             buf.sprintf("%02d:%02d", time.hour(), time.minute());
-        mFont.setPointSize(qMin((int)(width() / buf.length() * 1.5), height()));
+        mFont.setPointSize(std::min((int)(width() / buf.length() * 1.5), height()));
         p.setFont(mFont);
         p.drawText(contentsRect(), Qt::AlignCenter, buf);
     } else
@@ -99,7 +99,7 @@ void KdmClock::paintEvent(QPaintEvent *)
         QTransform matrix;
         QPoint cp = contentsRect().center();
         matrix.translate(cp.x(), cp.y());
-        int d = qMin(contentsRect().width() - 15, contentsRect().height() - 15);
+        int d = std::min(contentsRect().width() - 15, contentsRect().height() - 15);
         matrix.scale(d / 1000.0F, d / 1000.0F);
 
         QPolygon pts;

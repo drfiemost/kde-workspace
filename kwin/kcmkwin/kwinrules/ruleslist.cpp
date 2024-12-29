@@ -171,7 +171,7 @@ void KCMRulesList::importClicked()
     if (groups.isEmpty())
         return;
 
-    int pos = qMax(0, rules_listbox->currentRow());
+    int pos = std::max(0, rules_listbox->currentRow());
     foreach (const QString &group, groups) {
         KConfigGroup grp(&config, group);
         const bool remove = grp.readEntry("DeleteRule", false);
@@ -185,7 +185,7 @@ void KCMRulesList::importClicked()
                     rules.remove(i);
                     delete rules_listbox->takeItem(i);
                     delete new_rule;
-                    pos = qMax(0, rules_listbox->currentRow()); // might have changed!
+                    pos = std::max(0, rules_listbox->currentRow()); // might have changed!
                 }
                 else
                     rules[i] = new_rule;

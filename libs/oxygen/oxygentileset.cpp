@@ -150,8 +150,8 @@ namespace Oxygen
         if( _w1+_w3 > 0 )
         {
             qreal wRatio( qreal( _w1 )/qreal( _w1 + _w3 ) );
-            wLeft = (t&Right) ? qMin( _w1, int(w*wRatio) ):_w1;
-            wRight = (t&Left) ? qMin( _w3, int(w*(1.0-wRatio)) ):_w3;
+            wLeft = (t&Right) ? std::min( _w1, int(w*wRatio) ):_w1;
+            wRight = (t&Left) ? std::min( _w3, int(w*(1.0-wRatio)) ):_w3;
         }
 
         // calculate pixmap heights
@@ -160,8 +160,8 @@ namespace Oxygen
         if( _h1+_h3 > 0 )
         {
             qreal hRatio( qreal( _h1 )/qreal( _h1 + _h3 ) );
-            hTop = (t&Bottom) ? qMin( _h1, int(h*hRatio) ):_h1;
-            hBottom = (t&Top) ? qMin( _h3, int(h*(1.0-hRatio)) ):_h3;
+            hTop = (t&Bottom) ? std::min( _h1, int(h*hRatio) ):_h1;
+            hBottom = (t&Top) ? std::min( _h3, int(h*(1.0-hRatio)) ):_h3;
         }
 
         // calculate corner locations

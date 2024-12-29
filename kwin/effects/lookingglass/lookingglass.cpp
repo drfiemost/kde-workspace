@@ -177,7 +177,7 @@ void LookingGlassEffect::toggle()
 
 void LookingGlassEffect::zoomIn()
 {
-    target_zoom = qMin(7.0, target_zoom + 0.5);
+    target_zoom = std::min(7.0, target_zoom + 0.5);
     m_enabled = true;
     if (!polling) {
         polling = true;
@@ -207,9 +207,9 @@ void LookingGlassEffect::prePaintScreen(ScreenPrePaintData& data, int time)
     if (zoom != target_zoom) {
         double diff = time / animationTime(500.0);
         if (target_zoom > zoom)
-            zoom = qMin(zoom * qMax(1.0 + diff, 1.2), target_zoom);
+            zoom = std::min(zoom * std::max(1.0 + diff, 1.2), target_zoom);
         else
-            zoom = qMax(zoom * qMin(1.0 - diff, 0.8), target_zoom);
+            zoom = std::max(zoom * std::min(1.0 - diff, 0.8), target_zoom);
         kDebug(1212) << "zoom is now " << zoom;
         radius = qBound((double)initialradius, initialradius * zoom, 3.5 * initialradius);
 

@@ -94,7 +94,7 @@ int IconGridLayout::cellSpacing() const
 
 void IconGridLayout::setCellSpacing(int cellSpacing)
 {
-    cellSpacing = qMax(0, cellSpacing);
+    cellSpacing = std::max(0, cellSpacing);
 
     if (cellSpacing == m_cellSpacing) {
         return;
@@ -205,12 +205,12 @@ void IconGridLayout::setGeometry(const QRectF &rect)
     updateGridParameters();
 
     qreal offsetLeft =
-        qMax<qreal>(
+        std::max<qreal>(
             contentsRect().left(),
             (contentsRect().width() - preferredWidth()) / 2);
 
     qreal offsetTop =
-        qMax<qreal>(
+        std::max<qreal>(
             contentsRect().top(),
             (contentsRect().height() - preferredHeight()) / 2);
 
@@ -278,25 +278,25 @@ void IconGridLayout::computeGridParameters(
         const int height = int(contentsRect().height());
         int minRowHeight = 0;
         Q_FOREACH(QGraphicsLayoutItem *item, m_items) {
-            minRowHeight = qMax(minRowHeight, (int)item->minimumHeight());
+            minRowHeight = std::max(minRowHeight, (int)item->minimumHeight());
         }
 
         if (m_maxSectionCount > 0 && m_maxSectionCountForced) {
-            rowCount = qMin(itemCount, m_maxSectionCount);
+            rowCount = std::min(itemCount, m_maxSectionCount);
         }
         else {
             rowCount = height / (minRowHeight + m_cellSpacing);
             rowCount = qBound(1, rowCount, itemCount);
 
             if (m_maxSectionCount > 0) {
-                rowCount = qMin(rowCount, m_maxSectionCount);
+                rowCount = std::min(rowCount, m_maxSectionCount);
             }
         }
         columnCount = ceil(double(itemCount) / rowCount);
 
         // Determine row heights.
         int maxRowHeight =
-            qMax(minRowHeight,
+            std::max(minRowHeight,
                  (height - (rowCount - 1) * m_cellSpacing) / rowCount);
 
         for (int row = 0; row < rowCount; row++) {
@@ -308,7 +308,7 @@ void IconGridLayout::computeGridParameters(
                     break;
                 }
                 desiredRowHeight =
-                    qMax(desiredRowHeight, int(m_items.at(itemIndex)->preferredHeight()));
+                    std::max(desiredRowHeight, int(m_items.at(itemIndex)->preferredHeight()));
             }
             rowHeights.append(desiredRowHeight < maxRowHeight ? desiredRowHeight : maxRowHeight);
         }
@@ -326,7 +326,7 @@ void IconGridLayout::computeGridParameters(
                 int preferredItemWidth =
                     int(m_items.at(itemIndex)->effectiveSizeHint(Qt::PreferredSize, QSizeF(-1, rowHeights.at(row))).width());
 
-                columnWidth = qMax(columnWidth, preferredItemWidth);
+                columnWidth = std::max(columnWidth, preferredItemWidth);
 
             }
             columnWidths.append(columnWidth);
@@ -335,25 +335,25 @@ void IconGridLayout::computeGridParameters(
         const int width = int(contentsRect().width());
         int minColumnWidth = 0;
         Q_FOREACH(QGraphicsLayoutItem *item, m_items) {
-            minColumnWidth = qMax(minColumnWidth, (int)item->minimumWidth());
+            minColumnWidth = std::max(minColumnWidth, (int)item->minimumWidth());
         }
 
         if (m_maxSectionCount > 0 && m_maxSectionCountForced) {
-            columnCount = qMin(itemCount, m_maxSectionCount);
+            columnCount = std::min(itemCount, m_maxSectionCount);
         }
         else {
             columnCount = width / (minColumnWidth + m_cellSpacing);
             columnCount = qBound(1, columnCount, itemCount);
 
             if (m_maxSectionCount > 0) {
-                columnCount = qMin(columnCount, m_maxSectionCount);
+                columnCount = std::min(columnCount, m_maxSectionCount);
             }
         }
         rowCount = ceil(double(itemCount) / columnCount);
 
         // Determine column widths.
         int maxColumnWidth =
-            qMax(minColumnWidth,
+            std::max(minColumnWidth,
                  (width - (columnCount - 1) * m_cellSpacing) / columnCount);
 
         for (int column = 0; column < columnCount; column++) {
@@ -366,7 +366,7 @@ void IconGridLayout::computeGridParameters(
                     break;
                 }
                 desiredColumnWidth =
-                    qMax(desiredColumnWidth, int(m_items.at(itemIndex)->preferredWidth()));
+                    std::max(desiredColumnWidth, int(m_items.at(itemIndex)->preferredWidth()));
             }
             columnWidths.append(desiredColumnWidth < maxColumnWidth ? desiredColumnWidth : maxColumnWidth);
         }
@@ -383,7 +383,7 @@ void IconGridLayout::computeGridParameters(
                 int preferredItemHeight =
                     int(m_items.at(itemIndex)->effectiveSizeHint(Qt::PreferredSize, QSizeF(columnWidths.at(column), -1)).height());
 
-                rowHeight = qMax(rowHeight, preferredItemHeight);
+                rowHeight = std::max(rowHeight, preferredItemHeight);
             }
             rowHeights.append(rowHeight);
         }

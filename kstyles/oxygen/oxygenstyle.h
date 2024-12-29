@@ -981,13 +981,13 @@ namespace Oxygen
         else if( vertical )
         {
 
-            slab._r.setTop( qMax( slab._r.top(), tabWidgetRect.top() ) );
-            slab._r.setBottom( qMin( slab._r.bottom(), tabWidgetRect.bottom() ) );
+            slab._r.setTop( std::max( slab._r.top(), tabWidgetRect.top() ) );
+            slab._r.setBottom( std::min( slab._r.bottom(), tabWidgetRect.bottom() ) );
 
         } else {
 
-            slab._r.setLeft( qMax( slab._r.left(), tabWidgetRect.left() ) );
-            slab._r.setRight( qMin( slab._r.right(), tabWidgetRect.right() ) );
+            slab._r.setLeft( std::max( slab._r.left(), tabWidgetRect.left() ) );
+            slab._r.setRight( std::min( slab._r.right(), tabWidgetRect.right() ) );
 
         }
 

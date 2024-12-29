@@ -188,7 +188,7 @@ public:
             newStrength = 1- qreal(localPoint.y())/m_triggerDistance;
             break;
         }
-        if (qAbs(newStrength - m_strength) > 0.01 && newStrength >= 0 && newStrength <= 1) {
+        if (std::abs(newStrength - m_strength) > 0.01 && newStrength >= 0 && newStrength <= 1) {
             m_strength = newStrength;
             update();
         }
@@ -375,8 +375,8 @@ PlasmaApp::PlasmaApp()
         int x = geom.indexOf('x');
 
         if (x > 0)  {
-            width = qMax(width, geom.left(x).toInt());
-            height = qMax(height, geom.right(geom.length() - x - 1).toInt());
+            width = std::max(width, geom.left(x).toInt());
+            height = std::max(height, geom.right(geom.length() - x - 1).toInt());
         }
     }
 
@@ -1235,7 +1235,7 @@ void PlasmaApp::createUnhideTrigger()
     }
 
     QPoint actualTriggerPoint;
-    QPoint triggerPoint = actualTriggerPoint = QPoint(qMax(0, m_controlBar->pos().x()), qMax(0, m_controlBar->pos().y()));
+    QPoint triggerPoint = actualTriggerPoint = QPoint(std::max(0, m_controlBar->pos().x()), std::max(0, m_controlBar->pos().y()));
 
     switch (m_controlBar->location()) {
         case Plasma::TopEdge:

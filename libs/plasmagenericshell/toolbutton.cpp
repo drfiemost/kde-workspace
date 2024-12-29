@@ -118,7 +118,7 @@ void ToolButton::paintEvent(QPaintEvent *event)
             QPainter bufferPainter(&buffer);
             bufferPainter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
             QColor alphaColor(Qt::black);
-            alphaColor.setAlphaF(qMin(qreal(0.95), m_alpha));
+            alphaColor.setAlphaF(std::min(qreal(0.95), m_alpha));
             bufferPainter.fillRect(buffer.rect(), alphaColor);
             bufferPainter.end();
 

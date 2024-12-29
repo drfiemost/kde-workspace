@@ -116,7 +116,7 @@ BGMultiWallpaperDialog::BGMultiWallpaperDialog(KBackgroundSettings *settings,
     dlg->m_spinInterval->setSuffix(ki18np(" minute", " minutes"));
 
     // Load
-    dlg->m_spinInterval->setValue(qMax(1, m_pSettings->wallpaperChangeInterval()));
+    dlg->m_spinInterval->setValue(std::max(1, m_pSettings->wallpaperChangeInterval()));
 
     dlg->m_listImages->addItems(m_pSettings->wallpaperList());
 

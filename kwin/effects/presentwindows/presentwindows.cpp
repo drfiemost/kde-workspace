@@ -181,9 +181,9 @@ void PresentWindowsEffect::prePaintScreen(ScreenPrePaintData &data, int time)
         data.mask |= Effect::PAINT_SCREEN_WITH_TRANSFORMED_WINDOWS;
 
     if (m_activated)
-        m_decalOpacity = qMin(1.0, m_decalOpacity + time / m_fadeDuration);
+        m_decalOpacity = std::min(1.0, m_decalOpacity + time / m_fadeDuration);
     else
-        m_decalOpacity = qMax(0.0, m_decalOpacity - time / m_fadeDuration);
+        m_decalOpacity = std::max(0.0, m_decalOpacity - time / m_fadeDuration);
 
     effects->prePaintScreen(data, time);
 }
@@ -268,12 +268,12 @@ void PresentWindowsEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &d
         // TODO: Minimized windows or windows not on the current desktop are only 75% visible?
         if (winData->visible) {
             if (winData->deleted)
-                winData->opacity = qMax(0.0, winData->opacity - time / m_fadeDuration);
+                winData->opacity = std::max(0.0, winData->opacity - time / m_fadeDuration);
             else
-                winData->opacity = qMin(/*(w->isMinimized() || !w->isOnCurrentDesktop()) ? 0.75 :*/ 1.0,
+                winData->opacity = std::min(/*(w->isMinimized() || !w->isOnCurrentDesktop()) ? 0.75 :*/ 1.0,
                                           winData->opacity + time / m_fadeDuration);
         } else
-            winData->opacity = qMax(0.0, winData->opacity - time / m_fadeDuration);
+            winData->opacity = std::max(0.0, winData->opacity - time / m_fadeDuration);
         if (winData->opacity <= 0.0) {
             // don't disable painting for panels if show panel is set
             if (!(m_showPanel && w->isDock()))
@@ -284,11 +284,11 @@ void PresentWindowsEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &d
         const bool isInMotion = m_motionManager.isManaging(w);
         // Calculate window's brightness
         if (w == m_highlightedWindow || w == m_closeWindow || !m_activated)
-            winData->highlight = qMin(1.0, winData->highlight + time / m_fadeDuration);
+            winData->highlight = std::min(1.0, winData->highlight + time / m_fadeDuration);
         else if (!isInMotion && w->isDesktop())
             winData->highlight = 0.3;
         else
-            winData->highlight = qMax(0.0, winData->highlight - time / m_fadeDuration);
+            winData->highlight = std::max(0.0, winData->highlight - time / m_fadeDuration);
 
         // Closed windows
         if (winData->deleted) {
@@ -346,9 +346,9 @@ void PresentWindowsEffect::paintWindow(EffectWindow *w, int mask, QRegion region
                 const float yr = area.height()/effSize.height();
                 float tScale = 0.0;
                 if (xr < yr) {
-                    tScale = qMax(xr/4.0, yr/32.0);
+                    tScale = std::max(xr/4.0, yr/32.0);
                 } else {
-                    tScale = qMax(xr/32.0, yr/4.0);
+                    tScale = std::max(xr/32.0, yr/4.0);
                 }
                 if (tScale < 1.05) {
                     tScale = 1.05;
@@ -366,8 +366,8 @@ void PresentWindowsEffect::paintWindow(EffectWindow *w, int mask, QRegion region
                     int tx = qRound(rect.width()*df);
                     int ty = qRound(rect.height()*df);
                     QRect tRect(rect.adjusted(-tx, -ty, tx, ty));
-                    tx = qMax(tRect.x(), area.x()) + qMin(0, area.right()-tRect.right());
-                    ty = qMax(tRect.y(), area.y()) + qMin(0, area.bottom()-tRect.bottom());
+                    tx = std::max(tRect.x(), area.x()) + std::min(0, area.right()-tRect.right());
+                    ty = std::max(tRect.y(), area.y()) + std::min(0, area.bottom()-tRect.bottom());
                     tx = qRound((tx-rect.x())*winData->highlight);
                     ty = qRound((ty-rect.y())*winData->highlight);
 

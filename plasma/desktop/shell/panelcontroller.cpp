@@ -657,24 +657,24 @@ void PanelController::mouseMoveFilter(QMouseEvent *event)
     switch (location()) {
     case Plasma::LeftEdge: {
         int newX = m_startDragControllerPos.x() + event->globalX() - m_startDragMousePos.x();
-        newX = qMax(newX, screenGeom.left() + MINIMUM_HEIGHT);
-        newX = qMin(newX, screenGeom.left() + screenGeom.width()/3);
+        newX = std::max(newX, screenGeom.left() + MINIMUM_HEIGHT);
+        newX = std::min(newX, screenGeom.left() + screenGeom.width()/3);
         move(newX, pos().y());
         resizeFrameHeight(geometry().left() - screenGeom.left());
         break;
     }
     case Plasma::RightEdge: {
         int newX = m_startDragControllerPos.x() + event->globalX() - m_startDragMousePos.x();
-        newX = qMin(newX, screenGeom.right() - MINIMUM_HEIGHT - width());
-        newX = qMax(newX, screenGeom.left() + 2*(screenGeom.width()/3) - width());
+        newX = std::min(newX, screenGeom.right() - MINIMUM_HEIGHT - width());
+        newX = std::max(newX, screenGeom.left() + 2*(screenGeom.width()/3) - width());
         move(newX, pos().y());
         resizeFrameHeight(screenGeom.right() - geometry().right());
         break;
     }
     case Plasma::TopEdge: {
         int newY = m_startDragControllerPos.y() + event->globalY() - m_startDragMousePos.y();
-        newY = qMax(newY, screenGeom.top() + MINIMUM_HEIGHT);
-        newY = qMin(newY, screenGeom.top() + screenGeom.height()/3);
+        newY = std::max(newY, screenGeom.top() + MINIMUM_HEIGHT);
+        newY = std::min(newY, screenGeom.top() + screenGeom.height()/3);
         move(pos().x(), newY);
         resizeFrameHeight(geometry().top() - screenGeom.top());
         break;
@@ -682,8 +682,8 @@ void PanelController::mouseMoveFilter(QMouseEvent *event)
     case Plasma::BottomEdge:
     default: {
         int newY = m_startDragControllerPos.y() + event->globalY() - m_startDragMousePos.y();
-        newY = qMin(newY, screenGeom.bottom() - MINIMUM_HEIGHT - height());
-        newY = qMax(newY, screenGeom.top() + 2*(screenGeom.height()/3) - height());
+        newY = std::min(newY, screenGeom.bottom() - MINIMUM_HEIGHT - height());
+        newY = std::max(newY, screenGeom.top() + 2*(screenGeom.height()/3) - height());
         move(pos().x(), newY);
         resizeFrameHeight(screenGeom.bottom() - geometry().bottom());
         break;
@@ -863,7 +863,7 @@ void PanelController::settingsPopup()
             pos.ry() -= ((pos.ry() + s.height()) - screenGeom.bottom());
         }
 
-        pos.rx() = qMax(0, pos.rx());
+        pos.rx() = std::max(0, pos.rx());
         m_optionsDialog->move(pos);
         m_optionsDialog->show();
     }
@@ -877,14 +877,14 @@ void PanelController::syncRuler()
         case Plasma::LeftEdge:
         case Plasma::RightEdge:
             m_ruler->setAvailableLength(screenGeom.height());
-            m_ruler->setMaxLength(qMin((int)containment()->maximumSize().height(), screenGeom.height()));
+            m_ruler->setMaxLength(std::min((int)containment()->maximumSize().height(), screenGeom.height()));
             m_ruler->setMinLength(containment()->minimumSize().height());
             break;
         case Plasma::TopEdge:
         case Plasma::BottomEdge:
         default:
             m_ruler->setAvailableLength(screenGeom.width());
-            m_ruler->setMaxLength(qMin((int)containment()->maximumSize().width(), screenGeom.width()));
+            m_ruler->setMaxLength(std::min((int)containment()->maximumSize().width(), screenGeom.width()));
             m_ruler->setMinLength(containment()->minimumSize().width());
             break;
     }

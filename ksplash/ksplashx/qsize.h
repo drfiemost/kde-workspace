@@ -52,6 +52,8 @@
 #include "qpoint.h" // ### change to qwindowdefs.h?
 #endif // QT_H
 
+#include <algorithm>
+
 class Q_EXPORT QSize
 // ### Make QSize inherit Qt in Qt 4.0
 {
@@ -233,12 +235,12 @@ inline const QSize operator/( const QSize &s, double c )
 
 inline QSize QSize::expandedTo( const QSize & otherSize ) const
 {
-    return QSize( qMax(wd,otherSize.wd), qMax(ht,otherSize.ht) );
+    return QSize( std::max(wd,otherSize.wd), std::max(ht,otherSize.ht) );
 }
 
 inline QSize QSize::boundedTo( const QSize & otherSize ) const
 {
-    return QSize( qMin(wd,otherSize.wd), qMin(ht,otherSize.ht) );
+    return QSize( std::min(wd,otherSize.wd), std::min(ht,otherSize.ht) );
 }
 
 

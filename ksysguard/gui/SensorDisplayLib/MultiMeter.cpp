@@ -105,8 +105,8 @@ void MultiMeter::answerReceived(int id, const QList<QByteArray>& answerlist)
     double val = answer.toDouble();
 
     int digits = 1;
-    if (qAbs(val) >= 1) {
-      digits = (int) log10(qAbs(val)) + 1;
+    if (std::abs(val) >= 1) {
+      digits = (int) log10(std::abs(val)) + 1;
     }
     if (mIsFloat) {
       //Show two digits after the decimal point
@@ -117,7 +117,7 @@ void MultiMeter::answerReceived(int id, const QList<QByteArray>& answerlist)
       digits += 1;
     }
 
-    mLcd->setNumDigits(qMin(15,digits));
+    mLcd->setNumDigits(std::min(15,digits));
 
     mLcd->display(val);
     if (mLowerLimitActive && val < mLowerLimit)

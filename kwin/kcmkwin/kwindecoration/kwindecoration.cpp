@@ -446,7 +446,7 @@ bool KWinDecorationModule::eventFilter(QObject *o, QEvent *e)
                         d = v.toInt();
                 }
                 if (d > 0)
-                    d = qMax(m_ui->decorationList->height() / d, 1);
+                    d = std::max(m_ui->decorationList->height() / d, 1);
                 if (key == Qt::Key_PageUp)
                     d = -d;
                 break;
@@ -454,7 +454,7 @@ bool KWinDecorationModule::eventFilter(QObject *o, QEvent *e)
                 break;
             }
             if (d) {
-                d = qMin(qMax(0, currentRow + d), m_proxyModel->rowCount());
+                d = std::min(std::max(0, currentRow + d), m_proxyModel->rowCount());
                 m_ui->decorationList->rootObject()->setProperty("currentIndex", d);
                 return true;
             }
@@ -482,7 +482,7 @@ void KWinDecorationModule::updatePreviews()
     // start at first element in sight
     int row = 0;
     if (h > 0)
-        row = qMin(qMax(0, y*m_model->rowCount()/h), m_model->rowCount());
+        row = std::min(std::max(0, y*m_model->rowCount()/h), m_model->rowCount());
     m_model->regeneratePreviews(row);
 }
 

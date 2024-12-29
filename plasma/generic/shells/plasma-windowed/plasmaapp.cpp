@@ -72,7 +72,7 @@ PlasmaApp::PlasmaApp()
         QString pluginName = appletGroup.readEntry("plugin", QString());
         if (id != 0 && !pluginName.isEmpty()) {
             m_storedApplets.insert(pluginName, id);
-            m_maxId = qMax(id, m_maxId);
+            m_maxId = std::max(id, m_maxId);
         }
     }
 

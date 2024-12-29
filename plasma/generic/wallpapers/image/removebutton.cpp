@@ -48,7 +48,7 @@ RemoveButton::RemoveButton(QWidget* parent) :
     
     m_icon = KIconLoader::global()->loadIcon("edit-delete",
                                              KIconLoader::NoGroup,
-                                             qMin(width(), height()));
+                                             std::min(width(), height()));
     setToolTip(i18n("Remove from list"));
 }
 
@@ -144,7 +144,7 @@ void RemoveButton::resizeEvent(QResizeEvent* event)
 
     m_icon = KIconLoader::global()->loadIcon("edit-delete",
                                              KIconLoader::NoGroup,
-                                             qMin(width(), height()));
+                                             std::min(width(), height()));
     update();
 }
 
@@ -188,7 +188,7 @@ void RemoveButton::refreshIcon()
 {
     m_icon = KIconLoader::global()->loadIcon("edit-delete",
                                              KIconLoader::NoGroup,
-                                             qMin(width(), height()));
+                                             std::min(width(), height()));
     update();
 }
 

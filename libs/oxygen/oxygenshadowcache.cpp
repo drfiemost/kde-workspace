@@ -70,7 +70,7 @@ namespace Oxygen
     //_______________________________________________________
     void ShadowCache::setAnimationsDuration( int value )
     {
-        setMaxIndex( qMin( 256, int( (120*value)/1000 ) ) );
+        setMaxIndex( std::min( 256, int( (120*value)/1000 ) ) );
         invalidateCaches();
     }
 
@@ -107,7 +107,7 @@ namespace Oxygen
         int inactiveSize( InactiveShadowConfiguration::enabled() ? InactiveShadowConfiguration::shadowSize():0 );
 
         // even if shadows are disabled,
-        return qMax( activeSize, inactiveSize );
+        return std::max( activeSize, inactiveSize );
     }
 
     //_______________________________________________________
@@ -210,8 +210,8 @@ namespace Oxygen
             {
 
                 // inner (sharp) gradient
-                const qreal gradientSize = qMin( shadowSize, (shadowSize+fixedSize)/2 );
-                const qreal voffset = qMin( 12.0*(gradientSize*ActiveShadowConfiguration::verticalOffset())/fixedSize, 4.0 );
+                const qreal gradientSize = std::min( shadowSize, (shadowSize+fixedSize)/2 );
+                const qreal voffset = std::min( 12.0*(gradientSize*ActiveShadowConfiguration::verticalOffset())/fixedSize, 4.0 );
 
                 QRadialGradient rg = QRadialGradient( size, size + voffset, gradientSize );
                 rg.setColorAt(1, Qt::transparent );
@@ -237,7 +237,7 @@ namespace Oxygen
 
                 // outer (spread) gradient
                 const qreal gradientSize = shadowSize;
-                const qreal voffset = qMin( 12.0*(gradientSize*ActiveShadowConfiguration::verticalOffset())/fixedSize, 4.0 );
+                const qreal voffset = std::min( 12.0*(gradientSize*ActiveShadowConfiguration::verticalOffset())/fixedSize, 4.0 );
 
                 QRadialGradient rg = QRadialGradient( size, size+voffset, gradientSize );
                 rg.setColorAt(1, Qt::transparent );
@@ -263,7 +263,7 @@ namespace Oxygen
 
             {
                 // inner (sharp gradient)
-                const qreal gradientSize = qMin( shadowSize, fixedSize );
+                const qreal gradientSize = std::min( shadowSize, fixedSize );
                 const qreal voffset( 0.2 );
 
                 QRadialGradient rg = QRadialGradient( size, size+voffset, gradientSize );
@@ -290,8 +290,8 @@ namespace Oxygen
             {
 
                 // mid gradient
-                const qreal gradientSize = qMin( shadowSize, (shadowSize+2*fixedSize)/3 );
-                const qreal voffset = qMin( 8.0*(gradientSize*InactiveShadowConfiguration::verticalOffset())/fixedSize, 4.0 );
+                const qreal gradientSize = std::min( shadowSize, (shadowSize+2*fixedSize)/3 );
+                const qreal voffset = std::min( 8.0*(gradientSize*InactiveShadowConfiguration::verticalOffset())/fixedSize, 4.0 );
 
                 // gaussian shadow is used
                 QRadialGradient rg = QRadialGradient( size, size+voffset, gradientSize );
@@ -317,7 +317,7 @@ namespace Oxygen
 
                 // outer (spread) gradient
                 const qreal gradientSize = shadowSize;
-                const qreal voffset = qMin( 20.0*(gradientSize*InactiveShadowConfiguration::verticalOffset())/fixedSize, 4.0 );
+                const qreal voffset = std::min( 20.0*(gradientSize*InactiveShadowConfiguration::verticalOffset())/fixedSize, 4.0 );
 
                 // gaussian shadow is used
                 QRadialGradient rg = QRadialGradient( size, size+voffset, gradientSize );

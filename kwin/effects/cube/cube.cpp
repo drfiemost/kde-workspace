@@ -1547,12 +1547,12 @@ void CubeEffect::paintWindow(EffectWindow* w, int mask, QRegion region, WindowPa
                 foreach (const QRect & paintRect, paint.rects()) {
                     for (int i = 0; i <= (paintRect.height() / quadSize); i++) {
                         for (int j = 0; j <= (paintRect.width() / quadSize); j++) {
-                            verts << qMin(paintRect.x() + (j + 1)*quadSize, (float)paintRect.x() + paintRect.width()) << paintRect.y() + i*quadSize;
+                            verts << std::min(paintRect.x() + (j + 1)*quadSize, (float)paintRect.x() + paintRect.width()) << paintRect.y() + i*quadSize;
                             verts << paintRect.x() + j*quadSize << paintRect.y() + i*quadSize;
-                            verts << paintRect.x() + j*quadSize << qMin(paintRect.y() + (i + 1)*quadSize, (float)paintRect.y() + paintRect.height());
-                            verts << paintRect.x() + j*quadSize << qMin(paintRect.y() + (i + 1)*quadSize, (float)paintRect.y() + paintRect.height());
-                            verts << qMin(paintRect.x() + (j + 1)*quadSize, (float)paintRect.x() + paintRect.width()) << qMin(paintRect.y() + (i + 1)*quadSize, (float)paintRect.y() + paintRect.height());
-                            verts << qMin(paintRect.x() + (j + 1)*quadSize, (float)paintRect.x() + paintRect.width()) << paintRect.y() + i*quadSize;
+                            verts << paintRect.x() + j*quadSize << std::min(paintRect.y() + (i + 1)*quadSize, (float)paintRect.y() + paintRect.height());
+                            verts << paintRect.x() + j*quadSize << std::min(paintRect.y() + (i + 1)*quadSize, (float)paintRect.y() + paintRect.height());
+                            verts << std::min(paintRect.x() + (j + 1)*quadSize, (float)paintRect.x() + paintRect.width()) << std::min(paintRect.y() + (i + 1)*quadSize, (float)paintRect.y() + paintRect.height());
+                            verts << std::min(paintRect.x() + (j + 1)*quadSize, (float)paintRect.x() + paintRect.width()) << paintRect.y() + i*quadSize;
                         }
                     }
                 }
@@ -1830,7 +1830,7 @@ void CubeEffect::grabbedKeyboardEvent(QKeyEvent* e)
             return;
         case Qt::Key_Plus:
             zoom -= 10.0;
-            zoom = qMax(-zPosition, zoom);
+            zoom = std::max(-zPosition, zoom);
             rotateCube();
             break;
         case Qt::Key_Minus:

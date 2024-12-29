@@ -89,7 +89,7 @@ void PaintRedirector::performPendingPaint()
     if (scratch->width() < size.width() || scratch->height() < size.height()) {
         int w = align(size.width(), 128);
         int h = align(size.height(), 128);
-        scratch = recreateScratch(QSize(qMax(scratch->width(), w), qMax(scratch->height(), h)));
+        scratch = recreateScratch(QSize(std::max(scratch->width(), w), std::max(scratch->height(), h)));
     }
     fillScratch(Qt::transparent);
     recursionCheck = true;
@@ -330,8 +330,8 @@ void OpenGLPaintRedirector::resizePixmaps(const QRect *rects)
 {
     QSize size[2];
     size[LeftRight] = QSize(rects[LeftPixmap].width() + rects[RightPixmap].width(),
-                            align(qMax(rects[LeftPixmap].height(), rects[RightPixmap].height()), 128));
-    size[TopBottom] = QSize(align(qMax(rects[TopPixmap].width(), rects[BottomPixmap].width()), 128),
+                            align(std::max(rects[LeftPixmap].height(), rects[RightPixmap].height()), 128));
+    size[TopBottom] = QSize(align(std::max(rects[TopPixmap].width(), rects[BottomPixmap].width()), 128),
                             rects[TopPixmap].height() + rects[BottomPixmap].height());
 
     if (!GLTexture::NPOTTextureSupported()) {

@@ -445,7 +445,7 @@ void Pager::updateSizes(bool allowResize /* = true */)
                                  padding * (m_columns - 1)) / 2;
 
             if (optimalSize < leftMargin || optimalSize < rightMargin) {
-                leftMargin = rightMargin = qMax(qreal(0), optimalSize);
+                leftMargin = rightMargin = std::max(qreal(0), optimalSize);
             }
         } else if (formFactor() == Plasma::Horizontal) {
             qreal optimalSize = (geometry().height() -
@@ -453,7 +453,7 @@ void Pager::updateSizes(bool allowResize /* = true */)
                                  padding * (m_rows - 1)) / 2;
 
             if (optimalSize < topMargin || optimalSize < bottomMargin) {
-                topMargin = bottomMargin = qMax(qreal(0), optimalSize);
+                topMargin = bottomMargin = std::max(qreal(0), optimalSize);
             }
         }
     } else {
@@ -599,8 +599,8 @@ void Pager::recalculateWindowRects()
 
             bool active = (window == KWindowSystem::activeWindow());
             int windowIconSize = KIconLoader::global()->currentSize(KIconLoader::Small);
-            int windowRectSize = qMin(windowRect.width(), windowRect.height());
-            windowIconSize = qMax(windowIconSize, windowRectSize / 2);
+            int windowRectSize = std::min(windowRect.width(), windowRect.height());
+            windowIconSize = std::max(windowIconSize, windowRectSize / 2);
             QPixmap icon = KWindowSystem::icon(info.win(), windowIconSize, windowIconSize, true);
             m_pagerModel->appendWindowRect(i, window, windowRect, active, icon, info.visibleName());
         }
@@ -742,7 +742,7 @@ void Pager::moveWindow(int window, double x, double y, int targetDesktop, int so
     dest = QPointF(dest.x()/m_widthScaleFactor, dest.y()/m_heightScaleFactor);
 
     // don't move windows to negative positions
-    dest = QPointF(qMax(dest.x(), qreal(0.0)), qMax(dest.y(), qreal(0.0)));
+    dest = QPointF(std::max(dest.x(), qreal(0.0)), std::max(dest.y(), qreal(0.0)));
 
     // use _NET_MOVERESIZE_WINDOW rather than plain move, so that the WM knows this is a pager request
     NETRootInfo info(QX11Info::display(), 0);

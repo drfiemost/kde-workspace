@@ -183,7 +183,7 @@ void Applet::checkGeometry()
             height = m_header->minimumSize().height();
             width = m_header->minimumSize().width();
         }
-        min.setHeight(qMax(height + nb_items * MINIMUM,
+        min.setHeight(std::max(height + nb_items * MINIMUM,
                              mainLayout()->minimumSize().height()));
         min.setWidth(width + MINIMUM);
         pref.setHeight(height + nb_items * m_preferredItemHeight);

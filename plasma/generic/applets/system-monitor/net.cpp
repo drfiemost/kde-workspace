@@ -118,7 +118,7 @@ void SM::Net::dataUpdated(const QString& source,
         m_data[interface] = QList<double>() << -1 << -1;
     }
 
-    m_data[interface][index] = qMax(0.0, data["value"].toDouble());
+    m_data[interface][index] = std::max(0.0, data["value"].toDouble());
 
     if (!m_data[interface].contains(-1)) {
 

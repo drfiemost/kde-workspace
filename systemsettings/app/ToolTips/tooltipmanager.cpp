@@ -160,7 +160,7 @@ void ToolTipManager::showToolTip( QModelIndex menuItem )
     int x = 0;
     int y = 0;
     if (hasRoomBelow || hasRoomAbove) {
-        x = qMax(desktop.left(), d->itemRect.center().x() - size.width() / 2);
+        x = std::max(desktop.left(), d->itemRect.center().x() - size.width() / 2);
         if (x + size.width() / 2 >= desktop.right()) {
             x = desktop.right() - size.width();
         }

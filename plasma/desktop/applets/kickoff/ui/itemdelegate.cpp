@@ -60,7 +60,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, 
 
         QRect emptyRect = rectAfterTitle(option, index);
 
-        QSize barSize = QSize(qMin(emptyRect.width(), option.rect.width() / 3), emptyRect.height());
+        QSize barSize = QSize(std::min(emptyRect.width(), option.rect.width() / 3), emptyRect.height());
 
         if (barSize.width() > 0) {
             // if the item view is gradually resized smaller or larger, make the bar fade out/in

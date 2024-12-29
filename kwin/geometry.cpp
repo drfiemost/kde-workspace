@@ -389,11 +389,11 @@ QPoint Workspace::adjustClientPosition(Client* c, QPoint pos, bool unrestricted,
         QRect geo = c->geometry();
         if (c->maximizeMode() & MaximizeHorizontal && (geo.x() == maxRect.left() || geo.right() == maxRect.right())) {
             guideMaximized |= MaximizeHorizontal;
-            borderSnapZone.setWidth(qMax(borderSnapZone.width() + 2, maxRect.width() / 16));
+            borderSnapZone.setWidth(std::max(borderSnapZone.width() + 2, maxRect.width() / 16));
         }
         if (c->maximizeMode() & MaximizeVertical && (geo.y() == maxRect.top() || geo.bottom() == maxRect.bottom())) {
             guideMaximized |= MaximizeVertical;
-            borderSnapZone.setHeight(qMax(borderSnapZone.height() + 2, maxRect.height() / 16));
+            borderSnapZone.setHeight(std::max(borderSnapZone.height() + 2, maxRect.height() / 16));
         }
     }
 
@@ -444,20 +444,20 @@ QPoint Workspace::adjustClientPosition(Client* c, QPoint pos, bool unrestricted,
             if (padding[3] && (titlePos == PositionBottom || (c->maximizeMode() & MaximizeVertical) ||
                                screens()->intersecting(geo.translated(0, maxRect.bottom() + padding[3] - geo.bottom())) > 1))
                 padding[3] = 0;
-            if ((sOWO ? (cx < xmin) : true) && (qAbs(xmin - cx) < snapX)) {
+            if ((sOWO ? (cx < xmin) : true) && (std::abs(xmin - cx) < snapX)) {
                 deltaX = xmin - cx;
                 nx = xmin - padding[0];
             }
-            if ((sOWO ? (rx > xmax) : true) && (qAbs(rx - xmax) < snapX) && (qAbs(xmax - rx) < deltaX)) {
+            if ((sOWO ? (rx > xmax) : true) && (std::abs(rx - xmax) < snapX) && (std::abs(xmax - rx) < deltaX)) {
                 deltaX = rx - xmax;
                 nx = xmax - cw + padding[1];
             }
 
-            if ((sOWO ? (cy < ymin) : true) && (qAbs(ymin - cy) < snapY)) {
+            if ((sOWO ? (cy < ymin) : true) && (std::abs(ymin - cy) < snapY)) {
                 deltaY = ymin - cy;
                 ny = ymin - padding[2];
             }
-            if ((sOWO ? (ry > ymax) : true) && (qAbs(ry - ymax) < snapY) && (qAbs(ymax - ry) < deltaY)) {
+            if ((sOWO ? (ry > ymax) : true) && (std::abs(ry - ymax) < snapY) && (std::abs(ymax - ry) < deltaY)) {
                 deltaY = ry - ymax;
                 ny = ymax - ch + padding[3];
             }
@@ -488,47 +488,47 @@ QPoint Workspace::adjustClientPosition(Client* c, QPoint pos, bool unrestricted,
 
                 if (!(guideMaximized & MaximizeHorizontal) &&
                     (((cy <= lry) && (cy  >= ly)) || ((ry >= ly) && (ry  <= lry)) || ((cy <= ly) && (ry >= lry)))) {
-                    if ((sOWO ? (cx < lrx) : true) && (qAbs(lrx - cx) < snap) && (qAbs(lrx - cx) < deltaX)) {
-                        deltaX = qAbs(lrx - cx);
+                    if ((sOWO ? (cx < lrx) : true) && (std::abs(lrx - cx) < snap) && (std::abs(lrx - cx) < deltaX)) {
+                        deltaX = std::abs(lrx - cx);
                         nx = lrx;
                     }
-                    if ((sOWO ? (rx > lx) : true) && (qAbs(rx - lx) < snap) && (qAbs(rx - lx) < deltaX)) {
-                        deltaX = qAbs(rx - lx);
+                    if ((sOWO ? (rx > lx) : true) && (std::abs(rx - lx) < snap) && (std::abs(rx - lx) < deltaX)) {
+                        deltaX = std::abs(rx - lx);
                         nx = lx - cw;
                     }
                 }
 
                 if (!(guideMaximized & MaximizeVertical) &&
                     (((cx <= lrx) && (cx  >= lx)) || ((rx >= lx) && (rx  <= lrx)) || ((cx <= lx) && (rx >= lrx)))) {
-                    if ((sOWO ? (cy < lry) : true) && (qAbs(lry - cy) < snap) && (qAbs(lry - cy) < deltaY)) {
-                        deltaY = qAbs(lry - cy);
+                    if ((sOWO ? (cy < lry) : true) && (std::abs(lry - cy) < snap) && (std::abs(lry - cy) < deltaY)) {
+                        deltaY = std::abs(lry - cy);
                         ny = lry;
                     }
-                    //if ( (qAbs( ry-ly ) < snap) && (qAbs( ry - ly ) < deltaY ))
-                    if ((sOWO ? (ry > ly) : true) && (qAbs(ry - ly) < snap) && (qAbs(ry - ly) < deltaY)) {
-                        deltaY = qAbs(ry - ly);
+                    //if ( (std::abs( ry-ly ) < snap) && (std::abs( ry - ly ) < deltaY ))
+                    if ((sOWO ? (ry > ly) : true) && (std::abs(ry - ly) < snap) && (std::abs(ry - ly) < deltaY)) {
+                        deltaY = std::abs(ry - ly);
                         ny = ly - ch;
                     }
                 }
 
                 // Corner snapping
                 if (!(guideMaximized & MaximizeVertical) && (nx == lrx || nx + cw == lx)) {
-                    if ((sOWO ? (ry > lry) : true) && (qAbs(lry - ry) < snap) && (qAbs(lry - ry) < deltaY)) {
-                        deltaY = qAbs(lry - ry);
+                    if ((sOWO ? (ry > lry) : true) && (std::abs(lry - ry) < snap) && (std::abs(lry - ry) < deltaY)) {
+                        deltaY = std::abs(lry - ry);
                         ny = lry - ch;
                     }
-                    if ((sOWO ? (cy < ly) : true) && (qAbs(cy - ly) < snap) && (qAbs(cy - ly) < deltaY)) {
-                        deltaY = qAbs(cy - ly);
+                    if ((sOWO ? (cy < ly) : true) && (std::abs(cy - ly) < snap) && (std::abs(cy - ly) < deltaY)) {
+                        deltaY = std::abs(cy - ly);
                         ny = ly;
                     }
                 }
                 if (!(guideMaximized & MaximizeHorizontal) && (ny == lry || ny + ch == ly)) {
-                    if ((sOWO ? (rx > lrx) : true) && (qAbs(lrx - rx) < snap) && (qAbs(lrx - rx) < deltaX)) {
-                        deltaX = qAbs(lrx - rx);
+                    if ((sOWO ? (rx > lrx) : true) && (std::abs(lrx - rx) < snap) && (std::abs(lrx - rx) < deltaX)) {
+                        deltaX = std::abs(lrx - rx);
                         nx = lrx - cw;
                     }
-                    if ((sOWO ? (cx < lx) : true) && (qAbs(cx - lx) < snap) && (qAbs(cx - lx) < deltaX)) {
-                        deltaX = qAbs(cx - lx);
+                    if ((sOWO ? (cx < lx) : true) && (std::abs(cx - lx) < snap) && (std::abs(cx - lx) < deltaX)) {
+                        deltaX = std::abs(cx - lx);
                         nx = lx;
                     }
                 }
@@ -538,8 +538,8 @@ QPoint Workspace::adjustClientPosition(Client* c, QPoint pos, bool unrestricted,
         // center snap
         snap = options->centerSnapZone() * snapAdjust; //snap trigger
         if (snap) {
-            int diffX = qAbs((xmin + xmax) / 2 - (cx + cw / 2));
-            int diffY = qAbs((ymin + ymax) / 2 - (cy + ch / 2));
+            int diffX = std::abs((xmin + xmax) / 2 - (cx + cw / 2));
+            int diffY = std::abs((ymin + ymax) / 2 - (cy + ch / 2));
             if (diffX < snap && diffY < snap && diffX < deltaX && diffY < deltaY) {
                 // Snap to center of screen
                 nx = (xmin + xmax) / 2 - cw / 2;
@@ -595,30 +595,30 @@ QRect Workspace::adjustClientSize(Client* c, QRect moveResizeGeom, int mode)
             deltaY = int(snap);
 
 #define SNAP_BORDER_TOP \
-    if ((sOWO?(newcy<ymin):true) && (qAbs(ymin-newcy)<deltaY)) \
+    if ((sOWO?(newcy<ymin):true) && (std::abs(ymin-newcy)<deltaY)) \
     { \
-        deltaY = qAbs(ymin-newcy); \
+        deltaY = std::abs(ymin-newcy); \
         newcy = ymin; \
     }
 
 #define SNAP_BORDER_BOTTOM \
-    if ((sOWO?(newry>ymax):true) && (qAbs(ymax-newry)<deltaY)) \
+    if ((sOWO?(newry>ymax):true) && (std::abs(ymax-newry)<deltaY)) \
     { \
-        deltaY = qAbs(ymax-newcy); \
+        deltaY = std::abs(ymax-newcy); \
         newry = ymax; \
     }
 
 #define SNAP_BORDER_LEFT \
-    if ((sOWO?(newcx<xmin):true) && (qAbs(xmin-newcx)<deltaX)) \
+    if ((sOWO?(newcx<xmin):true) && (std::abs(xmin-newcx)<deltaX)) \
     { \
-        deltaX = qAbs(xmin-newcx); \
+        deltaX = std::abs(xmin-newcx); \
         newcx = xmin; \
     }
 
 #define SNAP_BORDER_RIGHT \
-    if ((sOWO?(newrx>xmax):true) && (qAbs(xmax-newrx)<deltaX)) \
+    if ((sOWO?(newrx>xmax):true) && (std::abs(xmax-newrx)<deltaX)) \
     { \
-        deltaX = qAbs(xmax-newrx); \
+        deltaX = std::abs(xmax-newrx); \
         newrx = xmax; \
     }
             switch(mode) {
@@ -683,58 +683,58 @@ QRect Workspace::adjustClientSize(Client* c, QRect moveResizeGeom, int mode)
 
 #define SNAP_WINDOW_TOP  if ( (sOWO?(newcy<lry):true) \
                               && WITHIN_WIDTH  \
-                              && (qAbs( lry - newcy ) < deltaY) ) {  \
-    deltaY = qAbs( lry - newcy ); \
+                              && (std::abs( lry - newcy ) < deltaY) ) {  \
+    deltaY = std::abs( lry - newcy ); \
     newcy=lry; \
 }
 
 #define SNAP_WINDOW_BOTTOM  if ( (sOWO?(newry>ly):true)  \
                                  && WITHIN_WIDTH  \
-                                 && (qAbs( ly - newry ) < deltaY) ) {  \
-    deltaY = qAbs( ly - newry );  \
+                                 && (std::abs( ly - newry ) < deltaY) ) {  \
+    deltaY = std::abs( ly - newry );  \
     newry=ly;  \
 }
 
 #define SNAP_WINDOW_LEFT  if ( (sOWO?(newcx<lrx):true)  \
                                && WITHIN_HEIGHT  \
-                               && (qAbs( lrx - newcx ) < deltaX)) {  \
-    deltaX = qAbs( lrx - newcx );  \
+                               && (std::abs( lrx - newcx ) < deltaX)) {  \
+    deltaX = std::abs( lrx - newcx );  \
     newcx=lrx;  \
 }
 
 #define SNAP_WINDOW_RIGHT  if ( (sOWO?(newrx>lx):true)  \
                                 && WITHIN_HEIGHT  \
-                                && (qAbs( lx - newrx ) < deltaX))  \
+                                && (std::abs( lx - newrx ) < deltaX))  \
 {  \
-    deltaX = qAbs( lx - newrx );  \
+    deltaX = std::abs( lx - newrx );  \
     newrx=lx;  \
 }
 
 #define SNAP_WINDOW_C_TOP  if ( (sOWO?(newcy<ly):true)  \
                                 && (newcx == lrx || newrx == lx)  \
-                                && qAbs(ly-newcy) < deltaY ) {  \
-    deltaY = qAbs( ly - newcy + 1 ); \
+                                && std::abs(ly-newcy) < deltaY ) {  \
+    deltaY = std::abs( ly - newcy + 1 ); \
     newcy = ly + 1; \
 }
 
 #define SNAP_WINDOW_C_BOTTOM  if ( (sOWO?(newry>lry):true)  \
                                    && (newcx == lrx || newrx == lx)  \
-                                   && qAbs(lry-newry) < deltaY ) {  \
-    deltaY = qAbs( lry - newry - 1 ); \
+                                   && std::abs(lry-newry) < deltaY ) {  \
+    deltaY = std::abs( lry - newry - 1 ); \
     newry = lry - 1; \
 }
 
 #define SNAP_WINDOW_C_LEFT  if ( (sOWO?(newcx<lx):true)  \
                                  && (newcy == lry || newry == ly)  \
-                                 && qAbs(lx-newcx) < deltaX ) {  \
-    deltaX = qAbs( lx - newcx + 1 ); \
+                                 && std::abs(lx-newcx) < deltaX ) {  \
+    deltaX = std::abs( lx - newcx + 1 ); \
     newcx = lx + 1; \
 }
 
 #define SNAP_WINDOW_C_RIGHT  if ( (sOWO?(newrx>lrx):true)  \
                                   && (newcy == lry || newry == ly)  \
-                                  && qAbs(lrx-newrx) < deltaX ) {  \
-    deltaX = qAbs( lrx - newrx - 1 ); \
+                                  && std::abs(lrx-newrx) < deltaX ) {  \
+    deltaX = std::abs( lrx - newrx - 1 ); \
     newrx = lrx - 1; \
 }
 
@@ -842,15 +842,15 @@ void Client::keepInArea(QRect area, bool partial)
 {
     if (partial) {
         // increase the area so that can have only 100 pixels in the area
-        area.setLeft(qMin(area.left() - width() + 100, area.left()));
-        area.setTop(qMin(area.top() - height() + 100, area.top()));
-        area.setRight(qMax(area.right() + width() - 100, area.right()));
-        area.setBottom(qMax(area.bottom() + height() - 100, area.bottom()));
+        area.setLeft(std::min(area.left() - width() + 100, area.left()));
+        area.setTop(std::min(area.top() - height() + 100, area.top()));
+        area.setRight(std::max(area.right() + width() - 100, area.right()));
+        area.setBottom(std::max(area.bottom() + height() - 100, area.bottom()));
     }
     if (!partial) {
         // resize to fit into area
         if (area.width() < width() || area.height() < height())
-            resizeWithChecks(qMin(area.width(), width()), qMin(area.height(), height()));
+            resizeWithChecks(std::min(area.width(), width()), std::min(area.height(), height()));
     }
     int tx = x(), ty = y();
     if (geometry().right() > area.right() && width() <= area.width())
@@ -916,10 +916,10 @@ QRect Client::adjustedClientArea(const QRect &desktopArea, const QRect& area) co
     // Handle struts at xinerama edges that are inside the virtual screen.
     // They're given in virtual screen coordinates, make them affect only
     // their xinerama screen.
-    stareaL.setLeft(qMax(stareaL.left(), screenarea.left()));
-    stareaR.setRight(qMin(stareaR.right(), screenarea.right()));
-    stareaT.setTop(qMax(stareaT.top(), screenarea.top()));
-    stareaB.setBottom(qMin(stareaB.bottom(), screenarea.bottom()));
+    stareaL.setLeft(std::max(stareaL.left(), screenarea.left()));
+    stareaR.setRight(std::min(stareaR.right(), screenarea.right()));
+    stareaT.setTop(std::max(stareaT.top(), screenarea.top()));
+    stareaB.setBottom(std::min(stareaB.bottom(), screenarea.bottom()));
 
     if (stareaL . intersects(area)) {
 //        kDebug (1212) << "Moving left of: " << r << " to " << stareaL.right() + 1;
@@ -1128,94 +1128,94 @@ void Client::checkWorkspacePosition(QRect oldGeometry, int oldDesktop)
         foreach (const QRect & r, workspace()->previousRestrictedMoveArea(oldDesktop, StrutAreaTop).rects()) {
             QRect rect = r & oldGeomTall;
             if (!rect.isEmpty())
-                oldTopMax = qMax(oldTopMax, rect.y() + rect.height());
+                oldTopMax = std::max(oldTopMax, rect.y() + rect.height());
         }
         foreach (const QRect & r, workspace()->previousRestrictedMoveArea(oldDesktop, StrutAreaRight).rects()) {
             QRect rect = r & oldGeomWide;
             if (!rect.isEmpty())
-                oldRightMax = qMin(oldRightMax, rect.x());
+                oldRightMax = std::min(oldRightMax, rect.x());
         }
         foreach (const QRect & r, workspace()->previousRestrictedMoveArea(oldDesktop, StrutAreaBottom).rects()) {
             QRect rect = r & oldGeomTall;
             if (!rect.isEmpty())
-                oldBottomMax = qMin(oldBottomMax, rect.y());
+                oldBottomMax = std::min(oldBottomMax, rect.y());
         }
         foreach (const QRect & r, workspace()->previousRestrictedMoveArea(oldDesktop, StrutAreaLeft).rects()) {
             QRect rect = r & oldGeomWide;
             if (!rect.isEmpty())
-                oldLeftMax = qMax(oldLeftMax, rect.x() + rect.width());
+                oldLeftMax = std::max(oldLeftMax, rect.x() + rect.width());
         }
     } else {
         // These 4 compute old bounds when e.g. active desktop or screen changes
         foreach (const QRect & r, workspace()->restrictedMoveArea(oldDesktop, StrutAreaTop).rects()) {
             QRect rect = r & oldGeomTall;
             if (!rect.isEmpty())
-                oldTopMax = qMax(oldTopMax, rect.y() + rect.height());
+                oldTopMax = std::max(oldTopMax, rect.y() + rect.height());
         }
         foreach (const QRect & r, workspace()->restrictedMoveArea(oldDesktop, StrutAreaRight).rects()) {
             QRect rect = r & oldGeomWide;
             if (!rect.isEmpty())
-                oldRightMax = qMin(oldRightMax, rect.x());
+                oldRightMax = std::min(oldRightMax, rect.x());
         }
         foreach (const QRect & r, workspace()->restrictedMoveArea(oldDesktop, StrutAreaBottom).rects()) {
             QRect rect = r & oldGeomTall;
             if (!rect.isEmpty())
-                oldBottomMax = qMin(oldBottomMax, rect.y());
+                oldBottomMax = std::min(oldBottomMax, rect.y());
         }
         foreach (const QRect & r, workspace()->restrictedMoveArea(oldDesktop, StrutAreaLeft).rects()) {
             QRect rect = r & oldGeomWide;
             if (!rect.isEmpty())
-                oldLeftMax = qMax(oldLeftMax, rect.x() + rect.width());
+                oldLeftMax = std::max(oldLeftMax, rect.x() + rect.width());
         }
     }
     // These 4 compute new bounds
     foreach (const QRect & r, workspace()->restrictedMoveArea(desktop(), StrutAreaTop).rects()) {
         QRect rect = r & newGeomTall;
         if (!rect.isEmpty())
-            topMax = qMax(topMax, rect.y() + rect.height());
+            topMax = std::max(topMax, rect.y() + rect.height());
     }
     foreach (const QRect & r, workspace()->restrictedMoveArea(desktop(), StrutAreaRight).rects()) {
         QRect rect = r & newGeomWide;
         if (!rect.isEmpty())
-            rightMax = qMin(rightMax, rect.x());
+            rightMax = std::min(rightMax, rect.x());
     }
     foreach (const QRect & r, workspace()->restrictedMoveArea(desktop(), StrutAreaBottom).rects()) {
         QRect rect = r & newGeomTall;
         if (!rect.isEmpty())
-            bottomMax = qMin(bottomMax, rect.y());
+            bottomMax = std::min(bottomMax, rect.y());
     }
     foreach (const QRect & r, workspace()->restrictedMoveArea(desktop(), StrutAreaLeft).rects()) {
         QRect rect = r & newGeomWide;
         if (!rect.isEmpty())
-            leftMax = qMax(leftMax, rect.x() + rect.width());
+            leftMax = std::max(leftMax, rect.x() + rect.width());
     }
 
     // Check if the sides were inside or touching but are no longer
     if ((oldGeometry.y() >= oldTopMax && newGeom.y() < topMax)
         || (oldGeometry.y() == oldTopMax && newGeom.y() != topMax)) {
         // Top was inside or touching before but isn't anymore
-        newGeom.moveTop(qMax(topMax, screenArea.y()));
+        newGeom.moveTop(std::max(topMax, screenArea.y()));
     }
     if ((oldGeometry.y() + oldGeometry.height() <= oldBottomMax && newGeom.y() + newGeom.height() > bottomMax)
         || (oldGeometry.y() + oldGeometry.height() == oldBottomMax && newGeom.y() + newGeom.height() != bottomMax)) {
         // Bottom was inside or touching before but isn't anymore
-        newGeom.moveBottom(qMin(bottomMax - 1, screenArea.bottom()));
+        newGeom.moveBottom(std::min(bottomMax - 1, screenArea.bottom()));
         // If the other side was inside make sure it still is afterwards (shrink appropriately)
         if (oldGeometry.y() >= oldTopMax && newGeom.y() < topMax)
-            newGeom.setTop(qMax(topMax, screenArea.y()));
+            newGeom.setTop(std::max(topMax, screenArea.y()));
     }
     if ((oldGeometry.x() >= oldLeftMax && newGeom.x() < leftMax)
         || (oldGeometry.x() == oldLeftMax && newGeom.x() != leftMax)) {
         // Left was inside or touching before but isn't anymore
-        newGeom.moveLeft(qMax(leftMax, screenArea.x()));
+        newGeom.moveLeft(std::max(leftMax, screenArea.x()));
     }
     if ((oldGeometry.x() + oldGeometry.width() <= oldRightMax && newGeom.x() + newGeom.width() > rightMax)
         || (oldGeometry.x() + oldGeometry.width() == oldRightMax && newGeom.x() + newGeom.width() != rightMax)) {
         // Right was inside or touching before but isn't anymore
-        newGeom.moveRight(qMin(rightMax - 1, screenArea.right()));
+        newGeom.moveRight(std::min(rightMax - 1, screenArea.right()));
         // If the other side was inside make sure it still is afterwards (shrink appropriately)
         if (oldGeometry.x() >= oldLeftMax && newGeom.x() < leftMax)
-            newGeom.setLeft(qMax(leftMax, screenArea.x()));
+            newGeom.setLeft(std::max(leftMax, screenArea.x()));
     }
 
     checkOffscreenPosition(&newGeom, screenArea);
@@ -1294,10 +1294,10 @@ QSize Client::sizeForClientSize(const QSize& wsize, Sizemode mode, bool noframe)
         if (decominsize.height() > min_size.height())
             min_size.setHeight(decominsize.height());
     }
-    w = qMin(max_size.width(), w);
-    h = qMin(max_size.height(), h);
-    w = qMax(min_size.width(), w);
-    h = qMax(min_size.height(), h);
+    w = std::min(max_size.width(), w);
+    h = std::min(max_size.height(), h);
+    w = std::max(min_size.width(), w);
+    h = std::max(min_size.height(), h);
 
     int w1 = w;
     int h1 = h;
@@ -1462,20 +1462,20 @@ void Client::getWmNormalHints()
     if (!(xSizeHint.flags & PMaxSize))
         xSizeHint.max_width = xSizeHint.max_height = INT_MAX;
     else {
-        xSizeHint.max_width = qMax(xSizeHint.max_width, 1);
-        xSizeHint.max_height = qMax(xSizeHint.max_height, 1);
+        xSizeHint.max_width = std::max(xSizeHint.max_width, 1);
+        xSizeHint.max_height = std::max(xSizeHint.max_height, 1);
     }
     if (xSizeHint.flags & PResizeInc) {
-        xSizeHint.width_inc = qMax(xSizeHint.width_inc, 1);
-        xSizeHint.height_inc = qMax(xSizeHint.height_inc, 1);
+        xSizeHint.width_inc = std::max(xSizeHint.width_inc, 1);
+        xSizeHint.height_inc = std::max(xSizeHint.height_inc, 1);
     } else {
         xSizeHint.width_inc = 1;
         xSizeHint.height_inc = 1;
     }
     if (xSizeHint.flags & PAspect) {
         // no dividing by zero
-        xSizeHint.min_aspect.y = qMax(xSizeHint.min_aspect.y, 1);
-        xSizeHint.max_aspect.y = qMax(xSizeHint.max_aspect.y, 1);
+        xSizeHint.min_aspect.y = std::max(xSizeHint.min_aspect.y, 1);
+        xSizeHint.max_aspect.y = std::max(xSizeHint.max_aspect.y, 1);
         if (!hadFixedAspect)
             maximize(max_mode); // align to eventual new contraints
     } else {
@@ -2719,8 +2719,8 @@ void Client::checkUnrestrictedMoveResize()
     int left_marge, right_marge, top_marge, bottom_marge, titlebar_marge;
     // restricted move/resize - keep at least part of the titlebar always visible
     // how much must remain visible when moved away in that direction
-    left_marge = qMin(100 + border_right, moveResizeGeom.width());
-    right_marge = qMin(100 + border_left, moveResizeGeom.width());
+    left_marge = std::min(100 + border_right, moveResizeGeom.width());
+    right_marge = std::min(100 + border_left, moveResizeGeom.width());
     // width/height change with opaque resizing, use the initial ones
     titlebar_marge = initialMoveResizeGeom.height();
     top_marge = border_bottom;
@@ -2817,7 +2817,7 @@ void Client::handleMoveResize(int x, int y, int x_root, int y_root)
     // When doing a restricted move we must always keep 100px of the titlebar
     // visible to allow the user to be able to move it again.
     const int frameTop = border_top;
-    int titlebarArea = qMin(frameTop * 100, moveResizeGeom.width() * moveResizeGeom.height());
+    int titlebarArea = std::min(frameTop * 100, moveResizeGeom.width() * moveResizeGeom.height());
 
     bool update = false;
     if (isResize()) {

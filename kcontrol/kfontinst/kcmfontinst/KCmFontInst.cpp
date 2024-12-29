@@ -110,7 +110,7 @@ class CPushButton : public KPushButton
     CPushButton(const KGuiItem &item, QWidget *parent)
         : KPushButton(item, parent)
     {
-        theirHeight=qMax(theirHeight, KPushButton::sizeHint().height());
+        theirHeight=std::max(theirHeight, KPushButton::sizeHint().height());
         setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     }
 

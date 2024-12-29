@@ -103,7 +103,7 @@ void BGMonitorArrangement::updateArrangement()
 
     QRect expandedOverallGeometry = expandToPreview(overallGeometry);
 
-    double scale = qMin(
+    double scale = std::min(
                        double(width()) / double(expandedOverallGeometry.width()),
                        double(height()) / double(expandedOverallGeometry.height())
                    );

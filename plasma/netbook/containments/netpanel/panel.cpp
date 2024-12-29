@@ -255,16 +255,16 @@ void Panel::updateBorders()
 
     switch (location()) {
     case LeftEdge:
-        rightWidth = qMin(rightWidth, qMax(qreal(1), size().width() - KIconLoader::SizeMedium));
+        rightWidth = std::min(rightWidth, std::max(qreal(1), size().width() - KIconLoader::SizeMedium));
         break;
     case RightEdge:
-        leftWidth = qMin(leftWidth, qMax(qreal(1), size().width() - KIconLoader::SizeMedium));
+        leftWidth = std::min(leftWidth, std::max(qreal(1), size().width() - KIconLoader::SizeMedium));
         break;
     case TopEdge:
-        bottomHeight = qMin(bottomHeight, qMax(qreal(1), size().height() - KIconLoader::SizeMedium));
+        bottomHeight = std::min(bottomHeight, std::max(qreal(1), size().height() - KIconLoader::SizeMedium));
         break;
     case BottomEdge:
-        topHeight = qMin(topHeight, qMax(qreal(1), size().height() - KIconLoader::SizeMedium));
+        topHeight = std::min(topHeight, std::max(qreal(1), size().height() - KIconLoader::SizeMedium));
         break;
     default:
         break;

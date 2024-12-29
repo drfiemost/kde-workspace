@@ -556,7 +556,7 @@ void FadeEffect::nextFrame()
     XPutImage(QX11Info::display(), pixmap->handle(), gc, image, 0, 0, 0, 0, image->width, image->height);
     parent->update();
 
-    alpha = qRound(qMax(255. - (255. * (qreal(time.elapsed() / runTime))), 0.0));
+    alpha = qRound(std::max(255. - (255. * (qreal(time.elapsed() / runTime))), 0.0));
 
     if (!done)
     {

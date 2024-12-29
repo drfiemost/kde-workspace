@@ -154,7 +154,7 @@ public:
     }
 
     void setMaxRecentApps(int num) {
-        maxRecentApps = qMax(0, num);
+        maxRecentApps = std::max(0, num);
         if (maxRecentApps > Kickoff::RecentApplications::self()->maximum()) {
             Kickoff::RecentApplications::self()->setMaximum(maxRecentApps);
         }
@@ -892,7 +892,7 @@ void MenuLauncherApplet::configChanged()
     QByteArray ftb = cg.readEntry("format", QByteArray(fte.valueToKey(d->formattype)));
     d->formattype = (MenuLauncherApplet::FormatType) fte.keyToValue(ftb);
 
-    d->setMaxRecentApps(cg.readEntry("maxRecentApps", qMin(5, Kickoff::RecentApplications::self()->maximum())));
+    d->setMaxRecentApps(cg.readEntry("maxRecentApps", std::min(5, Kickoff::RecentApplications::self()->maximum())));
     d->showMenuTitles = cg.readEntry("showMenuTitles", false);
     d->showRecentlyInstalled = cg.readEntry("showRecentlyInstalled", true);
 

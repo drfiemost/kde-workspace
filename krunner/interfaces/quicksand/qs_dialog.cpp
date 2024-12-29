@@ -140,7 +140,7 @@ void QsDialog::setConfigWidget(QWidget *w)
     int left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
     const int padding = top + bottom + m_activityButton->height();
-    resize(width(), qMin(maxHeight, qMax(w->sizeHint().height() + padding, size().height())));
+    resize(width(), std::min(maxHeight, std::max(w->sizeHint().height() + padding, size().height())));
 
     QVBoxLayout *layout = static_cast<QVBoxLayout*>(this->layout());
     layout->addWidget(w);

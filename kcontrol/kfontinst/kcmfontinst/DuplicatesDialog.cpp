@@ -186,7 +186,7 @@ void CDuplicatesDialog::scanFinished()
             for(int i=0; i<itsView->header()->count(); ++i)
                 width+=itsView->header()->sectionSize(i);
 
-            width=qMin(QApplication::desktop()->screenGeometry(this).width(), width);
+            width=std::min(QApplication::desktop()->screenGeometry(this).width(), width);
             resize(width, height());
             QSize sizeNow(size());
             if(sizeNow.width()>sizeB4.width())

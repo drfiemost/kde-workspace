@@ -456,9 +456,9 @@ void CubeSlideEffect::slotDesktopChanged(int old, int current)
     if (usePagerLayout) {
         // calculate distance in respect to pager
         QPoint diff = effects->desktopGridCoords(effects->currentDesktop()) - effects->desktopGridCoords(old);
-        if (qAbs(diff.x()) > effects->desktopGridWidth() / 2) {
-            int sign = -1 * (diff.x() / qAbs(diff.x()));
-            diff.setX(sign *(effects->desktopGridWidth() - qAbs(diff.x())));
+        if (std::abs(diff.x()) > effects->desktopGridWidth() / 2) {
+            int sign = -1 * (diff.x() / std::abs(diff.x()));
+            diff.setX(sign *(effects->desktopGridWidth() - std::abs(diff.x())));
         }
         if (diff.x() > 0) {
             for (int i = 0; i < diff.x(); i++) {
@@ -470,9 +470,9 @@ void CubeSlideEffect::slotDesktopChanged(int old, int current)
                 slideRotations.enqueue(Left);
             }
         }
-        if (qAbs(diff.y()) > effects->desktopGridHeight() / 2) {
-            int sign = -1 * (diff.y() / qAbs(diff.y()));
-            diff.setY(sign *(effects->desktopGridHeight() - qAbs(diff.y())));
+        if (std::abs(diff.y()) > effects->desktopGridHeight() / 2) {
+            int sign = -1 * (diff.y() / std::abs(diff.y()));
+            diff.setY(sign *(effects->desktopGridHeight() - std::abs(diff.y())));
         }
         if (diff.y() > 0) {
             for (int i = 0; i < diff.y(); i++) {

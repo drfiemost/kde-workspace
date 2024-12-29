@@ -144,11 +144,11 @@ void Clock::updateSize()
         }
 
         if (!m_dateTimezoneBesides) {
-            w = qMax(w, (int)(contentsRect().height() * aspect));
+            w = std::max(w, (int)(contentsRect().height() * aspect));
             h = h+(int)(contentsRect().width() / aspect);
         } else {
             w = w+(int)(contentsRect().height() * aspect);
-            h = qMax(h, (int)(contentsRect().width() / aspect));
+            h = std::max(h, (int)(contentsRect().width() / aspect));
         }
     } else {
         w = (int)(contentsRect().height() * aspect);
@@ -512,14 +512,14 @@ void Clock::paintInterface(QPainter *p, const QStyleOptionGraphicsItem *option, 
             //kDebug() << Plasma::Vertical << contentsRect.height() <<contentsRect.width() * 2;
             QRect dateRect = contentsRect;
             dateRect.setHeight(dateRect.width());
-            smallFont.setPixelSize(qMax(dateRect.height() / 2, fm.ascent()));
+            smallFont.setPixelSize(std::max(dateRect.height() / 2, fm.ascent()));
             m_dateRect = preparePainter(p, dateRect, smallFont, dateString);
         } else {
             // Find a suitable size for the date font
             if (formFactor() == Plasma::Vertical) {
-                smallFont.setPixelSize(qMax(contentsRect.height()/6, fm.ascent()));
+                smallFont.setPixelSize(std::max(contentsRect.height()/6, fm.ascent()));
             } else if (formFactor() == Plasma::Horizontal) {
-                smallFont.setPixelSize(qMax(qMin(contentsRect.height(), contentsRect.width())*2/7, fm.ascent()));
+                smallFont.setPixelSize(std::max(std::min(contentsRect.height(), contentsRect.width())*2/7, fm.ascent()));
 
                 //we want to write the date always on one line
                 fm = QFontMetrics(smallFont);
@@ -529,7 +529,7 @@ void Clock::paintInterface(QPainter *p, const QStyleOptionGraphicsItem *option, 
                 }
 
             } else {
-                smallFont.setPixelSize(qMax(qMin(contentsRect.height(), contentsRect.width())/8, KGlobalSettings::smallestReadableFont().pointSize()));
+                smallFont.setPixelSize(std::max(std::min(contentsRect.height(), contentsRect.width())/8, KGlobalSettings::smallestReadableFont().pointSize()));
             }
 
             m_dateRect = preparePainter(p, contentsRect, smallFont, dateString);
@@ -575,7 +575,7 @@ void Clock::paintInterface(QPainter *p, const QStyleOptionGraphicsItem *option, 
 
     // kDebug(96669) << m_time;
     // Choose a relatively big font size to start with
-    m_plainClockFont.setPointSizeF(qMax(m_timeRect.height(), KGlobalSettings::smallestReadableFont().pointSize()));
+    m_plainClockFont.setPointSizeF(std::max(m_timeRect.height(), KGlobalSettings::smallestReadableFont().pointSize()));
     preparePainter(p, m_timeRect, m_plainClockFont, fakeTimeString, true);
 
     if (!m_dateString.isEmpty()) {
@@ -585,7 +585,7 @@ void Clock::paintInterface(QPainter *p, const QStyleOptionGraphicsItem *option, 
             QRect br = fm.boundingRect(m_timeRect, Qt::AlignCenter, timeString);
 
             QFontMetrics smallfm(smallFont);
-            dateRect.moveLeft(br.right() + qMin(0, br.left()) + smallfm.width(" "));
+            dateRect.moveLeft(br.right() + std::min(0, br.left()) + smallfm.width(" "));
         }
 
         // When we're relatively low, force everything into a single line
@@ -610,7 +610,7 @@ void Clock::paintInterface(QPainter *p, const QStyleOptionGraphicsItem *option, 
     if (m_useCustomColor || !m_svgExistsInTheme) {
         QFontMetrics fm(p->font());
 
-        QPointF timeTextOrigin(QPointF(qMax(0, (m_timeRect.center().x() - fm.width(fakeTimeString) / 2)),
+        QPointF timeTextOrigin(QPointF(std::max(0, (m_timeRect.center().x() - fm.width(fakeTimeString) / 2)),
                             (m_timeRect.center().y() + fm.height() / 3)));
         p->translate(-0.5, -0.5);
 
@@ -718,7 +718,7 @@ void Clock::prepareFont(QFont &font, QRect &rect, const QString &text, bool sing
         if (first) {
             first = false;
         } else  {
-            font.setPointSize(qMax(smallest, font.pointSize() - 1));
+            font.setPointSize(std::max(smallest, font.pointSize() - 1));
         }
 
         const QFontMetrics fm(font);

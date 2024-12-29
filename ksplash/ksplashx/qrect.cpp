@@ -49,6 +49,8 @@
 #include "qrect.h"
 #include "qdatastream.h"
 
+#include <algorithm>
+
 /*!
     \class QRect
     \brief The QRect class defines a rectangle in the plane.
@@ -829,10 +831,10 @@ QRect QRect::operator|(const QRect &r) const
     if ( isValid() ) {
 	if ( r.isValid() ) {
 	    QRect tmp;
-	    tmp.setLeft(   qMin( x1, r.x1 ) );
-	    tmp.setRight(  qMax( x2, r.x2 ) );
-	    tmp.setTop(	   qMin( y1, r.y1 ) );
-	    tmp.setBottom( qMax( y2, r.y2 ) );
+	    tmp.setLeft(   std::min( x1, r.x1 ) );
+	    tmp.setRight(  std::max( x2, r.x2 ) );
+	    tmp.setTop(	   std::min( y1, r.y1 ) );
+	    tmp.setBottom( std::max( y2, r.y2 ) );
 	    return tmp;
 	} else {
 	    return *this;
@@ -863,10 +865,10 @@ QRect QRect::unite( const QRect &r ) const
 QRect QRect::operator&( const QRect &r ) const
 {
     QRect tmp;
-    tmp.x1 = qMax( x1, r.x1 );
-    tmp.x2 = qMin( x2, r.x2 );
-    tmp.y1 = qMax( y1, r.y1 );
-    tmp.y2 = qMin( y2, r.y2 );
+    tmp.x1 = std::max( x1, r.x1 );
+    tmp.x2 = std::min( x2, r.x2 );
+    tmp.y1 = std::max( y1, r.y1 );
+    tmp.y2 = std::min( y2, r.y2 );
     return tmp;
 }
 
@@ -889,8 +891,8 @@ QRect QRect::intersect( const QRect &r ) const
 
 bool QRect::intersects( const QRect &r ) const
 {
-    return ( qMax( x1, r.x1 ) <= qMin( x2, r.x2 ) &&
-	     qMax( y1, r.y1 ) <= qMin( y2, r.y2 ) );
+    return ( std::max( x1, r.x1 ) <= std::min( x2, r.x2 ) &&
+	     std::max( y1, r.y1 ) <= std::min( y2, r.y2 ) );
 }
 
 

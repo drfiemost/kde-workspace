@@ -318,7 +318,7 @@ void ResultItem::setIndex(int index)
         return;
     }
 
-    m_index = qMax(-1, index);
+    m_index = std::max(-1, index);
 }
 
 int ResultItem::index() const
@@ -606,8 +606,8 @@ void ResultItem::calculateSize(int sceneWidth)
 
     int height = fm.boundingRect(textBounds, Qt::AlignLeft | Qt::TextWordWrap, text).height();
     //kDebug() << (QObject*)this << text << fm.boundingRect(textBounds, Qt::AlignLeft | Qt::TextWordWrap, text);
-    //kDebug() << fm.height() << maxHeight << textBounds << height << minHeight << qMax(height, minHeight);
-    int innerHeight = qMax(height, minHeight);
+    //kDebug() << fm.height() << maxHeight << textBounds << height << minHeight << std::max(height, minHeight);
+    int innerHeight = std::max(height, minHeight);
 
     qreal left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);

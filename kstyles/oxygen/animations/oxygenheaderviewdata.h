@@ -165,8 +165,8 @@ namespace Oxygen
     {
         if( QHeaderView* header = qobject_cast<QHeaderView*>( target().data() ) )
         {
-            const int firstIndex( qMin( previousIndex(), currentIndex() ) );
-            const int lastIndex( qMax( previousIndex(), currentIndex() ) );
+            const int firstIndex( std::min( previousIndex(), currentIndex() ) );
+            const int lastIndex( std::max( previousIndex(), currentIndex() ) );
             if( firstIndex >= 0 ) header->headerDataChanged( header->orientation(), firstIndex, lastIndex );
             else if( lastIndex >= 0 ) header->headerDataChanged( header->orientation(), lastIndex, lastIndex );
         }

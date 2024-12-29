@@ -244,7 +244,7 @@ namespace Oxygen
 
         //! returns menu background color matching position in a top level widget of given height
         virtual const QColor& backgroundColor( const QColor& color, int height, int y )
-        { return backgroundColor( color, qMin( qreal( 1.0 ), qreal( y )/qMin( 300, 3*height/4 ) ) ); }
+        { return backgroundColor( color, std::min( qreal( 1.0 ), qreal( y )/std::min( 300, 3*height/4 ) ) ); }
 
         //! color used for background radial gradient
         virtual const QColor& backgroundRadialColor( const QColor& color );

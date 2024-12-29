@@ -246,8 +246,8 @@ void InternalToolBox::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     int distanceToTop = newPos.y() - m_dragStartRelative.y();
     int distanceToBottom = areaHeight - h - distanceToTop;
 
-    int distancetoHorizontalMiddle = qAbs((newPos.x() + boundingRect().size().width()/2) - areaWidth/2 - m_dragStartRelative.x());
-    int distancetoVerticalMiddle = qAbs((newPos.y() + boundingRect().size().height()/2) - areaHeight/2 - m_dragStartRelative.y());
+    int distancetoHorizontalMiddle = std::abs((newPos.x() + boundingRect().size().width()/2) - areaWidth/2 - m_dragStartRelative.x());
+    int distancetoVerticalMiddle = std::abs((newPos.y() + boundingRect().size().height()/2) - areaHeight/2 - m_dragStartRelative.y());
 
     if (distancetoHorizontalMiddle < 10) {
         x = areaWidth/2 - boundingRect().size().width()/2;
@@ -395,25 +395,25 @@ void InternalToolBox::restore(const KConfigGroup &containmentGroup)
             setPos(0, 0);
             break;
         case InternalToolBox::Top:
-            setPos(qMin(offset, maxW), 0);
+            setPos(std::min(offset, maxW), 0);
             break;
         case InternalToolBox::TopRight:
             setPos(m_containment->size().width() - boundingRect().width(), 0);
             break;
         case InternalToolBox::Right:
-            setPos(m_containment->size().width() - boundingRect().width(), qMin(offset, maxH));
+            setPos(m_containment->size().width() - boundingRect().width(), std::min(offset, maxH));
             break;
         case InternalToolBox::BottomRight:
             setPos(m_containment->size().width() - boundingRect().width(), m_containment->size().height() - boundingRect().height());
             break;
         case InternalToolBox::Bottom:
-            setPos(qMin(offset, maxW), m_containment->size().height() - boundingRect().height());
+            setPos(std::min(offset, maxW), m_containment->size().height() - boundingRect().height());
             break;
         case InternalToolBox::BottomLeft:
             setPos(0, m_containment->size().height() - boundingRect().height());
             break;
         case InternalToolBox::Left:
-            setPos(0, qMin(offset, maxH));
+            setPos(0, std::min(offset, maxH));
             break;
     }
     //kDebug() << "marked as user moved" << pos()

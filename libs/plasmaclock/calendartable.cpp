@@ -1073,14 +1073,14 @@ void CalendarTable::resizeEvent(QGraphicsSceneResizeEvent * event)
 
     //Using integers to help to keep things aligned to the grid
     //kDebug() << r.width() << rectSize;
-    d->cellSpace = qMax(1, qMin(4, qMin(rectSizeH, rectSizeW) / 20));
+    d->cellSpace = std::max(1, std::min(4, std::min(rectSizeH, rectSizeW) / 20));
     d->headerSpace = d->cellSpace * 2;
     d->weekBarSpace = d->cellSpace * 2 + 1;
     d->cellH = rectSizeH - d->cellSpace;
     d->cellW = rectSizeW - d->cellSpace;
     d->glowRadius = d->cellW * .1;
     d->headerHeight = (int) (d->cellH / 1.5);
-    d->centeringSpace = qMax(0, int((r.width() - (rectSizeW * numCols) - (d->cellSpace * (numCols -1))) / 2));
+    d->centeringSpace = std::max(0, int((r.width() - (rectSizeW * numCols) - (d->cellSpace * (numCols -1))) / 2));
 
     // Relative to the cell size
     const qreal weekSize = .75;
@@ -1106,7 +1106,7 @@ void CalendarTable::resizeEvent(QGraphicsSceneResizeEvent * event)
     int width = 0;
     for (int i = 0; i < d->daysInWeek; i++) {
         const QString name = calendar()->weekDayName(i, KCalendarSystem::ShortDayName);
-        width = qMax(width, fm.width(name));
+        width = std::max(width, fm.width(name));
     }
 
     if (width > d->cellW * weekSize) {
@@ -1116,7 +1116,7 @@ void CalendarTable::resizeEvent(QGraphicsSceneResizeEvent * event)
     fm = QFontMetrics(d->dateFontBold);
     width = 0;
     for (int i = 10; i <= 52; i++) {
-        width = qMax(width, fm.width(QString::number(i)));
+        width = std::max(width, fm.width(QString::number(i)));
     }
 
     if (width > d->cellW * dateSize) {

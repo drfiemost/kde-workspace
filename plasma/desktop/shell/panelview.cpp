@@ -171,7 +171,7 @@ public:
             newStrength = 1- qreal(localPoint.y())/m_triggerDistance;
             break;
         }
-        if (qAbs(newStrength - m_strength) > 0.01 && newStrength >= 0 && newStrength <= 1) {
+        if (std::abs(newStrength - m_strength) > 0.01 && newStrength >= 0 && newStrength <= 1) {
             m_strength = newStrength;
             update();
         }
@@ -504,7 +504,7 @@ void PanelView::updatePanelGeometry()
     QRect screenGeom = PlasmaApp::self()->corona()->screenGeometry(screen);
 
     if (m_alignment != Qt::AlignCenter) {
-        m_offset = qMax(m_offset, 0);
+        m_offset = std::max(m_offset, 0);
     }
 
     //Sanity controls
@@ -1514,7 +1514,7 @@ void PanelView::createUnhideTrigger()
 
             if (fancy) {
                 triggerWidth += 30;
-                triggerPoint.setX(qMax(0, triggerPoint.x() - 15));
+                triggerPoint.setX(std::max(0, triggerPoint.x() - 15));
             }
             break;
         case Plasma::BottomEdge:
@@ -1523,8 +1523,8 @@ void PanelView::createUnhideTrigger()
 
             if (fancy) {
                 triggerWidth += 30;
-                triggerPoint.setX(qMax(0, triggerPoint.x() - 15));
-                triggerPoint.setY(qMax(0, triggerPoint.y() - 29));
+                triggerPoint.setX(std::max(0, triggerPoint.x() - 15));
+                triggerPoint.setY(std::max(0, triggerPoint.y() - 29));
             }
             break;
         case Plasma::RightEdge:
@@ -1533,8 +1533,8 @@ void PanelView::createUnhideTrigger()
 
             if (fancy) {
                 triggerHeight += 30;
-                triggerPoint.setY(qMax(0, triggerPoint.y() - 15));
-                triggerPoint.setX(qMax(0, triggerPoint.x() - 29));
+                triggerPoint.setY(std::max(0, triggerPoint.y() - 15));
+                triggerPoint.setX(std::max(0, triggerPoint.x() - 29));
             }
             break;
         case Plasma::LeftEdge:
@@ -1542,7 +1542,7 @@ void PanelView::createUnhideTrigger()
 
             if (fancy) {
                 triggerHeight += 30;
-                triggerPoint.setY(qMax(0, triggerPoint.y() - 15));
+                triggerPoint.setY(std::max(0, triggerPoint.y() - 15));
             }
             break;
         default:

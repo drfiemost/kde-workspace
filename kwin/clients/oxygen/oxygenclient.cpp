@@ -306,7 +306,7 @@ namespace Oxygen
 
                 } else if( !compositingActive() && _configuration->frameBorder() == Configuration::BorderTiny ) {
 
-                    border = qMax( frameBorder, 3 );
+                    border = std::max( frameBorder, 3 );
 
                 }
 
@@ -325,7 +325,7 @@ namespace Oxygen
 
                     // for tiny border, the convention is to have a larger bottom area in order to
                     // make resizing easier
-                    border = qMax(frameBorder, 4);
+                    border = std::max(frameBorder, 4);
 
                 } else if( _configuration->frameBorder() < Configuration::BorderTiny ) {
 
@@ -333,7 +333,7 @@ namespace Oxygen
 
                 } else if( !compositingActive() && _configuration->frameBorder() == Configuration::BorderTiny ) {
 
-                    border = qMax( frameBorder, 3 );
+                    border = std::max( frameBorder, 3 );
 
                 }
 
@@ -397,7 +397,7 @@ namespace Oxygen
                 if( hideTitleBar() ) return 0;
                 else {
                     const int titleHeight = QFontMetrics(options()->font(true)).height();
-                    return qMax(buttonSize, titleHeight);
+                    return std::max(buttonSize, titleHeight);
                 }
             }
 
@@ -740,12 +740,12 @@ namespace Oxygen
             QRect frame;
 
             // bottom line
-            const int leftOffset = qMin( layoutMetric( LM_BorderLeft ), int(HFRAMESIZE) );
-            const int rightOffset = qMin( layoutMetric( LM_BorderRight ), int(HFRAMESIZE) );
+            const int leftOffset = std::min( layoutMetric( LM_BorderLeft ), int(HFRAMESIZE) );
+            const int rightOffset = std::min( layoutMetric( LM_BorderRight ), int(HFRAMESIZE) );
             if( _configuration->frameBorder() > Configuration::BorderNone )
             {
 
-                const int height = qMax( 0, layoutMetric( LM_BorderBottom ) - HFRAMESIZE );
+                const int height = std::max( 0, layoutMetric( LM_BorderBottom ) - HFRAMESIZE );
                 const int width = r.width() - leftOffset - rightOffset - 1;
 
                 const QRect rect( r.bottomLeft()-position + QPoint( leftOffset, -layoutMetric( LM_BorderBottom ) ), QSize( width, height ) );
@@ -759,7 +759,7 @@ namespace Oxygen
 
             // left and right
             const int topOffset = titleHeight;
-            const int bottomOffset = qMin( layoutMetric( LM_BorderBottom ), int(HFRAMESIZE) );
+            const int bottomOffset = std::min( layoutMetric( LM_BorderBottom ), int(HFRAMESIZE) );
             const int height = r.height() - topOffset - bottomOffset - 1;
 
             if( _configuration->frameBorder() >= Configuration::BorderTiny )
@@ -769,14 +769,14 @@ namespace Oxygen
                 painter->setPen( shadow );
 
                 // left
-                int width = qMax( 0, layoutMetric( LM_BorderLeft ) - HFRAMESIZE );
+                int width = std::max( 0, layoutMetric( LM_BorderLeft ) - HFRAMESIZE );
                 QRect rect( r.topLeft()-position + QPoint( layoutMetric( LM_BorderLeft ) - width, topOffset ), QSize( width, height ) );
                 if( width > 0 ) { mask += rect; frame |= rect; }
 
                 painter->drawLine( rect.topLeft()-QPoint(1,0), rect.bottomLeft()-QPoint(1, 0) );
 
                 // right
-                width = qMax( 0, layoutMetric( LM_BorderRight ) - HFRAMESIZE );
+                width = std::max( 0, layoutMetric( LM_BorderRight ) - HFRAMESIZE );
                 rect = QRect(r.topRight()-position + QPoint( -layoutMetric( LM_BorderRight ), topOffset ), QSize( width, height ));
                 if( width > 0 ) { mask += rect; frame |= rect; }
 

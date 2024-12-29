@@ -202,7 +202,7 @@ void Color::generatePainting(int mode, QPainter* painter, const QRectF& exposedR
 
     case RADIAL: {
             // The diameter of the gradient will be the max screen dimension
-            int maxDimension = qMax(boundingRect.height(), boundingRect.width());
+            int maxDimension = std::max(boundingRect.height(), boundingRect.width());
 
             QRadialGradient gradient = QRadialGradient(boundingRect.center(),
                                                        maxDimension / 2,

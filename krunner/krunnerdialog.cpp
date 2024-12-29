@@ -303,16 +303,16 @@ void KRunnerDialog::themeUpdated()
     if (useShadowsForMargins) {
         m_shadows->getMargins(m_topBorderHeight, m_rightBorderWidth, m_bottomBorderHeight, m_leftBorderWidth);
     } else {
-        m_leftBorderWidth = qMax(0, int(m_background->marginSize(Plasma::LeftMargin)));
-        m_rightBorderWidth = qMax(0, int(m_background->marginSize(Plasma::RightMargin)));
-        m_bottomBorderHeight = qMax(0, int(m_background->marginSize(Plasma::BottomMargin)));
+        m_leftBorderWidth = std::max(0, int(m_background->marginSize(Plasma::LeftMargin)));
+        m_rightBorderWidth = std::max(0, int(m_background->marginSize(Plasma::RightMargin)));
+        m_bottomBorderHeight = std::max(0, int(m_background->marginSize(Plasma::BottomMargin)));
         // the -1 in the non-floating case is not optimal, but it gives it a bit of a "more snug to the
         // top" feel; best would be if we could tell exactly where the edge/shadow of the frame svg was
         // but this works nicely
-        m_topBorderHeight = m_floating ? qMax(0, int(m_background->marginSize(Plasma::TopMargin)))
+        m_topBorderHeight = m_floating ? std::max(0, int(m_background->marginSize(Plasma::TopMargin)))
                                        : Plasma::Theme::defaultTheme()->windowTranslucencyEnabled()
-                                            ? qMax(1, m_bottomBorderHeight / 2)
-                                            : qMax(1, m_bottomBorderHeight - 1);
+                                            ? std::max(1, m_bottomBorderHeight / 2)
+                                            : std::max(1, m_bottomBorderHeight - 1);
     }
 
     kDebug() << m_leftBorderWidth << m_topBorderHeight << m_rightBorderWidth << m_bottomBorderHeight;
@@ -398,9 +398,9 @@ void KRunnerDialog::mousePressEvent(QMouseEvent *e)
     if (e->button() == Qt::LeftButton) {
         m_lastPressPos = e->globalPos();
 
-        const bool leftResize = e->x() < qMax(5, m_leftBorderWidth);
-        m_rightResize = e->x() > width() - qMax(5, m_rightBorderWidth);
-        m_vertResize = e->y() > height() - qMax(5, m_bottomBorderHeight);
+        const bool leftResize = e->x() < std::max(5, m_leftBorderWidth);
+        m_rightResize = e->x() > width() - std::max(5, m_rightBorderWidth);
+        m_vertResize = e->y() > height() - std::max(5, m_bottomBorderHeight);
         kWarning() << "right:" << m_rightResize << "left:" << leftResize << "vert:" << m_vertResize;
         if (m_rightResize || m_vertResize || leftResize) {
             // let's do a resize! :)
@@ -472,7 +472,7 @@ void KRunnerDialog::mouseMoveEvent(QMouseEvent *e)
         // resizing
         if (m_vertResize) {
             const int deltaY = e->globalY() - m_lastPressPos.y();
-            resize(width(), qMax(80, height() + deltaY));
+            resize(width(), std::max(80, height() + deltaY));
             m_lastPressPos = e->globalPos();
         } else {
             const QRect r = m_desktopWidget->availableGeometry(m_shownOnScreen);
@@ -482,10 +482,10 @@ void KRunnerDialog::mouseMoveEvent(QMouseEvent *e)
             // don't let it grow beyond the opposite screen edge
             if (m_rightResize) {
                 if (m_leftBorderWidth > 0) {
-                    newWidth += qMin(deltaX, x() - r.left());
+                    newWidth += std::min(deltaX, x() - r.left());
                 }
             } else if (m_rightBorderWidth > 0) {
-                newWidth += qMin(deltaX, r.right() - (x() + width() - 1));
+                newWidth += std::min(deltaX, r.right() - (x() + width() - 1));
             } else if (newWidth > minimumWidth() && newWidth < width()) {
                 move(r.right() - newWidth + 1, y());
             }
@@ -524,8 +524,8 @@ void KRunnerDialog::timerEvent(QTimerEvent *event)
 bool KRunnerDialog::checkCursor(const QPoint &pos)
 {
     //Plasma::FrameSvg borders = m_background->enabledBoders();
-    if ((m_leftBorderWidth > 0 && pos.x() < qMax(5, m_leftBorderWidth)) ||
-        (m_rightBorderWidth > 0 && pos.x() > width() - qMax(5, m_rightBorderWidth))) {
+    if ((m_leftBorderWidth > 0 && pos.x() < std::max(5, m_leftBorderWidth)) ||
+        (m_rightBorderWidth > 0 && pos.x() > width() - std::max(5, m_rightBorderWidth))) {
         if (cursor().shape() != Qt::SizeHorCursor) {
             setCursor(Qt::SizeHorCursor);
             if (!m_runningTimer) {
@@ -536,7 +536,7 @@ bool KRunnerDialog::checkCursor(const QPoint &pos)
         }
 
         return true;
-    } else if ((pos.y() > height() - qMax(5, m_bottomBorderHeight)) && (pos.y() < height())) {
+    } else if ((pos.y() > height() - std::max(5, m_bottomBorderHeight)) && (pos.y() < height())) {
         if (cursor().shape() != Qt::SizeVerCursor) {
             setCursor(Qt::SizeVerCursor);
             if (!m_runningTimer) {

@@ -660,7 +660,7 @@ KDMConfShutdown::KDMConfShutdown(int _uid, const QList<DpySpec> &sessions, int t
         complete(lv);
         int cw[2];
         for (int i = 0; i < 2; i++)
-            cw[i] = qMax(static_cast<QAbstractItemView *>(lv)->sizeHintForColumn(i),
+            cw[i] = std::max(static_cast<QAbstractItemView *>(lv)->sizeHintForColumn(i),
                          lv->header()->sectionSizeHint(i));
         int w = lv->maximumViewportSize().width(), w2 = w / 2;
         int m = (w < cw[0] + cw[1]) ?

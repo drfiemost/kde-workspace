@@ -84,10 +84,10 @@ void ScreenShotEffect::postPaintScreen()
         if (m_scheduledScreenshot->hasDecoration() && m_type & INCLUDE_DECORATION) {
             foreach (const WindowQuad & quad, d.quads) {
                 // we need this loop to include the decoration padding
-                left   = qMin(left, quad.left());
-                top    = qMin(top, quad.top());
-                right  = qMax(right, quad.right());
-                bottom = qMax(bottom, quad.bottom());
+                left   = std::min(left, quad.left());
+                top    = std::min(top, quad.top());
+                right  = std::max(right, quad.right());
+                bottom = std::max(bottom, quad.bottom());
             }
         } else if (m_scheduledScreenshot->hasDecoration()) {
             WindowQuadList newQuads;
@@ -98,10 +98,10 @@ void ScreenShotEffect::postPaintScreen()
             foreach (const WindowQuad & quad, d.quads) {
                 if (quad.type() == WindowQuadContents) {
                     newQuads << quad;
-                    left   = qMin(left, quad.left());
-                    top    = qMin(top, quad.top());
-                    right  = qMax(right, quad.right());
-                    bottom = qMax(bottom, quad.bottom());
+                    left   = std::min(left, quad.left());
+                    top    = std::min(top, quad.top());
+                    right  = std::max(right, quad.right());
+                    bottom = std::max(bottom, quad.bottom());
                 }
             }
             d.quads = newQuads;

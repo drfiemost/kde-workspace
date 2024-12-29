@@ -320,7 +320,7 @@ void Kclock::resizeEvent( QResizeEvent * )
 
 void Kclock::setClockSize(const QSize &size)
 {
-    int dim = qMin(size.width(), size.height());
+    int dim = std::min(size.width(), size.height());
     QSize newSize = QSize(dim, dim);
 
     if (newSize != m_faceCache.size()) {

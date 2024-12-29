@@ -206,7 +206,7 @@ void KFocusConfig::delayFocusOnTog(bool a)
 
 void KFocusConfig::setFocusStealing(int l)
 {
-    l = qMax(0, qMin(4, l));
+    l = std::max(0, std::min(4, l));
     m_ui->focusStealing->setCurrentIndex(l);
 }
 

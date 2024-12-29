@@ -59,7 +59,7 @@ namespace Oxygen
 
         // background contrast is calculated so that it is 0.9
         // when KGlobalSettings contrast value of 0.7
-        _bgcontrast = qMin( 1.0, 0.9*_contrast/0.7 );
+        _bgcontrast = std::min( 1.0, 0.9*_contrast/0.7 );
 
         _backgroundCache.setMaxCost( 64 );
 
@@ -83,7 +83,7 @@ namespace Oxygen
 
         _config->reparseConfiguration();
         _contrast = KGlobalSettings::contrastF( _config );
-        _bgcontrast = qMin( 1.0, 0.9*_contrast/0.7 );
+        _bgcontrast = std::min( 1.0, 0.9*_contrast/0.7 );
 
         _viewFocusBrush = KStatefulBrush( KColorScheme::View, KColorScheme::FocusColor, config() );
         _viewHoverBrush = KStatefulBrush( KColorScheme::View, KColorScheme::HoverColor, config() );
@@ -163,7 +163,7 @@ namespace Oxygen
         const int offset( gradientHeight - 20 );
 
         // draw upper linear gradient
-        const int splitY( offset + qMin( 300, ( 3*height )/4 ) );
+        const int splitY( offset + std::min( 300, ( 3*height )/4 ) );
         const QRect upperRect( -x, -y, r.width(), splitY );
         QPixmap tile( verticalGradient( color, splitY, offset ) );
         p->drawTiledPixmap( upperRect, tile );
@@ -173,7 +173,7 @@ namespace Oxygen
         p->fillRect( lowerRect, backgroundBottomColor( color ) );
 
         // draw upper radial gradient
-        const int radialW( qMin( 600, width ) );
+        const int radialW( std::min( 600, width ) );
         const QRect radialRect( ( r.width() - radialW ) / 2-x, -y, radialW, offset + 64 );
         if ( clipRect.intersects( radialRect ) )
         {
@@ -647,8 +647,8 @@ namespace Oxygen
             lg.setColorAt( 0, light );
             lg.setColorAt( 1, alphaColor( light, 0 ) );
 
-            if( h > 20.5 ) lg.setColorAt( qMax( 0.0, 1.0 - 12.0/( h-5.5 ) ), alphaColor( light, 0.5 ) );
-            else if( h > 8.5 ) lg.setColorAt( qMax( 0.0, 3.0/( h-5.5 ) ), alphaColor( light, 0.5 ) );
+            if( h > 20.5 ) lg.setColorAt( std::max( 0.0, 1.0 - 12.0/( h-5.5 ) ), alphaColor( light, 0.5 ) );
+            else if( h > 8.5 ) lg.setColorAt( std::max( 0.0, 3.0/( h-5.5 ) ), alphaColor( light, 0.5 ) );
 
             p->setPen( QPen( lg, 0.8 ) );
             if( tiles & TileSet::Left ) p->drawLine( QPointF( x+0.6, y+4 ), QPointF( x+0.6, y+h-4 ) );

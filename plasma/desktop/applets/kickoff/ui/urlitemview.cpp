@@ -227,7 +227,7 @@ public:
         }
 
         return QSize(q->width() - ItemDelegate::HEADER_LEFT_MARGIN,
-                     qMax(fm.height() + (isFirst ? 4 : ItemDelegate::HEADER_TOP_MARGIN), minHeight)
+                     std::max(fm.height() + (isFirst ? 4 : ItemDelegate::HEADER_TOP_MARGIN), minHeight)
                      + ItemDelegate::HEADER_BOTTOM_MARGIN) ;
     }
 
@@ -425,7 +425,7 @@ QModelIndex UrlItemView::moveCursor(CursorAction cursorAction, Qt::KeyboardModif
             const QModelIndex root = model()->index(0, 0);
             index = model()->index(model()->rowCount(root) - 1, 0, root);
         } else {
-            visualIndex = qMax(0, visualIndex - 1);
+            visualIndex = std::max(0, visualIndex - 1);
         }
         break;
     case MoveDown:
@@ -433,7 +433,7 @@ QModelIndex UrlItemView::moveCursor(CursorAction cursorAction, Qt::KeyboardModif
             const QModelIndex root = model()->index(0, 0);
             index = model()->index(0, 0, root);
         } else {
-            visualIndex = qMin(d->visualOrder.count() - 1, visualIndex + 1);
+            visualIndex = std::min(d->visualOrder.count() - 1, visualIndex + 1);
         }
         break;
     default:

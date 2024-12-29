@@ -379,7 +379,7 @@ KDecoration::Position KDecoration::mousePosition(const QPoint& p) const
     const int range = 16;
     int bleft, bright, btop, bbottom;
     borders(bleft, bright, btop, bbottom);
-    btop = qMin(btop, 4);   // otherwise whole titlebar would have resize cursor
+    btop = std::min(btop, 4);   // otherwise whole titlebar would have resize cursor
 
     Position m = PositionCenter;
 
@@ -387,14 +387,14 @@ KDecoration::Position KDecoration::mousePosition(const QPoint& p) const
             && (p.y() > btop && p.y() < widget()->height() - bbottom))
         return PositionCenter;
 
-    if (p.y() <= qMax(range, btop) && p.x() <= qMax(range, bleft))
+    if (p.y() <= std::max(range, btop) && p.x() <= std::max(range, bleft))
         m = PositionTopLeft;
-    else if (p.y() >= widget()->height() - qMax(range, bbottom)
-            && p.x() >= widget()->width() - qMax(range, bright))
+    else if (p.y() >= widget()->height() - std::max(range, bbottom)
+            && p.x() >= widget()->width() - std::max(range, bright))
         m = PositionBottomRight;
-    else if (p.y() >= widget()->height() - qMax(range, bbottom) && p.x() <= qMax(range, bleft))
+    else if (p.y() >= widget()->height() - std::max(range, bbottom) && p.x() <= std::max(range, bleft))
         m = PositionBottomLeft;
-    else if (p.y() <= qMax(range, btop) && p.x() >= widget()->width() - qMax(range, bright))
+    else if (p.y() <= std::max(range, btop) && p.x() >= widget()->width() - std::max(range, bright))
         m = PositionTopRight;
     else if (p.y() <= btop)
         m = PositionTop;

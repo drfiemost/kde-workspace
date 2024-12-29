@@ -205,9 +205,9 @@ Interface::Interface(Plasma::RunnerManager *runnerManager, QWidget *parent)
         int width = size().width();
 
         if (screenWidth >= 1920) {
-            width = qMax(width, 550);
+            width = std::max(width, 550);
         } else if (screenWidth >= 1024) {
-            width = qMax(width, 300);
+            width = std::max(width, 300);
         }
 
         m_defaultSize = QSize(width, 500);
@@ -287,7 +287,7 @@ void Interface::setConfigWidget(QWidget *w)
     int left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
     const int padding = top + bottom + m_activityButton->height();
-    resize(width(), qMin(maxHeight, qMax(w->sizeHint().height() + padding, m_defaultSize.height())));
+    resize(width(), std::min(maxHeight, std::max(w->sizeHint().height() + padding, m_defaultSize.height())));
 
     m_resultsView->hide();
     m_searchTerm->setEnabled(false);
@@ -603,7 +603,7 @@ void Interface::matchCountChanged(int count)
 
             m_resultsView->show();
         }
-        //m_resultsScene->resize(m_resultsView->width(), qMax(m_resultsView->height(), int(m_resultsScene->height())));
+        //m_resultsScene->resize(m_resultsView->width(), std::max(m_resultsView->height(), int(m_resultsScene->height())));
         //kDebug() << s << size();
     } else {
         //kDebug() << "hiding ... eventually";
@@ -658,7 +658,7 @@ void Interface::resetResultsArea()
 {
     m_resultsView->hide();
     setMinimumSize(QSize(MIN_WIDTH, m_searchTerm->sizeHint().height()));
-    resize(qMax(minimumSizeHint().width(), m_defaultSize.width()), minimumSizeHint().height());
+    resize(std::max(minimumSizeHint().width(), m_defaultSize.width()), minimumSizeHint().height());
 }
 
 #include "interface.moc"

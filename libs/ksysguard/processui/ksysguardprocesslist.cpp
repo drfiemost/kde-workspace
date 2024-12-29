@@ -100,7 +100,7 @@ class ProgressBarItemDelegate : public QStyledItemDelegate
 
             //Now draw our percentage thingy
             const QRect &rect = option.rect;
-            int size = qMin(percentage,1.0f) * rect.width();
+            int size = std::min(percentage,1.0f) * rect.width();
             if(size > 2 ) { //make sure the line will have a width of more than 1 pixel
                 painter->setPen(Qt::NoPen);
                 QColor color = option.palette.color(cg, QPalette::Link);

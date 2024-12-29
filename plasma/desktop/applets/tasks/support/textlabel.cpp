@@ -157,7 +157,7 @@ void TextLabel::layoutText(QTextLayout &layout, const QString &text, const QSize
         line.setPosition(QPoint(0, height));
 
         height += int(line.height());
-        widthUsed = int(qMax(qreal(widthUsed), line.naturalTextWidth()));
+        widthUsed = int(std::max(qreal(widthUsed), line.naturalTextWidth()));
     }
     layout.endLayout();
 }
@@ -200,7 +200,7 @@ void TextLabel::drawTextLayout(QPainter *painter, const QTextLayout &layout, con
         // Add a fade out rect to the list if the line is too long
         if (line.naturalTextWidth() > rect.width())
         {
-            int x = int(qMin(line.naturalTextWidth(), (qreal)pixmap.width())) - fadeWidth;
+            int x = int(std::min(line.naturalTextWidth(), (qreal)pixmap.width())) - fadeWidth;
             int y = int(line.position().y() + position.y());
             QRect r = QStyle::visualRect(layout.textOption().textDirection(), pixmap.rect(),
                                          QRect(x, y, fadeWidth, int(line.height())));

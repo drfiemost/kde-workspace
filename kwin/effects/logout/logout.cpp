@@ -140,9 +140,9 @@ void LogoutEffect::prePaintScreen(ScreenPrePaintData& data, int time)
         --frameDelay;
     else {
         if (displayEffect)
-            progress = qMin(1.0, progress + time / animationTime(2000.0));
+            progress = std::min(1.0, progress + time / animationTime(2000.0));
         else if (progress > 0.0)
-            progress = qMax(0.0, progress - time / animationTime(500.0));
+            progress = std::max(0.0, progress - time / animationTime(500.0));
     }
 
     if (blurSupported && progress > 0.0) {

@@ -111,7 +111,7 @@ void ResultsView::nextPage()
     if (item && (item != currentItem)) {
         m_resultScene->setFocusItem(item);
     } else {
-        verticalScrollBar()->setValue(qMin(m_resultScene->viewableHeight(),
+        verticalScrollBar()->setValue(std::min(m_resultScene->viewableHeight(),
                                            int(verticalScrollBar()->value()+ (height() * 0.4))));
     }
 }

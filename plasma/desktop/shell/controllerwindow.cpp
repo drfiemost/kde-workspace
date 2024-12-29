@@ -245,10 +245,10 @@ void ControllerWindow::syncToGraphicsWidget()
 
         QSize windowSize;
         if (m_location == Plasma::LeftEdge || m_location == Plasma::RightEdge) {
-            windowSize = QSize(qMin(int(m_graphicsWidget->size().width()) + left + right, maxSize.width()), maxSize.height());
+            windowSize = QSize(std::min(int(m_graphicsWidget->size().width()) + left + right, maxSize.width()), maxSize.height());
             m_graphicsWidget->resize(m_graphicsWidget->size().width(), windowSize.height());
         } else {
-            windowSize = QSize(maxSize.width(), qMin(int(m_graphicsWidget->size().height()) + top + bottom, maxSize.height()));
+            windowSize = QSize(maxSize.width(), std::min(int(m_graphicsWidget->size().height()) + top + bottom, maxSize.height()));
             m_graphicsWidget->resize(windowSize.width(), m_graphicsWidget->size().height());
         }
 
@@ -261,8 +261,8 @@ void ControllerWindow::syncToGraphicsWidget()
         //force a valid rect, otherwise it will take up the whole scene
         QRectF sceneRect(m_graphicsWidget->sceneBoundingRect());
 
-        sceneRect.setWidth(qMax(qreal(1), sceneRect.width()));
-        sceneRect.setHeight(qMax(qreal(1), sceneRect.height()));
+        sceneRect.setWidth(std::max(qreal(1), sceneRect.width()));
+        sceneRect.setHeight(std::max(qreal(1), sceneRect.height()));
         m_view->setSceneRect(sceneRect);
 
         m_view->centerOn(m_graphicsWidget);

@@ -248,7 +248,7 @@ void Compositor::slotCompositingOptionsInitialized()
     fpsInterval = options->maxFpsInterval();
     if (m_scene->syncsToVBlank()) {  // if we do vsync, set the fps to the next multiple of the vblank rate
         vBlankInterval = milliToNano(1000) / m_xrrRefreshRate;
-        fpsInterval = qMax((fpsInterval / vBlankInterval) * vBlankInterval, vBlankInterval);
+        fpsInterval = std::max((fpsInterval / vBlankInterval) * vBlankInterval, vBlankInterval);
     } else
         vBlankInterval = milliToNano(1); // no sync - DO NOT set "0", would cause div-by-zero segfaults.
     m_timeSinceLastVBlank = fpsInterval - (options->vBlankTime() + 1); // means "start now" - we don't have even a slight idea when the first vsync will occur
@@ -707,7 +707,7 @@ void Compositor::setCompositeTimer()
             waitTime = 1; // ... "0" would be sufficient, but the compositor isn't the WMs only task
         }
     }
-    compositeTimer.start(qMin(waitTime, 250u), this); // force 4fps minimum
+    compositeTimer.start(std::min(waitTime, 250u), this); // force 4fps minimum
 }
 
 bool Compositor::isActive()

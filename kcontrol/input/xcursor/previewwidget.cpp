@@ -132,13 +132,13 @@ QSize PreviewWidget::sizeHint() const
     foreach (const PreviewCursor *c, list)
     {
         totalWidth += c->width();
-        maxHeight = qMax(c->height(), maxHeight);
+        maxHeight = std::max(c->height(), maxHeight);
     }
 
     totalWidth += (list.count() - 1) * cursorSpacing;
-    maxHeight = qMax(maxHeight, widgetMinHeight);
+    maxHeight = std::max(maxHeight, widgetMinHeight);
 
-    return QSize(qMax(totalWidth, widgetMinWidth), qMax(height(), maxHeight));
+    return QSize(std::max(totalWidth, widgetMinWidth), std::max(height(), maxHeight));
 }
 
 

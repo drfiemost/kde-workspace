@@ -864,7 +864,7 @@ void Workspace::slotIncreaseWindowOpacity()
     if (!active_client) {
         return;
     }
-    active_client->setOpacity(qMin(active_client->opacity() + 0.05, 1.0));
+    active_client->setOpacity(std::min(active_client->opacity() + 0.05, 1.0));
 }
 
 void Workspace::slotLowerWindowOpacity()
@@ -872,7 +872,7 @@ void Workspace::slotLowerWindowOpacity()
     if (!active_client) {
         return;
     }
-    active_client->setOpacity(qMax(active_client->opacity() - 0.05, 0.05));
+    active_client->setOpacity(std::max(active_client->opacity() - 0.05, 0.05));
 }
 
 void Workspace::closeActivePopup()
@@ -1266,11 +1266,11 @@ bool Client::performMouseCommand(Options::MouseCommand command, const QPoint &gl
         break;
     case Options::MouseOpacityMore:
         if (!isDesktop())   // No point in changing the opacity of the desktop
-            setOpacity(qMin(opacity() + 0.1, 1.0));
+            setOpacity(std::min(opacity() + 0.1, 1.0));
         break;
     case Options::MouseOpacityLess:
         if (!isDesktop())   // No point in changing the opacity of the desktop
-            setOpacity(qMax(opacity() - 0.1, 0.1));
+            setOpacity(std::max(opacity() - 0.1, 0.1));
         break;
     case Options::MousePreviousTab:
         if (tabGroup())
@@ -1658,19 +1658,19 @@ void Workspace::switchWindow(Direction direction)
             switch(direction) {
             case DirectionNorth:
                 distance = curPos.y() - other.y();
-                offset = qAbs(other.x() - curPos.x());
+                offset = std::abs(other.x() - curPos.x());
                 break;
             case DirectionEast:
                 distance = other.x() - curPos.x();
-                offset = qAbs(other.y() - curPos.y());
+                offset = std::abs(other.y() - curPos.y());
                 break;
             case DirectionSouth:
                 distance = other.y() - curPos.y();
-                offset = qAbs(other.x() - curPos.x());
+                offset = std::abs(other.x() - curPos.x());
                 break;
             case DirectionWest:
                 distance = curPos.x() - other.x();
-                offset = qAbs(other.y() - curPos.y());
+                offset = std::abs(other.y() - curPos.y());
                 break;
             default:
                 distance = -1;

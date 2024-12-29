@@ -1449,8 +1449,8 @@ void Client::setDesktop(int desktop)
 {
     const int numberOfDesktops = VirtualDesktopManager::self()->count();
     if (desktop != NET::OnAllDesktops)   // Do range check
-        desktop = qMax(1, qMin(numberOfDesktops, desktop));
-    desktop = qMin(numberOfDesktops, rules()->checkDesktop(desktop));
+        desktop = std::max(1, std::min(numberOfDesktops, desktop));
+    desktop = std::min(numberOfDesktops, rules()->checkDesktop(desktop));
     if (desk == desktop)
         return;
 
@@ -2035,7 +2035,7 @@ void Client::getIcons()
 
 QPixmap Client::icon(const QSize& size) const
 {
-    const int iconSize = qMin(size.width(), size.height());
+    const int iconSize = std::min(size.width(), size.height());
     if (iconSize <= 16)
         return miniIcon();
     else if (iconSize <= 32)

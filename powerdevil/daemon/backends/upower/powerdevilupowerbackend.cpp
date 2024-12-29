@@ -337,9 +337,9 @@ void PowerDevilUPowerBackend::brightnessKeyPressed(PowerDevil::BackendInterface:
     if (qFuzzyCompare(currentBrightness, m_cachedBrightnessMap.value(controlType))) {
         float newBrightness;
         if (type == Increase) {
-            newBrightness = qMin(100.0f, currentBrightness + step);
+            newBrightness = std::min(100.0f, currentBrightness + step);
         } else if (type == Decrease) {
-            newBrightness = qMax(0.0f, currentBrightness - step);
+            newBrightness = std::max(0.0f, currentBrightness - step);
         } else { // Toggle On/off
             newBrightness = currentBrightness > 0 ? 0 : 100;
         }

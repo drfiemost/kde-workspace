@@ -33,7 +33,7 @@ PlastikButtonProvider::PlastikButtonProvider()
 
 QPixmap PlastikButtonProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    int origSize = requestedSize.isValid() ? qMin(requestedSize.width(), requestedSize.height()) : 10;
+    int origSize = requestedSize.isValid() ? std::min(requestedSize.width(), requestedSize.height()) : 10;
     if (size) {
         *size = QSize(origSize, origSize);
     }
@@ -351,7 +351,7 @@ QPixmap PlastikButtonProvider::icon(ButtonIcon icon, int size, bool active, bool
                 lw2 = 1;
             }
 
-            int h = qMax( (r.width()/2), (lw1+2*lw2) );
+            int h = std::max( (r.width()/2), (lw1+2*lw2) );
 
             // horizontal bars
             drawObject(p, HorizontalLine, r.x(), r.y(), r.width(), lw1);

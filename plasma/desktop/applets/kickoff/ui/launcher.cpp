@@ -620,7 +620,7 @@ QSize Launcher::minimumSizeHint() const
     case Plasma::RightEdge:
         size.rheight() = d->searchBar->sizeHint().height() +
                          d->footer->sizeHint().height() +
-                         qMax(d->favoritesView->sizeHintForRow(0) * 3 + ItemDelegate::HEADER_HEIGHT, d->contentSwitcher->sizeHint().height());
+                         std::max(d->favoritesView->sizeHintForRow(0) * 3 + ItemDelegate::HEADER_HEIGHT, d->contentSwitcher->sizeHint().height());
         size.rwidth() = d->contentSwitcher->sizeHint().width() + d->favoritesView->sizeHint().width();
         break;
     case Plasma::TopEdge:

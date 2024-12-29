@@ -82,8 +82,8 @@ void CalculatorRunner::powSubstitutions(QString& cmd)
 
         QChar decimalSymbol = KGlobal::locale()->decimalSymbol().at(0);
         //avoid out of range on weird commands
-        preIndex = qMax(0, preIndex);
-        postIndex = qMin(postIndex, cmd.length()-1);
+        preIndex = std::max(0, preIndex);
+        postIndex = std::min(postIndex, cmd.length()-1);
 
         //go backwards looking for the beginning of the number or expression
         while (preIndex != 0) {
@@ -137,8 +137,8 @@ void CalculatorRunner::powSubstitutions(QString& cmd)
             postIndex++;
         }
 
-        preIndex = qMax(0, preIndex);
-        postIndex = qMin(postIndex, cmd.length());
+        preIndex = std::max(0, preIndex);
+        postIndex = std::min(postIndex, cmd.length());
 
         cmd.insert(preIndex,"pow(");
         // +1 +4 == next position to the last number after we add 4 new characters pow(

@@ -416,16 +416,16 @@ void Edge::updateApproaching(const QPoint &point)
             factor = ((point - approachGeometry().bottomLeft()).manhattanLength()<<8) / cornerDistance;
             break;
         case ElectricTop:
-            factor = (qAbs(point.y() - approachGeometry().y())<<8) / edgeDistance;
+            factor = (std::abs(point.y() - approachGeometry().y())<<8) / edgeDistance;
             break;
         case ElectricRight:
-            factor = (qAbs(point.x() - approachGeometry().right())<<8) / edgeDistance;
+            factor = (std::abs(point.x() - approachGeometry().right())<<8) / edgeDistance;
             break;
         case ElectricBottom:
-            factor = (qAbs(point.y() - approachGeometry().bottom())<<8) / edgeDistance;
+            factor = (std::abs(point.y() - approachGeometry().bottom())<<8) / edgeDistance;
             break;
         case ElectricLeft:
-            factor = (qAbs(point.x() - approachGeometry().x())<<8) / edgeDistance;
+            factor = (std::abs(point.x() - approachGeometry().x())<<8) / edgeDistance;
             break;
         default:
             break;
@@ -597,7 +597,7 @@ void ScreenEdges::reconfigure()
     // TODO: migrate settings to a group ScreenEdges
     KConfigGroup windowsConfig = m_config->group("Windows");
     setTimeThreshold(windowsConfig.readEntry("ElectricBorderDelay", 150));
-    setReActivationThreshold(qMax(timeThreshold() + 50, windowsConfig.readEntry("ElectricBorderCooldown", 350)));
+    setReActivationThreshold(std::max(timeThreshold() + 50, windowsConfig.readEntry("ElectricBorderCooldown", 350)));
     int desktopSwitching = windowsConfig.readEntry("ElectricBorders", static_cast<int>(ElectricDisabled));
     if (desktopSwitching == ElectricDisabled) {
         setDesktopSwitching(false);

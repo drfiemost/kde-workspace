@@ -111,7 +111,7 @@ void ItemContainer::setCurrentItem(ResultWidget *currentIcon)
     //m_currentIcon.clear();
 
     if (m_currentIcon.data() != currentIcon) {
-        const int nColumns = qMax(1, (int)ceil(size().width() / m_cellSize.width()));
+        const int nColumns = std::max(1, (int)ceil(size().width() / m_cellSize.width()));
 
         for (int i = 0; i < m_model->rowCount(); ++i) {
             QModelIndex index = m_model->index(i, 0, m_rootIndex);
@@ -291,16 +291,16 @@ void ItemContainer::relayout()
     QSizeF availableSize(m_itemView->size() - QSizeF(30, 30));
 
 
-    int nColumns = qMax(1, (int)availableSize.width() / m_cellSize.width());
-    int nRows = qMax(1, (int)availableSize.height() / m_cellSize.height());
+    int nColumns = std::max(1, (int)availableSize.width() / m_cellSize.width());
+    int nRows = std::max(1, (int)availableSize.height() / m_cellSize.height());
 
-    nColumns = qMin(m_model->rowCount(), nColumns);
-    nRows = qMin(m_model->rowCount(), nRows);
+    nColumns = std::min(m_model->rowCount(), nColumns);
+    nRows = std::min(m_model->rowCount(), nRows);
 
     setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 
     if (m_orientation == Qt::Vertical) {
-        nRows = qMax(1, (int)ceil((qreal)m_model->rowCount() / nColumns));
+        nRows = std::max(1, (int)ceil((qreal)m_model->rowCount() / nColumns));
         for (int i = 0; i <= m_model->rowCount() - 1; i++) {
 
             int actualIndex = i;
@@ -328,7 +328,7 @@ void ItemContainer::relayout()
             }
         }
     } else {
-        nColumns = qMax(1, (int)ceil((qreal)m_model->rowCount() / nRows));
+        nColumns = std::max(1, (int)ceil((qreal)m_model->rowCount() / nRows));
         for (int i = 0; i <= m_model->rowCount() - 1; i++) {
 
             int actualIndex = i;
@@ -392,8 +392,8 @@ void ItemContainer::itemRequestedDrag(ResultWidget *icon)
 
 void ItemContainer::keyPressEvent(QKeyEvent *event)
 {
-    const int nColumns = qMax(1, (int)ceil(size().width() / m_cellSize.width()));
-    const int nRows = qMax(1, (int)ceil(size().height() / m_cellSize.height()));
+    const int nColumns = std::max(1, (int)ceil(size().width() / m_cellSize.width()));
+    const int nRows = std::max(1, (int)ceil(size().height() / m_cellSize.height()));
 
     switch (event->key()) {
     case Qt::Key_Left: {
@@ -521,15 +521,15 @@ bool ItemContainer::eventFilter(QObject *watched, QEvent *event)
 
 int ItemContainer::rowForPosition(const QPointF &point)
 {
-    const int nColumns = qMax(1, (int)ceil(size().width() / m_cellSize.width()));
-    const int nRows = qMax(1, (int)ceil(size().height() / m_cellSize.height()));
+    const int nColumns = std::max(1, (int)ceil(size().width() / m_cellSize.width()));
+    const int nRows = std::max(1, (int)ceil(size().height() / m_cellSize.height()));
 
-    int row = qMin(nRows-1, (int)round(point.y()/m_cellSize.height()));
-    int column = qMin(nColumns-1, (int)round(point.x()/m_cellSize.width()));
+    int row = std::min(nRows-1, (int)round(point.y()/m_cellSize.height()));
+    int column = std::min(nColumns-1, (int)round(point.x()/m_cellSize.width()));
 
     kDebug() << "The item will be put at" << row;
 
-    int modelRow = qMin(m_model->rowCount(), row*nColumns + qBound(0, column, nColumns));
+    int modelRow = std::min(m_model->rowCount(), row*nColumns + qBound(0, column, nColumns));
 
     kDebug() << "Corresponding to the model row" << modelRow;
 
@@ -577,12 +577,12 @@ void ItemContainer::resizeEvent(QGraphicsSceneResizeEvent *event)
         if (size().width() < parentRect.size().width()) {
             newPos.setX(parentRect.center().x() - size().width()/2);
         } else {
-            newPos.setX(qMin(pos().x(), (qreal)0.0));
+            newPos.setX(std::min(pos().x(), (qreal)0.0));
         }
         if (size().height() < parentRect.size().height()) {
             newPos.setY(parentRect.center().y() - size().height()/2);
         } else {
-            newPos.setY(qMin(pos().y(), (qreal)0.0));
+            newPos.setY(std::min(pos().y(), (qreal)0.0));
         }
         if (m_positionAnimation->state() == QAbstractAnimation::Running) {
             m_positionAnimation->stop();

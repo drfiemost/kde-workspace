@@ -197,7 +197,7 @@ void KeyboardApplet::generatePixmap()
 	pixmap.fill(Qt::transparent);
 
 	QFont font = Plasma::Theme::defaultTheme()->font(Plasma::Theme::DesktopFont);
-	int height = qMin(contentsRect.height(), contentsRect.width());
+	int height = std::min(contentsRect.height(), contentsRect.width());
 	int fontSize = shortText.length() == 2
 			? height * 13 / 15
 			: height * 5 / 15;

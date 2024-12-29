@@ -397,7 +397,7 @@ QString KWinDesktopConfig::extrapolatedShortcut(int desktop) const
     if (desktop == 1)
         return QString("Ctrl+F1");
 
-    KAction *beforeAction = qobject_cast<KAction*>(m_actionCollection->actions().at(qMin(9, desktop - 2)));
+    KAction *beforeAction = qobject_cast<KAction*>(m_actionCollection->actions().at(std::min(9, desktop - 2)));
     QString before = beforeAction->globalShortcut(KAction::ActiveShortcut).toString();
     if (before.isEmpty())
         before = beforeAction->globalShortcut(KAction::DefaultShortcut).toString();

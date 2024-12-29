@@ -85,11 +85,11 @@ QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     QFontMetrics fm1(boldfont);
     QFontMetrics fm2(normalfont);
     int height = fm1.lineSpacing() + fm2.lineSpacing();
-    height = qMax(height, option.decorationSize.height());
+    height = std::max(height, option.decorationSize.height());
 
     // Compute the text width
     int width = fm1.width(firstRow);
-    width = qMax(width, fm2.width(secondRow));
+    width = std::max(width, fm2.width(secondRow));
 
     // Add decoration width + margin
     width += option.decorationSize.width() + decorationMargin;

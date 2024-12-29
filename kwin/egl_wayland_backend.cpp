@@ -198,7 +198,7 @@ static void pointerHandleAxis(void *data, wl_pointer *pointer, uint32_t time, ui
         // doesn't exist
         return;
     }
-    for (int i = 0; i < qAbs(delta); ++i) {
+    for (int i = 0; i < std::abs(delta); ++i) {
         xcb_test_fake_input(connection(), XCB_BUTTON_PRESS, xButton, XCB_TIME_CURRENT_TIME, XCB_WINDOW_NONE, 0, 0, 0);
         xcb_test_fake_input(connection(), XCB_BUTTON_RELEASE, xButton, XCB_TIME_CURRENT_TIME, XCB_WINDOW_NONE, 0, 0, 0);
     }

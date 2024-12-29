@@ -55,6 +55,8 @@
 #include "x11_defs.h"
 #include "string.h"
 
+#include <algorithm>
+
 int		qt_ncols_option  = 216;		// used in qcolor_x11.cpp
 
 // NOT REVISED
@@ -250,7 +252,7 @@ void QColor::initialize()
 	    colormodel = d8;
 	    // Create the g_our_alloc array, which remembers which color pixels
 	    // we allocated.
-	    screendata[scr]->g_cells = qMin(ncols,256);
+	    screendata[scr]->g_cells = std::min(ncols,256);
 	    screendata[scr]->g_carr  = new XColor[screendata[scr]->g_cells];
 	    Q_CHECK_PTR( screendata[scr]->g_carr );
 	    memset( screendata[scr]->g_carr, 0,

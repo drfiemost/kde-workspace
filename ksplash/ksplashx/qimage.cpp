@@ -71,6 +71,8 @@
 #include "qnamespace.h"
 #include "x11_defs.h"
 
+#include <algorithm>
+
 #ifdef Q_WS_QWS
 #include "qgfx_qws.h"
 #endif
@@ -1607,7 +1609,7 @@ static bool convert_32_to_8( const QImage *src, QImage *dst, int conversion_flag
 		    // Bi-directional error diffusion
 		    if ( y&1 ) {
 			for (x=0; x<sw; x++) {
-			    int pix = qMax(qMin(5, (l1[x] * 5 + 128)/ 255), 0);
+			    int pix = std::max(std::min(5, (l1[x] * 5 + 128)/ 255), 0);
 			    int err = l1[x] - pix * 255 / 5;
 			    pv[chan][x] = pix;
 
@@ -1622,7 +1624,7 @@ static bool convert_32_to_8( const QImage *src, QImage *dst, int conversion_flag
 			}
 		    } else {
 			for (x=sw; x-->0; ) {
-			    int pix = qMax(qMin(5, (l1[x] * 5 + 128)/ 255), 0);
+			    int pix = std::max(std::min(5, (l1[x] * 5 + 128)/ 255), 0);
 			    int err = l1[x] - pix * 255 / 5;
 			    pv[chan][x] = pix;
 
@@ -2979,8 +2981,8 @@ QImage QImage::xForm( const QWMatrix &matrix ) const
 	    return copy();
 	hd = qRound( mat.m22() * hs );
 	wd = qRound( mat.m11() * ws );
-	hd = qAbs( hd );
-	wd = qAbs( wd );
+	hd = std::abs( hd );
+	wd = std::abs( wd );
     } else {					// rotation or shearing
 	QPointArray a( QRect(0, 0, ws, hs) );
 	a = mat.map( a );
@@ -3560,7 +3562,7 @@ bool QImage::doImageIO( QImageIO* io, int quality ) const
 	qWarning( "QPixmap::save: quality out of range [-1,100]" );
 #endif
     if ( quality >= 0 )
-	io->setQuality( qMin(quality,100) );
+	io->setQuality( std::min(quality,100) );
     return io->write();
 }
 #endif //QT_NO_IMAGEIO
@@ -6170,16 +6172,16 @@ void bitBlt( QImage* dst, int dx, int dy, const QImage* src,
 	    const int ds = src->width() - sw;
 	    while ( sh-- ) {
 		for ( int t=sw; t--; ) {
-		    unsigned char a = qAlpha(*s);
+		    int a = qAlpha(*s);
 		    if ( a == 255 )
 			*d++ = *s++;
 		    else if ( a == 0 )
 			++d,++s; // nothing
 		    else {
-			unsigned char r = ((qRed(*s)-qRed(*d)) * a) / 256 + qRed(*d);
-			unsigned char g = ((qGreen(*s)-qGreen(*d)) * a) / 256 + qGreen(*d);
-			unsigned char b = ((qBlue(*s)-qBlue(*d)) * a) / 256 + qBlue(*d);
-			a = qMax(qAlpha(*d),a); // alternatives...
+			int r = ((qRed(*s)-qRed(*d)) * a) / 256 + qRed(*d);
+			int g = ((qGreen(*s)-qGreen(*d)) * a) / 256 + qGreen(*d);
+			int b = ((qBlue(*s)-qBlue(*d)) * a) / 256 + qBlue(*d);
+			a = std::max(qAlpha(*d),a); // alternatives...
 			*d++ = qRgba(r,g,b,a);
 			++s;
 		    }

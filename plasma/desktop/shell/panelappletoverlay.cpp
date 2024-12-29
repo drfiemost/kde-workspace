@@ -162,10 +162,10 @@ void PanelAppletOverlay::paintEvent(QPaintEvent *event)
     }
 
     if (m_orientation == Qt::Horizontal) {
-        iconSize = qMin(qMin(height(), int(m_applet->size().width())), 64);
+        iconSize = std::min(std::min(height(), int(m_applet->size().width())), 64);
         iconRect = QRect(rect().center() - QPoint(iconSize / 2, iconSize / 2), QSize(iconSize, iconSize));
     } else {
-        iconSize = qMin(qMin(width(), int(m_applet->size().height())), 64);
+        iconSize = std::min(std::min(width(), int(m_applet->size().height())), 64);
         iconRect = QRect(rect().center() - QPoint(iconSize / 2, iconSize / 2), QSize(iconSize, iconSize));
     }
 

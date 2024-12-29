@@ -893,7 +893,7 @@ void ObscuringWindows::create(Client* c)
 
 ObscuringWindows::~ObscuringWindows()
 {
-    max_cache_size = qMax(int(max_cache_size), obscuring_windows.count() + 4) - 1;
+    max_cache_size = std::max(int(max_cache_size), obscuring_windows.count() + 4) - 1;
     for (QList<Window>::ConstIterator it = obscuring_windows.constBegin();
             it != obscuring_windows.constEnd();
             ++it) {

@@ -109,9 +109,9 @@ public:
         }
 
         if (alignment == Qt::AlignCenter) {
-            return 2 * qAbs(sliderPos - offsetPos);
+            return 2 * std::abs(sliderPos - offsetPos);
         } else {
-            return qAbs(sliderPos - offsetPos);
+            return std::abs(sliderPos - offsetPos);
         }
     }
 
@@ -395,7 +395,7 @@ void PositioningRuler::setMinLength(int newMin)
     int deltaX;
     int deltaY;
 
-    int min = qMax(d->minimumBound, newMin);
+    int min = std::max(d->minimumBound, newMin);
 
     switch (d->location) {
     case Plasma::LeftEdge:
@@ -637,10 +637,10 @@ void PositioningRuler::mouseMoveEvent(QMouseEvent *event)
     }
 
     //bound to width, height
-    QPoint newPos = QPoint(qMin(event->pos().x() - d->startDragPos.x(), width()),
-                           qMin(event->pos().y() - d->startDragPos.y(), height()));
+    QPoint newPos = QPoint(std::min(event->pos().x() - d->startDragPos.x(), width()),
+                           std::min(event->pos().y() - d->startDragPos.y(), height()));
     //bound to 0,0
-    newPos = QPoint(qMax(newPos.x(), 0), qMax(newPos.y(), 0));
+    newPos = QPoint(std::max(newPos.x(), 0), std::max(newPos.y(), 0));
 
 
     const bool horizontal = (d->location == Plasma::TopEdge || d->location == Plasma::BottomEdge);
@@ -651,7 +651,7 @@ void PositioningRuler::mouseMoveEvent(QMouseEvent *event)
     if (horizontal) {
         if (newPos.x() <= snapSize) {
             newPos.setX(0);
-        } else if (qAbs(newPos.x() - d->availableLength/2) <= snapSize) {
+        } else if (std::abs(newPos.x() - d->availableLength/2) <= snapSize) {
             newPos.setX(d->availableLength/2);
         } else if (d->availableLength - newPos.x() <= snapSize) {
             newPos.setX(d->availableLength);
@@ -659,7 +659,7 @@ void PositioningRuler::mouseMoveEvent(QMouseEvent *event)
     } else {
         if (newPos.y() <= snapSize) {
             newPos.setY(0);
-        } else if (qAbs(newPos.y() - d->availableLength/2) <= snapSize) {
+        } else if (std::abs(newPos.y() - d->availableLength/2) <= snapSize) {
             newPos.setY(d->availableLength/2);
         } else if (d->availableLength - newPos.y() <= snapSize) {
             newPos.setY(d->availableLength);
@@ -745,7 +745,7 @@ void PositioningRuler::mouseMoveEvent(QMouseEvent *event)
         if (d->location == Plasma::LeftEdge || d->location == Plasma::RightEdge) {
             if (d->alignment == Qt::AlignRight && (newPos.y() < widthBound)) {
                 return;
-            } else if (qAbs(d->availableLength - newPos.y()) < widthBound) {
+            } else if (std::abs(d->availableLength - newPos.y()) < widthBound) {
                 return;
             }
             d->offsetSliderRect.moveCenter(QPoint(d->offsetSliderRect.center().x(), newPos.y()));
@@ -753,7 +753,7 @@ void PositioningRuler::mouseMoveEvent(QMouseEvent *event)
         } else {
             if ((d->alignment == Qt::AlignRight || d->alignment == Qt::AlignCenter) && (newPos.x() < widthBound)) {
                 return;
-            } else if (qAbs(d->availableLength - newPos.x()) < widthBound) {
+            } else if (std::abs(d->availableLength - newPos.x()) < widthBound) {
                 return;
             }
             d->offsetSliderRect.moveCenter(QPoint(newPos.x(), d->offsetSliderRect.center().y()));
@@ -771,8 +771,8 @@ void PositioningRuler::mouseMoveEvent(QMouseEvent *event)
             centerFactor = 2;
         }
 
-        d->maxLength = centerFactor*qMin(d->maxLength/centerFactor, d->availableLength/centerFactor - qAbs(d->offset));
-        d->minLength = centerFactor*qMin(d->minLength/centerFactor, d->availableLength/centerFactor - qAbs(d->offset));
+        d->maxLength = centerFactor*std::min(d->maxLength/centerFactor, d->availableLength/centerFactor - std::abs(d->offset));
+        d->minLength = centerFactor*std::min(d->minLength/centerFactor, d->availableLength/centerFactor - std::abs(d->offset));
 
         if (d->location == Plasma::LeftEdge || d->location == Plasma::RightEdge) {
              d->leftMaxSliderRect.moveTop(d->offsetSliderRect.top() - d->maxLength/centerFactor);

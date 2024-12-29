@@ -588,7 +588,7 @@ void KSignalPlotterPrivate::updateDataBuffers()
     if(q->isVisible())
         mMaxSamples = uint(q->size().width() / mHorizontalScale + 4);
     else //If it's not visible, we can't rely on sensible values for width.  Store some minimum number of data points
-        mMaxSamples = qMin((uint)(q->size().width() / mHorizontalScale + 4), NUM_SAMPLES_WHEN_INVISIBLE);
+        mMaxSamples = std::min((uint)(q->size().width() / mHorizontalScale + 4), NUM_SAMPLES_WHEN_INVISIBLE);
 }
 
 #ifdef GRAPHICS_SIGNAL_PLOTTER
@@ -760,7 +760,7 @@ void KSignalPlotterPrivate::redrawScrollableImage()
     mScrollOffset = 0;
     mVerticalLinesOffset = mVerticalLinesDistance - mHorizontalScale+1; // mVerticalLinesDistance - alignedWidth % mVerticalLinesDistance;
     //We need to draw the background for areas without a beam
-    int withoutBeamWidth = qMax(mBeamData.size()-1, 0) * mHorizontalScale;
+    int withoutBeamWidth = std::max(mBeamData.size()-1, 0) * mHorizontalScale;
     QPainter pCache(&mScrollableImage);
     if(withoutBeamWidth < mScrollableImage.width())
         drawBackground(&pCache, QRect(withoutBeamWidth, 0, alignedWidth - withoutBeamWidth, mScrollableImage.height()));
@@ -814,7 +814,7 @@ void KSignalPlotterPrivate::calculateNiceRange()
     if( alignToXAxis ) {
         number_lines_above_zero = int( mHorizontalLinesCount * max / range);
         number_lines_below_zero = mHorizontalLinesCount - number_lines_above_zero -1; //subtract 1 line for the actual 0 line
-        step = qMax( max / (mScaleDownBy*(number_lines_above_zero+1)), -min/(mScaleDownBy*(number_lines_below_zero+1)));
+        step = std::max( max / (mScaleDownBy*(number_lines_above_zero+1)), -min/(mScaleDownBy*(number_lines_below_zero+1)));
     } else
         step = range / (mScaleDownBy*(mHorizontalLinesCount+1));
 
@@ -904,13 +904,13 @@ void KSignalPlotterPrivate::drawBeam(QPainter *p, const QRect &boundingBox, int 
     const QList<qreal> &prev_prev_datapoints = hasPrevPrevDatapoints?mBeamData[index+2]:prev_datapoints;
 
     qreal x0 = boundingBox.right();
-    qreal x1 = qMax(boundingBox.right() - horizontalScale, 0);
+    qreal x1 = std::max(boundingBox.right() - horizontalScale, 0);
 
     qreal xaxis = boundingBox.bottom();
     if( mNiceMinValue < 0)
-       xaxis = qMax(qreal(xaxis + mNiceMinValue*scaleFac), qreal(boundingBox.top()));
+       xaxis = std::max(qreal(xaxis + mNiceMinValue*scaleFac), qreal(boundingBox.top()));
 
-    const int count = qMin(datapoints.size(), mBeamColors.size());
+    const int count = std::min(datapoints.size(), mBeamColors.size());
     QVector<QPainterPath> paths(count);
     QPointF previous_c0;
     QPointF previous_c1;
@@ -1017,7 +1017,7 @@ void KSignalPlotterPrivate::drawAxisText(QPainter *p, const QRect &boundingBox)
 
         if(textBoundingRect.width() > mActualAxisTextWidth)
             mAxisTextOverlapsPlotter = true;
-        int offset = qMax(mActualAxisTextWidth - textBoundingRect.right(), -textBoundingRect.left());
+        int offset = std::max(mActualAxisTextWidth - textBoundingRect.right(), -textBoundingRect.left());
         if ( q->layoutDirection() == Qt::RightToLeft )
             p->drawText( boundingBox.left(), y_coord, boundingBox.width() - offset , fontHeight+1, Qt::AlignLeft | Qt::AlignTop, val);
         else
@@ -1060,7 +1060,7 @@ QString KSignalPlotter::valueAsString( qreal value, int precision) const
 }
 QString KSignalPlotterPrivate::scaledValueAsString( qreal value, int precision) const
 {
-    qreal absvalue = qAbs(value);
+    qreal absvalue = std::abs(value);
     if(precision == -1) {
         if(absvalue >= 99.5)
             precision = 0;

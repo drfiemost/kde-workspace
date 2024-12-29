@@ -181,7 +181,7 @@ const QString &AuroraeTheme::themeName() const
 
 void AuroraeTheme::borders(int& left, int& top, int& right, int& bottom, bool maximized) const
 {
-    const qreal titleHeight = qMax((qreal)d->themeConfig.titleHeight(),
+    const qreal titleHeight = std::max((qreal)d->themeConfig.titleHeight(),
                                    d->themeConfig.buttonHeight()*buttonSizeFactor() +
                                    d->themeConfig.buttonMarginTop());
     if (maximized) {
@@ -212,13 +212,13 @@ void AuroraeTheme::borders(int& left, int& top, int& right, int& bottom, bool ma
         case KDecoration::BorderTiny:
             // TODO: this looks wrong
             if (isCompositingActive()) {
-                left = qMin(0, (int)left - d->themeConfig.borderLeft() - d->themeConfig.paddingLeft());
-                right = qMin(0, (int)right - d->themeConfig.borderRight() - d->themeConfig.paddingRight());
-                bottom = qMin(0, (int)bottom - d->themeConfig.borderBottom() - d->themeConfig.paddingBottom());
+                left = std::min(0, (int)left - d->themeConfig.borderLeft() - d->themeConfig.paddingLeft());
+                right = std::min(0, (int)right - d->themeConfig.borderRight() - d->themeConfig.paddingRight());
+                bottom = std::min(0, (int)bottom - d->themeConfig.borderBottom() - d->themeConfig.paddingBottom());
             } else {
-                left = qMin(0, (int)left - d->themeConfig.borderLeft());
-                right = qMin(0, (int)right - d->themeConfig.borderRight());
-                bottom = qMin(0, (int)bottom - d->themeConfig.borderBottom());
+                left = std::min(0, (int)left - d->themeConfig.borderLeft());
+                right = std::min(0, (int)right - d->themeConfig.borderRight());
+                bottom = std::min(0, (int)bottom - d->themeConfig.borderBottom());
             }
             break;
         case KDecoration::BorderLarge:

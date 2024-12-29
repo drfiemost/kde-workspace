@@ -202,7 +202,7 @@ void ZoomEffect::reconfigure(ReconfigureFlags)
 {
     ZoomConfig::self()->readConfig();
     // On zoom-in and zoom-out change the zoom by the defined zoom-factor.
-    zoomFactor = qMax(0.1, ZoomConfig::zoomFactor());
+    zoomFactor = std::max(0.1, ZoomConfig::zoomFactor());
     // Visibility of the mouse-pointer.
     mousePointer = MousePointerType(ZoomConfig::mousePointer());
     // Track moving of the mouse.
@@ -221,9 +221,9 @@ void ZoomEffect::reconfigure(ReconfigureFlags)
     // When the focus changes, move the zoom area to the focused location.
     followFocus = ZoomConfig::enableFollowFocus();
     // The time in milliseconds to wait before a focus-event takes away a mouse-move.
-    focusDelay = qMax(uint(0), ZoomConfig::focusDelay());
+    focusDelay = std::max(uint(0), ZoomConfig::focusDelay());
     // The factor the zoom-area will be moved on touching an edge on push-mode or using the navigation KAction's.
-    moveFactor = qMax(0.1, ZoomConfig::moveFactor());
+    moveFactor = std::max(0.1, ZoomConfig::moveFactor());
     if (source_zoom < 0) {
         // Load the saved zoom value.
         source_zoom = 1.0;
@@ -240,11 +240,11 @@ void ZoomEffect::prePaintScreen(ScreenPrePaintData& data, int time)
     bool altered = false;
     if (zoom != target_zoom) {
         altered = true;
-        const float zoomDist = qAbs(target_zoom - source_zoom);
+        const float zoomDist = std::abs(target_zoom - source_zoom);
         if (target_zoom > zoom)
-            zoom = qMin(zoom + ((zoomDist * time) / animationTime(150*zoomFactor)), target_zoom);
+            zoom = std::min(zoom + ((zoomDist * time) / animationTime(150*zoomFactor)), target_zoom);
         else
-            zoom = qMax(zoom - ((zoomDist * time) / animationTime(150*zoomFactor)), target_zoom);
+            zoom = std::max(zoom - ((zoomDist * time) / animationTime(150*zoomFactor)), target_zoom);
     }
 
     if (zoom == 1.0) {
@@ -276,8 +276,8 @@ void ZoomEffect::paintScreen(int mask, QRegion region, ScreenPaintData& data)
             prevPoint = cursorPoint;
             // fall through
         case MouseTrackingDisabled:
-            data.setXTranslation(qMin(0, qMax(int(displayWidth() - displayWidth() * zoom), int(displayWidth() / 2 - prevPoint.x() * zoom))));
-            data.setYTranslation(qMin(0, qMax(int(displayHeight() - displayHeight() * zoom), int(displayHeight() / 2 - prevPoint.y() * zoom))));
+            data.setXTranslation(std::min(0, std::max(int(displayWidth() - displayWidth() * zoom), int(displayWidth() / 2 - prevPoint.x() * zoom))));
+            data.setYTranslation(std::min(0, std::max(int(displayHeight() - displayHeight() * zoom), int(displayHeight() / 2 - prevPoint.y() * zoom))));
             break;
         case MouseTrackingPush: {
                 // touching an edge of the screen moves the zoom-area in that direction.
@@ -294,9 +294,9 @@ void ZoomEffect::paintScreen(int mask, QRegion region, ScreenPaintData& data)
                 else if (y + threshold > displayHeight())
                     yMove = (y + threshold - displayHeight()) / zoom;
                 if (xMove)
-                    prevPoint.setX(qMax(0, qMin(displayWidth(), prevPoint.x() + xMove)));
+                    prevPoint.setX(std::max(0, std::min(displayWidth(), prevPoint.x() + xMove)));
                 if (yMove)
-                    prevPoint.setY(qMax(0, qMin(displayHeight(), prevPoint.y() + yMove)));
+                    prevPoint.setY(std::max(0, std::min(displayHeight(), prevPoint.y() + yMove)));
                 data.setXTranslation(- int(prevPoint.x() * (zoom - 1.0)));
                 data.setYTranslation(- int(prevPoint.y() * (zoom - 1.0)));
                 break;
@@ -423,8 +423,8 @@ void ZoomEffect::actualSize()
 
 void ZoomEffect::timelineFrameChanged(int /* frame */)
 {
-    prevPoint.setX(qMax(0, qMin(displayWidth(), prevPoint.x() + xMove)));
-    prevPoint.setY(qMax(0, qMin(displayHeight(), prevPoint.y() + yMove)));
+    prevPoint.setX(std::max(0, std::min(displayWidth(), prevPoint.x() + xMove)));
+    prevPoint.setY(std::max(0, std::min(displayHeight(), prevPoint.y() + yMove)));
     cursorPoint = prevPoint;
     effects->addRepaintFull();
 }
@@ -435,16 +435,16 @@ void ZoomEffect::moveZoom(int x, int y)
         timeline.stop();
 
     if (x < 0)
-        xMove = - qMax(1.0, displayWidth() / zoom / moveFactor);
+        xMove = - std::max(1.0, displayWidth() / zoom / moveFactor);
     else if (x > 0)
-        xMove = qMax(1.0, displayWidth() / zoom  / moveFactor);
+        xMove = std::max(1.0, displayWidth() / zoom  / moveFactor);
     else
         xMove = 0;
 
     if (y < 0)
-        yMove = - qMax(1.0, displayHeight() / zoom / moveFactor);
+        yMove = - std::max(1.0, displayHeight() / zoom / moveFactor);
     else if (y > 0)
-        yMove = qMax(1.0, displayHeight() / zoom / moveFactor);
+        yMove = std::max(1.0, displayHeight() / zoom / moveFactor);
     else
         yMove = 0;
 
@@ -498,7 +498,7 @@ void ZoomEffect::focusChanged(int px, int py, int rx, int ry, int rwidth, int rh
 {
     if (zoom == 1.0)
         return;
-    focusPoint = (px >= 0 && py >= 0) ? QPoint(px, py) : QPoint(rx + qMax(0, (qMin(displayWidth(), rwidth) / 2) - 60), ry + qMax(0, (qMin(displayHeight(), rheight) / 2) - 60));
+    focusPoint = (px >= 0 && py >= 0) ? QPoint(px, py) : QPoint(rx + std::max(0, (std::min(displayWidth(), rwidth) / 2) - 60), ry + std::max(0, (std::min(displayHeight(), rheight) / 2) - 60));
     if (enableFocusTracking) {
         lastFocusEvent = QTime::currentTime();
         effects->addRepaintFull();

@@ -307,9 +307,9 @@ void SearchLaunch::availableScreenRegionChanged()
         maxRect.moveTopLeft(ownView->mapFromGlobal(maxRect.topLeft()));
     }
 
-    maxRect.moveTopLeft(QPoint(qMax(0, maxRect.left()), qMax(0, maxRect.top())));
+    maxRect.moveTopLeft(QPoint(std::max(0, maxRect.left()), std::max(0, maxRect.top())));
 
-    setContentsMargins(maxRect.left(), maxRect.top(), qMax((qreal)0.0, size().width() - maxRect.right()), qMax((qreal)0.0, size().height() - maxRect.bottom()));
+    setContentsMargins(maxRect.left(), maxRect.top(), std::max((qreal)0.0, size().width() - maxRect.right()), std::max((qreal)0.0, size().height() - maxRect.bottom()));
 }
 
 void SearchLaunch::toggleImmutability()

@@ -58,7 +58,7 @@ BlurShader *BlurShader::create()
 
 void BlurShader::setRadius(int radius)
 {
-    const int r = qMax(radius, 2);
+    const int r = std::max(radius, 2);
 
     if (mRadius != r) {
         mRadius = r;
@@ -80,7 +80,7 @@ float BlurShader::gaussian(float x, float sigma) const
 
 QList<KernelValue> BlurShader::gaussianKernel() const
 {
-    int size = qMin(mRadius | 1, maxKernelSize());
+    int size = std::min(mRadius | 1, maxKernelSize());
     if (!(size & 0x1))
         size -= 1;
 
@@ -314,7 +314,7 @@ void GLSLBlurShader::init()
     stream2 << "    vec4 sum = " << texture2D << "(texUnit, samplePos[0].st) * kernel0;\n";
     for (int i = 1, j = -center + 1; i < size; i++, j++)
         stream2 << "    sum = sum + " << texture2D << "(texUnit, samplePos[" << i / 2
-                << ((i % 2) ? "].pq)" : "].st)") << " * kernel" << center - qAbs(j) << ";\n";
+                << ((i % 2) ? "].pq)" : "].st)") << " * kernel" << center - std::abs(j) << ";\n";
     stream2 << "    " << fragColor << " = sum;\n";
     stream2 << "}\n";
     stream2.flush();
@@ -440,7 +440,7 @@ int ARBBlurShader::maxKernelSize() const
     result = (value - 1) * 2; // We only need to store half the kernel, since it's symmetrical
 
     glGetProgramivARB(GL_FRAGMENT_PROGRAM_ARB, GL_MAX_PROGRAM_INSTRUCTIONS_ARB, &value);
-    result = qMin(result, value / 3); // We need 3 instructions / sample
+    result = std::min(result, value / 3); // We need 3 instructions / sample
 
     return result;
 }

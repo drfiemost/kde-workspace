@@ -457,7 +457,7 @@ void ItemSpace::ItemGroup::Request::activate (ItemSpace *itemSpace, ItemGroup *g
                     limit = itemSpace->workingGeom.height() - itemSpace->screenSpacing - origGeom.bottom();
                     break;
             }
-            group->m_pushAvailable = qMax(qreal(0.0), qMin(group->m_pushAvailable, limit));
+            group->m_pushAvailable = std::max(qreal(0.0), std::min(group->m_pushAvailable, limit));
             if (group->m_pushAvailable == 0) {
                 break;
             }
@@ -481,8 +481,8 @@ void ItemSpace::ItemGroup::Request::activate (ItemSpace *itemSpace, ItemGroup *g
                     limit = -(origGeom.top() - preferredGeometry.top());
                     break;
             }
-            limit = qMax(qreal(0.0), limit);
-            group->m_pushAvailable = qMin(group->m_pushAvailable, limit);
+            limit = std::max(qreal(0.0), limit);
+            group->m_pushAvailable = std::min(group->m_pushAvailable, limit);
             if (group->m_pushAvailable == 0) {
                 break;
             }
@@ -524,7 +524,7 @@ void ItemSpace::ItemGroup::Request::activate (ItemSpace *itemSpace, ItemGroup *g
 
                 // check if it is an obstacle
                 if (testItem.lastGeometry.intersects(newlyTakenSpace)) {
-                    groupPush = qMax(groupPush, push);
+                    groupPush = std::max(groupPush, push);
                 }
             }
 
@@ -540,7 +540,7 @@ void ItemSpace::ItemGroup::Request::activate (ItemSpace *itemSpace, ItemGroup *g
 
             // limit our push by how much the obstacle can actually move
             if (testGroup.m_pushAvailable < groupPush) {
-                group->m_pushAvailable = qMax(qreal(0.0), group->m_pushAvailable - (groupPush - testGroup.m_pushAvailable));
+                group->m_pushAvailable = std::max(qreal(0.0), group->m_pushAvailable - (groupPush - testGroup.m_pushAvailable));
                 if (group->m_pushAvailable == 0) {
                     break;
                 }
@@ -589,9 +589,9 @@ void ItemSpace::ItemGroup::applyResults(ItemSpace *itemSpace, int cameFrom)
     qreal totalPushRequired = 0;
     for (int i = 0; i < m_requests.size(); i++) {
         Request &request = m_requests[i];
-        totalPushRequired = qMax(totalPushRequired, request.m_pushRequested);
+        totalPushRequired = std::max(totalPushRequired, request.m_pushRequested);
     }
-    m_pushAvailable = qMin(m_pushAvailable, totalPushRequired);
+    m_pushAvailable = std::min(m_pushAvailable, totalPushRequired);
 
     for (int groupId = 0; groupId < m_groupItems.size(); groupId++) {
         ItemSpaceItem &groupItem = m_groupItems[groupId];

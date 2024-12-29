@@ -162,7 +162,7 @@ namespace Oxygen
             const QColor af = palette.color(QPalette::Active, QPalette::WindowText);
             const QColor nb = palette.color(QPalette::Inactive, QPalette::Window);
             const QColor nf = palette.color(QPalette::Inactive, QPalette::WindowText);
-            out = new QColor( reduceContrast(nb, nf, qMax(qreal(2.5), KColorUtils::contrastRatio(ab, KColorUtils::mix(ab, af, 0.4)))) );
+            out = new QColor( reduceContrast(nb, nf, std::max(qreal(2.5), KColorUtils::contrastRatio(ab, KColorUtils::mix(ab, af, 0.4)))) );
             _titleBarTextColorCache.insert( key, out );
         }
 
@@ -184,7 +184,7 @@ namespace Oxygen
             const QColor af = palette.color(QPalette::Active, QPalette::ButtonText);
             const QColor nb = palette.color(QPalette::Inactive, QPalette::Button);
             const QColor nf = palette.color(QPalette::Inactive, QPalette::ButtonText);
-            out = new QColor( reduceContrast(nb, nf, qMax(qreal(2.5), KColorUtils::contrastRatio(ab, KColorUtils::mix(ab, af, 0.4)))) );
+            out = new QColor( reduceContrast(nb, nf, std::max(qreal(2.5), KColorUtils::contrastRatio(ab, KColorUtils::mix(ab, af, 0.4)))) );
             _buttonTextColorCache.insert( key, out );
         }
 

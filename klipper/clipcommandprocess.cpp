@@ -42,7 +42,7 @@ ClipCommandProcess::ClipCommandProcess(const ClipAction& action, const ClipComma
 
     const QStringList matches = action.regExpMatches();
     // support only %0 and the first 9 matches...
-    const int numMatches = qMin(10, matches.count());
+    const int numMatches = std::min(10, matches.count());
     for ( int i = 0; i < numMatches; ++i ) {
         map.insert( QChar( '0' + i ), matches.at( i ) );
     }
