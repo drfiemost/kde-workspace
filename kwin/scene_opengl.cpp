@@ -24,11 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "scene_opengl.h"
 #ifdef KWIN_HAVE_EGL
 #include "eglonxbackend.h"
-// for Wayland
 #include "config-workspace.h"
-#ifdef WAYLAND_FOUND
-#include "egl_wayland_backend.h"
-#endif
 #endif
 #ifndef KWIN_HAVE_OPENGLES
 #include "glxbackend.h"
@@ -208,8 +204,7 @@ SceneOpenGL *SceneOpenGL::createScene()
     platformInterface = EglPlatformInterface;
 #else
     // check environment variable
-    if (qstrcmp(envOpenGLInterface, "egl") == 0 ||
-            qstrcmp(envOpenGLInterface, "egl_wayland") == 0) {
+    if (qstrcmp(envOpenGLInterface, "egl") == 0) {
         kDebug(1212) << "Forcing EGL native interface through environment variable";
         platformInterface = EglPlatformInterface;
     }
@@ -224,15 +219,7 @@ SceneOpenGL *SceneOpenGL::createScene()
         break;
     case EglPlatformInterface:
 #ifdef KWIN_HAVE_EGL
-#ifdef WAYLAND_FOUND
-        if (qstrcmp(envOpenGLInterface, "egl_wayland") == 0) {
-            backend = new EglWaylandBackend();
-        } else {
-            backend = new EglOnXBackend();
-        }
-#else
         backend = new EglOnXBackend();
-#endif
 #endif
         break;
     default:

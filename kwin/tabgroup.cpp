@@ -189,8 +189,6 @@ void TabGroup::closeAll()
     // NOTICE - in theory it's OK to use the list because closing sends an event to the client and
     // due to the async X11 nature, the client would be released and thus removed from m_clients
     // after this function exits.
-    // However later Wayland support or similar might not share this bahaviour - and we really had
-    // enough trouble with a polluted client list around the tabbing code ....
     ClientList list(m_clients);
     for (ClientList::const_iterator i = list.constBegin(), end = list.constEnd(); i != end; ++i)
         if (*i != m_current)
