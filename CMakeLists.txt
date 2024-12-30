@@ -138,27 +138,6 @@ set_package_properties(PythonLibrary PROPERTIES DESCRIPTION "Python scripting la
                        PURPOSE "Needed to build plasma scriptengine for python."
                       )
 
-macro_optional_find_package(Boost 1.34.0 MODULE)
-set_package_properties(Boost PROPERTIES DESCRIPTION "Boost C++ Libraries"
-                       URL "http://www.boost.org"
-                       TYPE OPTIONAL
-                       PURPOSE "Required to build certain Plasma DataEngines (Akonadi, RSS, Calendar)"
-                      )
-
-macro_optional_find_package(Akonadi QUIET CONFIG)
-set_package_properties(Akonadi PROPERTIES DESCRIPTION "An extensible cross-desktop storage service for PIM data"
-                       URL "http://pim.kde.org/akonadi"
-                       TYPE OPTIONAL
-                       PURPOSE "Required to build certain Plasma DataEngines (Akonadi, Calendar)"
-                      )
-
-macro_optional_find_package(KdepimLibs 4.10.68 QUIET CONFIG)
-set_package_properties(KdepimLibs PROPERTIES DESCRIPTION "The KDEPIM libraries"
-                       URL "http://pim.kde.org"
-                       TYPE OPTIONAL
-                       PURPOSE "Required to build certain Plasma DataEngines (Akonadi, Calendar)"
-                      )
-
 macro_optional_find_package(QJSON)
 set_package_properties(QJSON PROPERTIES DESCRIPTION "Library to manage JSON objects with Qt"
                        URL "http://qjson.sourceforge.net/"
