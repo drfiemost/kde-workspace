@@ -1,5 +1,5 @@
 - add plugin support
-  - make juk, xmms support plugins
+  - make juk support plugins
 - MPD support
 - support players in Kelly's spreadsheet (see panel-devel list)
 - VLC pre-DBus support?  See /usr/include/vlc/mediacontrol.h

@@ -120,7 +120,7 @@ macro_optional_find_package(GLIB2 2.0)
 set_package_properties(GLIB2 PROPERTIES DESCRIPTION "Low-level core library for data structure handling, portability wrappers, etc."
                        URL "http://www.gtk.org"
                        TYPE OPTIONAL
-                       PURPOSE "Needed to build the kxkb keyboard map control program and provide XMMS support in the Now Playing Plasma data engine"
+                       PURPOSE "Needed to build the kxkb keyboard map control program"
                       )
 
 macro_optional_find_package(Fontconfig)

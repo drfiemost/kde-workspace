@@ -18,8 +18,6 @@
 
 #include "nowplayingengine.h"
 
-#include <config-nowplaying.h>
-
 #include <QStringList>
 
 #include <KDebug>
@@ -32,9 +30,6 @@
 #include "playerinterface/mpris/mpris.h"
 #include "playerinterface/mpris2/mpris2.h"
 #include "playerinterface/juk.h"
-#ifdef XMMS_FOUND
-#include "playerinterface/xmms.h"
-#endif // XMMS_FOUND
 
 #include "playercontrol.h"
 #include "playercontainer.h"
@@ -59,15 +54,6 @@ NowPlayingEngine::NowPlayingEngine(QObject* parent,
     dbusWatcher->addFactory(new Mpris2Factory(dbusWatcher));
     dbusWatcher->addFactory(new MprisFactory(dbusWatcher));
     dbusWatcher->addFactory(new JukFactory(dbusWatcher));
-
-#ifdef XMMS_FOUND
-    pollingWatcher = new PollingWatcher(this);
-    connect(pollingWatcher, SIGNAL(newPlayer(Player::Ptr)),
-            this,        SLOT(addPlayer(Player::Ptr)));
-    connect(pollingWatcher, SIGNAL(playerDisappeared(Player::Ptr)),
-            this,        SLOT(removePlayer(Player::Ptr)));
-    pollingWatcher->addFactory(new XmmsFactory(pollingWatcher));
-#endif
 }
 
 Plasma::Service* NowPlayingEngine::serviceForSource(const QString& source)
