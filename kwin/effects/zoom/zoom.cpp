@@ -175,7 +175,7 @@ void ZoomEffect::recreateTexture()
         iconSize = QApplication::style()->pixelMetric(QStyle::PM_LargeIconSize);
 
     // load the cursor-theme image from the Xcursor-library
-    XcursorImage *ximg = XcursorLibraryLoadImage("left_ptr", theme.toLocal8Bit(), iconSize);
+    XcursorImage *ximg = XcursorLibraryLoadImage("left_ptr", theme.toLocal8Bit().constData(), iconSize);
     if (!ximg) // default is better then nothing, so keep it as backup
         ximg = XcursorLibraryLoadImage("left_ptr", "default", iconSize);
     if (ximg) {
