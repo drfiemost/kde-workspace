@@ -43,30 +43,16 @@ DecorationButton {
             button.surfaceTop = Qt.tint(button.baseSurfaceTop, highlightColor);
             button.surfaceBottom = Qt.tint(button.baseSurfaceBottom, highlightColor);
             highlightColor = colorHelper.multiplyAlpha(highlightColor, 0.4);
-            button.conturTop = Qt.tint(button.baseConturTop, highlightColor);
-            button.conturBottom = Qt.tint(button.baseConturBottom, highlightColor);
         } else {
-            button.conturTop = button.baseConturTop;
-            button.conturBottom = button.baseConturBottom;
             button.surfaceTop = button.baseSurfaceTop;
             button.surfaceBottom = button.baseSurfaceBottom;
         }
     }
     property real size
-    property color conturTop
-    property color conturBottom
     property color surfaceTop
     property color surfaceBottom
-    property color baseConturTop: Qt.darker("white", 1.5)
-    property color baseConturBottom: "white"
-    property color baseSurfaceTop: "white"
-    property color baseSurfaceBottom: Qt.darker("white", 1.5)
-    Behavior on conturTop {
-        ColorAnimation { duration: root.animateButtons ? root.animationDuration : 0 }
-    }
-    Behavior on conturBottom {
-        ColorAnimation { duration: root.animateButtons ? root.animationDuration : 0 }
-    }
+    property color baseSurfaceTop: options.titleBarColor
+    property color baseSurfaceBottom: Qt.darker(options.titleBarColor, 1.5)
     Behavior on surfaceTop {
         ColorAnimation { duration: root.animateButtons ? root.animationDuration : 0 }
     }
@@ -76,43 +62,27 @@ DecorationButton {
     width: size
     height: size
     Rectangle {
-        radius: width / 2
         smooth: true
-        anchors.fill: parent
+        anchors {
+            fill: parent
+            leftMargin: 1
+            rightMargin: 1
+            topMargin: 1
+            bottomMargin: 1
+        }
         gradient: Gradient {
             GradientStop {
-                position: 0.0
-                color: button.conturTop
+                position: 0.3
+                color: button.surfaceTop
             }
             GradientStop {
-                position: 0.8
-                color: button.conturBottom
+                position: 1.0
+                color: button.surfaceBottom
             }
         }
-        Rectangle {
-            radius: width / 2
-            smooth: true
-            anchors {
-                fill: parent
-                leftMargin: 2
-                rightMargin: 2
-                topMargin: 2
-                bottomMargin: 2
-            }
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.3
-                    color: button.surfaceTop
-                }
-                GradientStop {
-                    position: 1.0
-                    color: button.surfaceBottom
-                }
-            }
-            border {
-		width: 1
-		color: Qt.darker("white", 1.6)
-	    }
+        border {
+            width: 1
+            color: Qt.darker(options.titleBarColor, 1.5)
         }
     }
     Item {

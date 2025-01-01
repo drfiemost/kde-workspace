@@ -103,8 +103,8 @@ Decoration {
     id: root
     alpha: false
     Rectangle {
-	id: baseRect
-	radius: 6
+        id: baseRect
+        radius: 6
         color: root.buttonColor
         anchors {
             fill: parent
@@ -127,7 +127,7 @@ Decoration {
             width: root.borders.left
             color: root.buttonColor
             Rectangle {
-		id: topLeftDecoration
+                id: topLeftDecoration
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -151,7 +151,7 @@ Decoration {
             width: root.borders.right -1
             color: root.buttonColor
             Rectangle {
-		id: topRightDecoration
+                id: topRightDecoration
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -169,13 +169,13 @@ Decoration {
                 bottom: parent.bottom
                 leftMargin: 1
                 rightMargin: 1
-		bottomMargin: 0
+                bottomMargin: 0
             }
             height: root.borders.bottom
             visible: !decoration.maximized
             color: root.buttonColor
             Rectangle {
-		id: bottomLeftDecoration
+                id: bottomLeftDecoration
                 anchors {
                     left: parent.left
                     bottom: parent.bottom
@@ -185,7 +185,7 @@ Decoration {
                 color: root.titleBarColor
             }
             Rectangle {
-		id: bottomRightDecoration
+                id: bottomRightDecoration
                 anchors {
                     right: parent.right
                     bottom: parent.bottom
@@ -224,7 +224,7 @@ Decoration {
                 id: topGradient
                 GradientStop {
                     position: 0.1
-                    color: Qt.lighter(root.titleBarColor, 2)//Qt.tint(Qt.lighter(root.titleBarColor, 2.2), "#10FF0000")
+                    color: Qt.darker(root.titleBarColor, 1.3)
                 }
                 GradientStop {
                     position: 0.6
