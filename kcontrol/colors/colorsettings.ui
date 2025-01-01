@@ -43,29 +43,6 @@
        <item row="0" column="1">
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="KPushButton" name="schemeKnsButton">
-           <property name="toolTip">
-            <string>Get new color schemes from the Internet</string>
-           </property>
-           <property name="text">
-            <string>Get &amp;New Schemes...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="KPushButton" name="schemeKnsUploadButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="toolTip">
-            <string>Share the selected scheme on the Internet</string>
-           </property>
-           <property name="text">
-            <string>&amp;Upload Scheme...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="KPushButton" name="schemeImportButton">
            <property name="toolTip">
             <string>Import a color scheme from a file</string>

@@ -98,7 +98,6 @@ ThemePage::ThemePage(QWidget *parent)
     // or Xcursor isn't set up to look for cursor themes there.
     if (!model->searchPaths().contains(QDir::homePath() + "/.icons") || !iconsIsWritable()) {
             installButton->setEnabled(false);
-            installKnsButton->setEnabled(false);
     }
 
     connect(installButton, SIGNAL(clicked()), SLOT(installClicked()));

@@ -37,16 +37,6 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="1">
-        <widget class="KPushButton" name="m_newThemeButton">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Get New Themes...</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">

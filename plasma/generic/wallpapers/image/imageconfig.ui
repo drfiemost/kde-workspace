@@ -163,13 +163,6 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="m_newStuff">
-     <property name="text">
-      <string>Get New Wallpapers...</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>

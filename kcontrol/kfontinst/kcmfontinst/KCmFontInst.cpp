@@ -172,14 +172,13 @@ int CPushButton::theirHeight=0;
 
 CKCmFontInst::CKCmFontInst(QWidget *parent, const QVariantList&)
             : KCModule(FontInstallFactory::componentData(), parent),
-              itsPreview(NULL),
+              itsPreview(nullptr),
               itsConfig(KFI_UI_CFG_FILE),
-              itsJob(NULL),
-              itsProgress(NULL),
-              itsUpdateDialog(NULL),
-              itsTempDir(NULL),
-              itsPrintProc(NULL),
-              itsDownloadFontsAct(NULL)
+              itsJob(nullptr),
+              itsProgress(nullptr),
+              itsUpdateDialog(nullptr),
+              itsTempDir(nullptr),
+              itsPrintProc(nullptr)
 {
     setButtons(Help);
 
@@ -226,13 +225,9 @@ CKCmFontInst::CKCmFontInst(QWidget *parent, const QVariantList&)
     KAction     *duplicateFontsAct=new KAction(KIcon("system-search"), i18n("Scan for Duplicate Fonts..."), this);
                 //*validateFontsAct=new KAction(KIcon("checkmark"), i18n("Validate Fonts..."), this);
 
-    if(!Misc::root())
-        itsDownloadFontsAct=new KAction(KIcon("get-hot-new-stuff"), i18n("Get New Fonts..."), this);
     itsToolsMenu=new KActionMenu(KIcon("system-run"), i18n("Tools"), this);
     itsToolsMenu->addAction(duplicateFontsAct);
     //itsToolsMenu->addAction(validateFontsAct);
-    if(itsDownloadFontsAct)
-        itsToolsMenu->addAction(itsDownloadFontsAct);
     itsToolsMenu->setDelayed(false);
     toolbar->addAction(itsToolsMenu);
     itsFilter=new CFontFilter(toolbarWidget);
@@ -552,9 +547,6 @@ void CKCmFontInst::groupSelected(const QModelIndex &index)
             itsGroupList->removeFromGroup(grp, *it);
         grp->setValidated();
     }
-
-    if(itsDownloadFontsAct)
-        itsDownloadFontsAct->setEnabled(grp->isPersonal() || grp->isAll());
 }
 
 void CKCmFontInst::print(bool all)

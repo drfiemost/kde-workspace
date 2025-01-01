@@ -158,7 +158,6 @@ void TopLevel::retranslateUi()
   mTabExportAction->setText( i18n( "Save Tab &As..." ) );
   mTabRemoveAction->setText( i18n( "&Close Tab" ) );
   mMonitorRemoteAction->setText( i18n( "Monitor &Remote Machine..." ) );
-  mHotNewWorksheetAction->setText( i18n( "&Download New Tabs..." ) );
   mHotNewWorksheetUploadAction->setText( i18n( "&Upload Current Tab..." ) );
 
   mConfigureSheetAction->setText( i18n( "Tab &Properties" ) );

@@ -9,7 +9,6 @@ target_link_libraries(kcm_colors ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} ${X11_LIBRA
 
 install(TARGETS kcm_colors  DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES colors.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES colorschemes.knsrc DESTINATION  ${CONFIG_INSTALL_DIR} )
 
 # built-in color schemes
 FILE(GLOB schemefiles schemes/*.colors)

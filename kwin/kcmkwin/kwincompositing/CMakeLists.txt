@@ -19,6 +19,3 @@ install(TARGETS kcm_kwincompositing  DESTINATION ${PLUGIN_INSTALL_DIR} )
 ########### install files ###############
 
 install( FILES kwincompositing.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES kwineffect.knsrc  DESTINATION  ${CONFIG_INSTALL_DIR} )
-
-

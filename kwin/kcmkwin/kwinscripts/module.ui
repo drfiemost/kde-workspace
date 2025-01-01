@@ -43,13 +43,6 @@
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="ghnsButton">
-         <property name="text">
-          <string>Get New Script...</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

@@ -60,7 +60,7 @@ private:
   bool mGui;
   ThemeListBox *mThemesList;
   QString mEngineOfSelected;
-  QPushButton *mBtnNew, *mBtnAdd, *mBtnRemove, *mBtnTest;
+  QPushButton *mBtnAdd, *mBtnRemove, *mBtnTest;
   QTextEdit *mText;
   QLabel *mPreview;
 };

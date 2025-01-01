@@ -134,7 +134,6 @@ class CKCmFontInst : public KCModule
     CJobRunner       *itsRunner;
     QMenu            *itsPreviewMenu,
                      *itsPreviewListMenu;
-    KAction          *itsDownloadFontsAct;
     QWidget          *itsPreviewWidget;
     bool             itsPreviewHidden;
 };

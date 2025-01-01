@@ -51,23 +51,13 @@
     </widget>
    </item>
    <item row="4" column="2">
-    <widget class="KPushButton" name="installKnsButton">
-     <property name="toolTip">
-      <string>Get new color schemes from the Internet</string>
-     </property>
-     <property name="text">
-      <string>Get New Theme...</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
     <widget class="KPushButton" name="installButton">
      <property name="text">
       <string>Install From File...</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="2">
+   <item row="5" column="2">
     <widget class="KPushButton" name="removeButton">
      <property name="text">
       <string>Remove Theme</string>

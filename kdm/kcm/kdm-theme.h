@@ -50,7 +50,6 @@ class KDMThemeWidget : public QWidget {
     QLabel *info;
     QPushButton *bInstallTheme;
     QPushButton *bRemoveTheme;
-    QPushButton *bGetNewThemes;
 
     ThemeData *defaultTheme;
     QString themeDir;
