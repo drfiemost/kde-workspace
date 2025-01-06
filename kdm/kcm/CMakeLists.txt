@@ -51,4 +51,3 @@ kde4_install_auth_actions(org.kde.kcontrol.kcmkdm kcmkdm_actions.actions)
 install( FILES kdm.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 
 install( FILES anchor.png  DESTINATION  ${DATA_INSTALL_DIR}/kcontrol/pics )
-install( FILES kdm.knsrc DESTINATION ${CONFIG_INSTALL_DIR} )
