@@ -73,6 +73,7 @@ QVListLayout *SolProcessorDevice::infoPanelLayout()
   if (insSets & Solid::Processor::IntelSsse3) extensions << i18n("Intel SSSE3");
   if (insSets & Solid::Processor::IntelSse41) extensions << i18n("Intel SSE4.1");
   if (insSets & Solid::Processor::IntelSse42) extensions << i18n("Intel SSE4.2");
+  if (insSets & Solid::Processor::IntelAVX) extensions << i18n("Intel AVX");
   if (insSets & Solid::Processor::Amd3DNow) extensions << i18n("AMD 3DNow");
   if (insSets & Solid::Processor::AltiVec) extensions << i18n("ATI IVEC");
   if(extensions.isEmpty()) extensions << i18nc("no instruction set extensions", "None");
