@@ -67,6 +67,7 @@ QVListLayout *SolProcessorDevice::infoPanelLayout()
   const Solid::Processor::InstructionSets insSets = prodev->instructionSets();
   
   if (insSets & Solid::Processor::IntelMmx) extensions << i18n("Intel MMX");
+  if (insSets & Solid::Processor::IntelMmxExt) extensions << i18n("Intel MMXEXT");
   if (insSets & Solid::Processor::IntelSse) extensions << i18n("Intel SSE");
   if (insSets & Solid::Processor::IntelSse2) extensions << i18n("Intel SSE2");
   if (insSets & Solid::Processor::IntelSse3) extensions << i18n("Intel SSE3");
@@ -76,6 +77,7 @@ QVListLayout *SolProcessorDevice::infoPanelLayout()
   if (insSets & Solid::Processor::IntelAVX) extensions << i18n("Intel AVX");
   if (insSets & Solid::Processor::IntelAVX2) extensions << i18n("Intel AVX2");
   if (insSets & Solid::Processor::Amd3DNow) extensions << i18n("AMD 3DNow");
+  if (insSets & Solid::Processor::Amd3DNowExt) extensions << i18n("AMD 3DNowEXT");
   if (insSets & Solid::Processor::BMI1) extensions << i18n("BMI1");
   if (insSets & Solid::Processor::BMI2) extensions << i18n("BMI2");
   if (insSets & Solid::Processor::AltiVec) extensions << i18n("ATI IVEC");
