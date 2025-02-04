@@ -48,7 +48,7 @@ namespace KWin
     rule_##var->setWhatsThis( type##RuleDesc );
 
 RulesWidget::RulesWidget(QWidget* parent)
-    : detect_dlg(NULL)
+    : detect_dlg(nullptr)
 {
     Q_UNUSED(parent);
     setupUi(this);
@@ -370,7 +370,7 @@ static NET::WindowType comboToType(int val)
 void RulesWidget::setRules(Rules* rules)
 {
     Rules tmp;
-    if (rules == NULL)
+    if (rules == nullptr)
         rules = &tmp; // empty
     description->setText(rules->description);
     wmclass->setText(rules->wmclass);
@@ -467,26 +467,24 @@ Rules* RulesWidget::rules() const
     rules->wmclassmatch = static_cast< Rules::StringMatch >(wmclass_match->currentIndex());
     rules->windowrole = role->text().toUtf8();
     rules->windowrolematch = static_cast< Rules::StringMatch >(role_match->currentIndex());
-    rules->types = 0;
+    rules->types = 0UL;
     bool all_types = true;
-    for (int i = 0;
-            i < types->count();
-            ++i)
+    for (int i = 0; i < types->count(); ++i)
         if (!types->item(i)->isSelected())
             all_types = false;
     if (all_types)   // if all types are selected, use AllTypesMask (for future expansion)
         rules->types = NET::AllTypesMask;
     else {
-        rules->types |= types->item(0)->isSelected() ? NET::NormalMask : 0U;
-        rules->types |= types->item(1)->isSelected() ? NET::DialogMask : 0U;
-        rules->types |= types->item(2)->isSelected() ? NET::UtilityMask : 0U;
-        rules->types |= types->item(3)->isSelected() ? NET::DockMask : 0U;
-        rules->types |= types->item(4)->isSelected() ? NET::ToolbarMask : 0U;
-        rules->types |= types->item(5)->isSelected() ? NET::MenuMask : 0U;
-        rules->types |= types->item(6)->isSelected() ? NET::SplashMask : 0U;
-        rules->types |= types->item(7)->isSelected() ? NET::DesktopMask : 0U;
-        rules->types |= types->item(8)->isSelected() ? NET::OverrideMask : 0U;
-        rules->types |= types->item(9)->isSelected() ? NET::TopMenuMask : 0U;
+        rules->types |= types->item(0)->isSelected() ? NET::NormalMask : 0UL;
+        rules->types |= types->item(1)->isSelected() ? NET::DialogMask : 0UL;
+        rules->types |= types->item(2)->isSelected() ? NET::UtilityMask : 0UL;
+        rules->types |= types->item(3)->isSelected() ? NET::DockMask : 0UL;
+        rules->types |= types->item(4)->isSelected() ? NET::ToolbarMask : 0UL;
+        rules->types |= types->item(5)->isSelected() ? NET::MenuMask : 0UL;
+        rules->types |= types->item(6)->isSelected() ? NET::SplashMask : 0UL;
+        rules->types |= types->item(7)->isSelected() ? NET::DesktopMask : 0UL;
+        rules->types |= types->item(8)->isSelected() ? NET::OverrideMask : 0UL;
+        rules->types |= types->item(9)->isSelected() ? NET::TopMenuMask : 0UL;
     }
     rules->title = title->text();
     rules->titlematch = static_cast< Rules::StringMatch >(title_match->currentIndex());
@@ -553,7 +551,7 @@ STRING_MATCH_COMBO(machine)
 
 void RulesWidget::detectClicked()
 {
-    assert(detect_dlg == NULL);
+    assert(detect_dlg == nullptr);
     detect_dlg = new DetectDialog;
     connect(detect_dlg, SIGNAL(detectionDone(bool)), this, SLOT(detected(bool)));
     detect_dlg->detect(0, Ui::RulesWidgetBase::detection_delay->value());
@@ -594,7 +592,7 @@ void RulesWidget::detected(bool ok)
         prefillUnusedValues(info);
     }
     delete detect_dlg;
-    detect_dlg = NULL;
+    detect_dlg = nullptr;
     detect_dlg_ok = ok;
 }
 
