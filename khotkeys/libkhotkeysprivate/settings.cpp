@@ -448,7 +448,7 @@ bool Settings::reread_settings(bool include_disabled)
     // Keep them
     gestures_disabled = gesturesConfig.readEntry( "Disabled", gestures_disabled);
     gesture_mouse_button = gesturesConfig.readEntry( "MouseButton", gesture_mouse_button );
-    gesture_mouse_button = qBound( 2, gesture_mouse_button, 9 );
+    gesture_mouse_button = std::clamp( gesture_mouse_button, 2, 9 );
     gesture_timeout = gesturesConfig.readEntry( "Timeout", gesture_timeout );
 
     // Somhow gesture_timeout found it's way into my config file. Fix it for
