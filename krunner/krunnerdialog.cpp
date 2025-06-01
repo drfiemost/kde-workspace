@@ -137,8 +137,8 @@ void KRunnerDialog::positionOnScreen()
     const QRect r = m_desktopWidget->screenGeometry(m_shownOnScreen);
 
     if (m_floating && !m_customPos.isNull()) {
-        int x = qBound(r.left(), m_customPos.x(), r.right() - width());
-        int y = qBound(r.top(), m_customPos.y(), r.bottom() - height());
+        int x = std::clamp(m_customPos.x(), r.left(), r.right() - width());
+        int y = std::clamp(m_customPos.y(), r.top(), r.bottom() - height());
         move(x, y);
         show();
         return;
@@ -152,8 +152,8 @@ void KRunnerDialog::positionOnScreen()
         y += r.height() / 3;
     }
 
-    x = qBound(r.left(), x, r.right() - width());
-    y = qBound(r.top(), y, r.bottom() - height());
+    x = std::clamp(x, r.left(), r.right() - width());
+    y = std::clamp(y, r.top(), r.bottom() - height());
 
     move(x, y);
 

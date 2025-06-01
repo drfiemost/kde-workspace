@@ -199,9 +199,7 @@ static void applyQtSettings( KSharedConfigPtr kglobalcfg, QSettings& settings )
 
 static void addColorDef(QString& s, const char* n, const QColor& col)
 {
-  QString tmp;
-
-  tmp.sprintf("#define %s #%02x%02x%02x\n",
+  QString tmp = QString::asprintf("#define %s #%02x%02x%02x\n",
               n, col.red(), col.green(), col.blue());
 
   s += tmp;

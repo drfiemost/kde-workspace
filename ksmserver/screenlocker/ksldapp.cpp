@@ -156,7 +156,7 @@ void KSldApp::configure()
         m_idleId = KIdleTime::instance()->addIdleTimeout(timeout*1000);
     }
     if (KScreenSaverSettings::lock()) {
-        m_lockGrace = qBound(0, KScreenSaverSettings::lockGrace(), 300000);  // max 5 minutes, keep the value sane
+        m_lockGrace = std::clamp(KScreenSaverSettings::lockGrace(), 0, 300000);  // max 5 minutes, keep the value sane
     } else {
         m_lockGrace = -1;
     }

@@ -425,7 +425,7 @@ void KSignalPlotter::resizeEvent( QResizeEvent* event )
     d->mPlottingArea = boundingBox;
 
     //Calculate the new number of horizontal lines
-    int newHorizontalLinesCount = qBound(0, (int)(boundingBox.height() / fontHeight)-2, 4);
+    int newHorizontalLinesCount = std::clamp((int)(boundingBox.height() / fontHeight)-2, 0, 4);
     if(newHorizontalLinesCount != d->mHorizontalLinesCount) {
         d->mHorizontalLinesCount = newHorizontalLinesCount;
         d->calculateNiceRange();
@@ -947,9 +947,9 @@ void KSignalPlotterPrivate::drawBeam(QPainter *p, const QRect &boundingBox, int 
             point2 = previous_point2 = previous_point2 + point2;
         }
 
-        qreal y0 = qBound((qreal)boundingBox.top(), boundingBox.bottom() - (point0 - mNiceMinValue)*scaleFac, (qreal)boundingBox.bottom());
-        qreal y1 = qBound((qreal)boundingBox.top(), boundingBox.bottom() - (point1 - mNiceMinValue)*scaleFac, (qreal)boundingBox.bottom());
-        qreal y2 = qBound((qreal)boundingBox.top(), boundingBox.bottom() - (point2 - mNiceMinValue)*scaleFac, (qreal)boundingBox.bottom());
+        qreal y0 = std::clamp(boundingBox.bottom() - (point0 - mNiceMinValue)*scaleFac, (qreal)boundingBox.top(), (qreal)boundingBox.bottom());
+        qreal y1 = std::clamp(boundingBox.bottom() - (point1 - mNiceMinValue)*scaleFac, (qreal)boundingBox.top(), (qreal)boundingBox.bottom());
+        qreal y2 = std::clamp(boundingBox.bottom() - (point2 - mNiceMinValue)*scaleFac, (qreal)boundingBox.top(), (qreal)boundingBox.bottom());
 
         QPainterPath &path = paths[j];
         path.moveTo( x1, y1);

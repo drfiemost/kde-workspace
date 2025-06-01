@@ -252,10 +252,10 @@ void Panel::setLength(int minPixels, int maxPixels)
         if (minPixels == maxPixels) {
             pixels = minPixels;
         } else {
-            pixels = qBound(minPixels,
-                            c->formFactor() == Plasma::Vertical ?
+            pixels = std::clamp(c->formFactor() == Plasma::Vertical ?
                                 c->preferredSize().toSize().height() :
                                 c->preferredSize().toSize().width(),
+                            minPixels,
                             maxPixels);
         }
 
@@ -355,7 +355,7 @@ void Panel::setHeight(int height)
         QRect screen = c->corona()->screenGeometry(v->screen());
         QSizeF size = c->size();
         const int max = (c->formFactor() == Plasma::Vertical ? screen.width() : screen.height()) / 3;
-        height = qBound(16, height, max);
+        height = std::clamp(height, 16, max);
 
         if (c->formFactor() == Plasma::Vertical) {
             size.setWidth(height);

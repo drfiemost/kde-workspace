@@ -341,11 +341,10 @@ quint32 createStyleVal(const QString &name)
 
 QString styleValToStr(quint32 style)
 {
-    QString str;
     int     weight, width, slant;
 
     decomposeStyleVal(style, weight, width, slant);
-    str.sprintf("0X%02X%02X%02X\n", weight, width, slant);
+    QString str = QString::asprintf("0X%02X%02X%02X\n", weight, width, slant);
     return str;
 }
 

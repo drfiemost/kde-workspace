@@ -49,6 +49,7 @@
 #include "x11_defs.h"
 #include <vector>
 #include <string.h>
+#include <cstring>
 
 #ifdef HAVE_XINERAMA
 extern "C" { // for older XFree86 versions
@@ -201,10 +202,10 @@ void closeDisplay()
     XCloseDisplay( spl_dpy );
     }
 
-static GC*	app_gc_ro	= 0;		// read-only GC
-static GC*	app_gc_tmp	= 0;		// temporary GC
-static GC*	app_gc_ro_m	= 0;		// read-only GC (monochrome)
-static GC*	app_gc_tmp_m	= 0;		// temporary GC (monochrome)
+static GC*	app_gc_ro       = nullptr;		// read-only GC
+static GC*	app_gc_tmp      = nullptr;		// temporary GC
+static GC*	app_gc_ro_m     = nullptr;		// read-only GC (monochrome)
+static GC*	app_gc_tmp_m    = nullptr;		// temporary GC (monochrome)
 
 static GC create_gc( int scrn, bool monochrome )
 {
@@ -238,24 +239,24 @@ GC qt_xget_readonly_gc( int scrn, bool monochrome )	// get read-only GC
 {
     if ( scrn < 0 || scrn >= appScreenCount ) {
 #if 0
-	qDebug("invalid screen %d %d", scrn, appScreenCount );
-	QWidget* bla = 0;
-	bla->setName("hello");
+        qDebug("invalid screen %d %d", scrn, appScreenCount );
+        QWidget* bla = 0;
+        bla->setName("hello");
 #endif
     }
     GC gc;
     if ( monochrome ) {
-	if ( !app_gc_ro_m )			// create GC for bitmap
-	    memset( (app_gc_ro_m = new GC[appScreenCount]), 0, appScreenCount * sizeof( GC ) );
-	if ( !app_gc_ro_m[scrn] )
-	    app_gc_ro_m[scrn] = create_gc( scrn, true );
-	gc = app_gc_ro_m[scrn];
+        if ( !app_gc_ro_m )			// create GC for bitmap
+            std::memset( (app_gc_ro_m = new GC[appScreenCount]), 0, appScreenCount * sizeof( GC ) );
+        if ( !app_gc_ro_m[scrn] )
+            app_gc_ro_m[scrn] = create_gc( scrn, true );
+        gc = app_gc_ro_m[scrn];
     } else {					// create standard GC
-	if ( !app_gc_ro )
-	    memset( (app_gc_ro = new GC[appScreenCount]), 0, appScreenCount * sizeof( GC ) );
-	if ( !app_gc_ro[scrn] )
-	    app_gc_ro[scrn] = create_gc( scrn, false );
-	gc = app_gc_ro[scrn];
+        if ( !app_gc_ro )
+            std::memset( (app_gc_ro = new GC[appScreenCount]), 0, appScreenCount * sizeof( GC ) );
+        if ( !app_gc_ro[scrn] )
+            app_gc_ro[scrn] = create_gc( scrn, false );
+        gc = app_gc_ro[scrn];
     }
     return gc;
 }
@@ -264,24 +265,24 @@ GC qt_xget_temp_gc( int scrn, bool monochrome )		// get temporary GC
 {
     if ( scrn < 0 || scrn >= appScreenCount ) {
 #if 0
-	qDebug("invalid screen (tmp) %d %d", scrn, appScreenCount );
-	QWidget* bla = 0;
-	bla->setName("hello");
+        qDebug("invalid screen (tmp) %d %d", scrn, appScreenCount );
+        QWidget* bla = 0;
+        bla->setName("hello");
 #endif
     }
     GC gc;
     if ( monochrome ) {
-	if ( !app_gc_tmp_m )			// create GC for bitmap
-	    memset( (app_gc_tmp_m = new GC[appScreenCount]), 0, appScreenCount * sizeof( GC ) );
-	if ( !app_gc_tmp_m[scrn] )
-	    app_gc_tmp_m[scrn] = create_gc( scrn, true );
-	gc = app_gc_tmp_m[scrn];
+        if ( !app_gc_tmp_m )			// create GC for bitmap
+            std::memset( (app_gc_tmp_m = new GC[appScreenCount]), 0, appScreenCount * sizeof( GC ) );
+        if ( !app_gc_tmp_m[scrn] )
+            app_gc_tmp_m[scrn] = create_gc( scrn, true );
+        gc = app_gc_tmp_m[scrn];
     } else {					// create standard GC
-	if ( !app_gc_tmp )
-	    memset( (app_gc_tmp = new GC[appScreenCount]), 0, appScreenCount * sizeof( GC ) );
-	if ( !app_gc_tmp[scrn] )
-	    app_gc_tmp[scrn] = create_gc( scrn, false );
-	gc = app_gc_tmp[scrn];
+        if ( !app_gc_tmp )
+            std::memset( (app_gc_tmp = new GC[appScreenCount]), 0, appScreenCount * sizeof( GC ) );
+        if ( !app_gc_tmp[scrn] )
+            app_gc_tmp[scrn] = create_gc( scrn, false );
+        gc = app_gc_tmp[scrn];
     }
     return gc;
 }

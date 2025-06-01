@@ -134,7 +134,7 @@ void NetPanel::setHeight(int height)
         QRect screen = c->corona()->screenGeometry(v->screen());
         QSizeF size = c->size();
         const int max = (c->formFactor() == Plasma::Vertical ? screen.width() : screen.height()) / 3;
-        height = qBound(16, height, max);
+        height = std::clamp(height, 16, max);
 
         if (c->formFactor() == Plasma::Vertical) {
             size.setWidth(height);

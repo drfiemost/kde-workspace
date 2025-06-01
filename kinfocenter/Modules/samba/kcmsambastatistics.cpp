@@ -177,24 +177,22 @@ void StatisticsView::calculate() {
 			}
 		}
 
-		foreach (const LogItem *tmpItem, sLog.items)
+		for (const LogItem *tmpItem: sLog.items)
 		{
 			if (!tmpItem)
 			{
 				continue;
                         }
 
-			foreach (const SmallLogItem *tmpStr, tmpItem->accessed) {
+			for (const SmallLogItem *tmpStr: tmpItem->accessed) {
 				if (!tmpStr)
 				{
 					continue;
 				}
 
 				calcCount++;
-				QString number("");
-				number.sprintf("%6d", calcCount);
-				QString hits("");
-				hits.sprintf("%7d", tmpStr->count);
+				QString number = QString::asprintf("%6d", calcCount);
+				QString hits = QString::asprintf("%7d", tmpStr->count);
 				QTreeWidgetItem *item = new QTreeWidgetItem(viewStatistics);
 				item->setText(0, number);
 				item->setText(1, eventCb->currentText());
@@ -221,10 +219,8 @@ void StatisticsView::calculate() {
 					count++;
 			}
 		}
-		QString number("");
-		number.sprintf("%6d", calcCount);
-		QString hits("");
-		hits.sprintf("%7d", count);
+		QString number = QString::asprintf("%6d", calcCount);
+		QString hits = QString::asprintf("%7d", count);
 		QTreeWidgetItem *item = new QTreeWidgetItem(viewStatistics);
 		item->setText(0, number);
 		item->setText(1, eventCb->currentText());

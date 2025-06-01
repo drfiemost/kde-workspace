@@ -767,14 +767,14 @@ void PanelController::rulersMoved(int offset, int minLength, int maxLength)
     switch (location()) {
         case Plasma::LeftEdge:
         case Plasma::RightEdge:
-            containment()->resize(QSize((int)containment()->size().width(), qBound(minLength, preferredSize.height(), maxLength)));
+            containment()->resize(QSize((int)containment()->size().width(), std::clamp(preferredSize.height(), minLength, maxLength)));
             containment()->setMinimumSize(QSize((int)containment()->minimumSize().width(), minLength));
             containment()->setMaximumSize(QSize((int)containment()->maximumSize().width(), maxLength));
             break;
         case Plasma::TopEdge:
         case Plasma::BottomEdge:
         default:
-            containment()->resize(QSize(qBound(minLength, preferredSize.width(), maxLength), (int)containment()->size().height()));
+            containment()->resize(QSize(std::clamp(preferredSize.width(), minLength, maxLength), (int)containment()->size().height()));
             containment()->setMinimumSize(QSize(minLength, (int)containment()->minimumSize().height()));
             containment()->setMaximumSize(QSize(maxLength, (int)containment()->maximumSize().height()));
             break;

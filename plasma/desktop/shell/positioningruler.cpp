@@ -71,7 +71,7 @@ public:
 
             if (alignment == Qt::AlignCenter) {
                 int newTop = offsetSliderRect.center().y() + (offsetSliderRect.center().y() - newPos.y());
-                newTop = qBound(0, newTop, availableLength);
+                newTop = std::clamp(newTop, 0, availableLength);
 
                 symmetricSliderRect.moveCenter(QPoint(symmetricSliderRect.center().x(), newTop));
             }

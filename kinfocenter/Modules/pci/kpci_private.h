@@ -95,7 +95,7 @@ union pciInfo {
 				unsigned progUnk:3;
 				unsigned progIdeMaster:1;
 			} devProgIface_bits KDE_PACKED;
-		} devProgIface KDE_PACKED;
+		} devProgIface;
 		unsigned char devSubClass;
 		unsigned char devClass;
 		unsigned char cacheLineSize;
@@ -106,7 +106,7 @@ union pciInfo {
 				unsigned headerType:7;
 				unsigned multifunctional:1;
 			} headerType_bits KDE_PACKED;
-		} headerType KDE_PACKED;
+		} headerType;
 		union {
 			unsigned char bist;
 			struct {
@@ -115,7 +115,7 @@ union pciInfo {
 				unsigned bistStart:1;
 				unsigned bistCapable:1;
 			} bist_bits KDE_PACKED;
-		} bist KDE_PACKED;
+		} bist;
 		union {
 			struct { //header0
 				union {
@@ -159,7 +159,7 @@ union pciInfo {
 						unsigned ioBaseUnk:3;
 						unsigned ioBaseAddr:4;
 					} ioBase_bits KDE_PACKED;
-				} ioBase KDE_PACKED;
+				} ioBase;
 				unsigned char ioLimit;
 				union {
 					unsigned short secStatus;
@@ -287,7 +287,7 @@ union pciInfo {
 				unsigned short cbSubDevice;
 				unsigned short cbLegacyModeBase;
 			} header2 KDE_PACKED;
-		} header KDE_PACKED;
+		} header;
 	} cooked KDE_PACKED;
 } KDE_PACKED;
 
@@ -343,7 +343,7 @@ union agpInfo{
 				unsigned configReq:8;
 			} config_bits1 KDE_PACKED;
 		} config KDE_PACKED;
-	} cooked KDE_PACKED;
+	} cooked;
 } KDE_PACKED;
 
 union pmInfo {
@@ -384,9 +384,9 @@ union pmInfo {
 				unsigned statBridgeBx:1;
 				unsigned statBridgeClock:1;
 			} statusBridge_bits KDE_PACKED;
-		} statusBridge KDE_PACKED;
+		} statusBridge;
 		unsigned char data;
-	} cooked KDE_PACKED;
+	} cooked;
 } KDE_PACKED;
 
 union vpdInfo {
@@ -427,7 +427,7 @@ union msiInfo {
 				unsigned msiMask;
 				unsigned msiPending;
 			} data KDE_PACKED;
-		} payload KDE_PACKED;
+		} payload;
 	} cooked KDE_PACKED;
 } KDE_PACKED;
 

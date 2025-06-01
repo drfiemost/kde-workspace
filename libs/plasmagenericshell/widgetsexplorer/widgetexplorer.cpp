@@ -636,8 +636,8 @@ QPoint WidgetExplorer::tooltipPosition(QGraphicsObject *item, int tipWidth, int 
 
     // Ensure tip stays within screen boundaries
     const QRect avail = QApplication::desktop()->availableGeometry(view);
-    pos.setX(qBound(avail.left(), pos.x(), avail.right() - tipWidth));
-    pos.setY(qBound(avail.top(), pos.y(), avail.bottom() - tipHeight));
+    pos.setX(std::clamp(pos.x(), avail.left(), avail.right() - tipWidth));
+    pos.setY(std::clamp(pos.y(), avail.top(), avail.bottom() - tipHeight));
     return pos;
 }
 

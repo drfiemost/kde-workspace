@@ -115,7 +115,7 @@ void migrateTranslucencySetting(KConfigGroup &group, const QString &key, qreal o
         // already migrated to new settings
         return;
     }
-    const int newValue = qBound<int>(0, qRound(value * 100), 100);
+    const int newValue = std::clamp(qRound(value * 100), 0, 100);
     group.writeEntry(key, newValue);
 }
 

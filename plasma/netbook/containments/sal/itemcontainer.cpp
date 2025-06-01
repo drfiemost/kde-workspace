@@ -529,7 +529,7 @@ int ItemContainer::rowForPosition(const QPointF &point)
 
     kDebug() << "The item will be put at" << row;
 
-    int modelRow = std::min(m_model->rowCount(), row*nColumns + qBound(0, column, nColumns));
+    int modelRow = std::min(m_model->rowCount(), row*nColumns + std::clamp(column, 0, nColumns));
 
     kDebug() << "Corresponding to the model row" << modelRow;
 

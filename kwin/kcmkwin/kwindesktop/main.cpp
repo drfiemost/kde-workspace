@@ -300,7 +300,7 @@ void KWinDesktopConfig::save()
     info.setNumberOfDesktops(numberDesktops);
     info.activate();
     int rows =m_ui->rowsSpinBox->value();
-    rows = qBound(1, rows, numberDesktops);
+    rows = std::clamp(rows, 1, numberDesktops);
     // avoid weird cases like having 3 rows for 4 desktops, where the last row is unused
     int columns = numberDesktops / rows;
     if (numberDesktops % rows > 0) {
@@ -317,7 +317,7 @@ void KWinDesktopConfig::save()
     if (screenNumber == 0)
         groupname = "Desktops";
     else
-        groupname.sprintf("Desktops-screen-%d", screenNumber);
+        groupname = QString::asprintf("Desktops-screen-%d", screenNumber);
     KConfigGroup group(m_config, groupname);
     group.writeEntry("Rows", rows);
 

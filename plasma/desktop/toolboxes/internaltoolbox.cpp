@@ -275,8 +275,8 @@ void InternalToolBox::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 
 
-    x = qBound(0, x, areaWidth - w);
-    y = qBound(0, y, areaHeight - h);
+    x = std::clamp(x, 0, areaWidth - w);
+    y = std::clamp(y, 0, areaHeight - h);
 
     Corner newCorner = corner();
     if (x == 0) {
