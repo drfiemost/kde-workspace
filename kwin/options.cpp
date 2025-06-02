@@ -962,7 +962,7 @@ void Options::reloadCompositingSettings(bool force)
     KConfigGroup config(_config, "Compositing");
 
     setGlDirect(prefs.enableDirectRendering());
-    setGlSmoothScale(qBound(-1, config.readEntry("GLTextureFilter", Options::defaultGlSmoothScale()), 2));
+    setGlSmoothScale(std::clamp(config.readEntry("GLTextureFilter", Options::defaultGlSmoothScale()), -1, 2));
     setGlStrictBindingFollowsDriver(!config.hasKey("GLStrictBinding"));
     if (!isGlStrictBindingFollowsDriver()) {
         setGlStrictBinding(config.readEntry("GLStrictBinding", Options::defaultGlStrictBinding()));
@@ -995,7 +995,7 @@ void Options::reloadCompositingSettings(bool force)
 
     setUnredirectFullscreen(config.readEntry("UnredirectFullscreen", Options::defaultUnredirectFullscreen()));
     // TOOD: add setter
-    animationSpeed = qBound(0, config.readEntry("AnimationSpeed", Options::defaultAnimationSpeed()), 6);
+    animationSpeed = std::clamp(config.readEntry("AnimationSpeed", Options::defaultAnimationSpeed()), 0, 6);
 }
 
 // restricted should be true for operations that the user may not be able to repeat

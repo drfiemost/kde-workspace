@@ -45,7 +45,7 @@ FallApartEffect::FallApartEffect()
 void FallApartEffect::reconfigure(ReconfigureFlags)
 {
     KConfigGroup conf = effects->effectConfig("FallApart");
-    blockSize = qBound(1, conf.readEntry("BlockSize", 40), 100000);
+    blockSize = std::clamp(conf.readEntry("BlockSize", 40), 1, 100000);
 }
 
 void FallApartEffect::prePaintScreen(ScreenPrePaintData& data, int time)

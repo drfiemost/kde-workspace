@@ -444,7 +444,7 @@ void GLTexture::clear()
     } else {
         if (const int size = width()*height()) {
             uint32_t *buffer = new uint32_t[size];
-            memset(buffer, 0, size*sizeof(uint32_t));
+            std::fill_n(buffer, size, 0);
             bind();
             glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width(), height(),
                             GLTexturePrivate::sTextureFormat, GL_UNSIGNED_BYTE, buffer);

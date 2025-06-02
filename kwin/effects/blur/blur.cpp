@@ -86,7 +86,7 @@ void BlurEffect::reconfigure(ReconfigureFlags flags)
     Q_UNUSED(flags)
 
     BlurConfig::self()->readConfig();
-    int radius = qBound(2, BlurConfig::blurRadius(), 14);
+    int radius = std::clamp(BlurConfig::blurRadius(), 2, 14);
     if (shader)
         shader->setRadius(radius);
 

@@ -213,7 +213,7 @@ void PowerDevilRunner::match(Plasma::RunnerContext &context)
             bool test;
             int b = parameter.toInt(&test);
             if (test) {
-                int brightness = qBound(0, b, 100);
+                int brightness = std::clamp(b, 0, 100);
                 Plasma::QueryMatch match(this);
                 match.setType(Plasma::QueryMatch::ExactMatch);
                 match.setIcon(KIcon("preferences-system-power-management"));

@@ -211,7 +211,7 @@ void LookingGlassEffect::prePaintScreen(ScreenPrePaintData& data, int time)
         else
             zoom = std::max(zoom * std::min(1.0 - diff, 0.8), target_zoom);
         kDebug(1212) << "zoom is now " << zoom;
-        radius = qBound((double)initialradius, initialradius * zoom, 3.5 * initialradius);
+        radius = std::clamp(initialradius * zoom, (double)initialradius, 3.5 * initialradius);
 
         if (zoom <= 1.0f) {
             m_enabled = false;

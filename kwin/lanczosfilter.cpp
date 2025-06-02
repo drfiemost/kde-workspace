@@ -142,7 +142,7 @@ void LanczosFilter::createKernel(float delta, int *size)
 
     // The two outermost samples always fall at points where the lanczos
     // function returns 0, so we'll skip them.
-    const int sampleCount = qBound(3, qCeil(delta * a) * 2 + 1 - 2, 29);
+    const int sampleCount = std::clamp(static_cast<int>(std::ceil(delta * a)) * 2 + 1 - 2, 3, 29);
     const int center = sampleCount / 2;
     const int kernelSize = center + 1;
     const float factor = 1.0 / delta;

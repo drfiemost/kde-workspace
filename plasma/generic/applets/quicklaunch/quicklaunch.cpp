@@ -291,7 +291,7 @@ void Quicklaunch::configChanged()
         QStringList iconUrls = config.readEntry("iconUrls", QStringList());
 
         int visibleIcons =
-            qBound(-1, config.readEntry("visibleIcons", -1), iconUrls.size());
+            std::clamp(config.readEntry("visibleIcons", -1), -1, iconUrls.size());
 
         bool showIconNames = config.readEntry("showIconNames", false);
 

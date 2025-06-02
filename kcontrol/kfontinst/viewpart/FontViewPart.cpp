@@ -400,7 +400,7 @@ void CFontViewPart::install()
         else
             itsProc->kill();
 
-        args << "--embed" <<  QString().sprintf("0x%x", (unsigned int)(itsFrame->window()->winId()))
+        args << "--embed" <<  QString::asprintf("0x%x", (unsigned int)(itsFrame->window()->winId()))
              << "--caption" << KGlobal::caption().toUtf8()
              << "--icon" << "kfontview"
              << url().prettyUrl();
@@ -451,7 +451,7 @@ void CFontViewPart::print()
 
     if(!itsFontDetails.family.isEmpty())
     {
-        args << "--embed" << QString().sprintf("0x%x", (unsigned int)(itsFrame->window()->winId()))
+        args << "--embed" << QString::asprintf("0x%x", (unsigned int)(itsFrame->window()->winId()))
              << "--caption" << KGlobal::caption().toUtf8()
              << "--icon" << "kfontview"
              << "--size" << "0"
@@ -459,7 +459,7 @@ void CFontViewPart::print()
     }
 #ifdef KFI_PRINT_APP_FONTS
     else
-        args << "--embed" << QString().sprintf("0x%x", (unsigned int)(itsFrame->window()->winId()))
+        args << "--embed" << QString::asprintf("0x%x", (unsigned int)(itsFrame->window()->winId()))
              << "--caption" << KGlobal::caption().toUtf8()
              << "--icon" << "kfontview"
              << "--size " << "0"

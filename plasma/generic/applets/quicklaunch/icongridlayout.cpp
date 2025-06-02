@@ -286,7 +286,7 @@ void IconGridLayout::computeGridParameters(
         }
         else {
             rowCount = height / (minRowHeight + m_cellSpacing);
-            rowCount = qBound(1, rowCount, itemCount);
+            rowCount = std::clamp(rowCount, 1, itemCount);
 
             if (m_maxSectionCount > 0) {
                 rowCount = std::min(rowCount, m_maxSectionCount);
@@ -343,7 +343,7 @@ void IconGridLayout::computeGridParameters(
         }
         else {
             columnCount = width / (minColumnWidth + m_cellSpacing);
-            columnCount = qBound(1, columnCount, itemCount);
+            columnCount = std::clamp(columnCount, 1, itemCount);
 
             if (m_maxSectionCount > 0) {
                 columnCount = std::min(columnCount, m_maxSectionCount);

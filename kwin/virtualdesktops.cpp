@@ -249,7 +249,7 @@ bool VirtualDesktopManager::setCurrent(uint newDesktop)
 
 void VirtualDesktopManager::setCount(uint count)
 {
-    count = qBound<uint>(1, count, VirtualDesktopManager::maximum());
+    count = std::clamp(count, 1u, VirtualDesktopManager::maximum());
     if (count == m_count) {
         // nothing to change
         return;
@@ -322,7 +322,7 @@ void VirtualDesktopManager::load()
     if (screen_number == 0) {
         groupname = "Desktops";
     } else {
-        groupname.sprintf("Desktops-screen-%d", screen_number);
+        groupname = QString::asprintf("Desktops-screen-%d", screen_number);
     }
     KConfigGroup group(m_config, groupname);
     const int n = group.readEntry("Number", 1);
@@ -336,7 +336,7 @@ void VirtualDesktopManager::load()
         }
 
         int rows = group.readEntry<int>("Rows", 2);
-        rows = qBound(1, rows, n);
+        rows = std::clamp(rows, 1, n);
         // avoid weird cases like having 3 rows for 4 desktops, where the last row is unused
         int columns = n / rows;
         if (n % rows > 0) {
@@ -360,7 +360,7 @@ void VirtualDesktopManager::save()
     if (screen_number == 0) {
         groupname = "Desktops";
     } else {
-        groupname.sprintf("Desktops-screen-%d", screen_number);
+        groupname = QString::asprintf("Desktops-screen-%d", screen_number);
     }
     KConfigGroup group(m_config, groupname);
 

@@ -222,7 +222,7 @@ DesktopThumbnailItem::~DesktopThumbnailItem()
 
 void DesktopThumbnailItem::setDesktop(int desktop)
 {
-    desktop = qBound<int>(1, desktop, VirtualDesktopManager::self()->count());
+    desktop = std::clamp(desktop, 1, static_cast<int>(VirtualDesktopManager::self()->count()));
     if (desktop == m_desktop) {
         return;
     }

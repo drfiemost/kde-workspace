@@ -580,9 +580,8 @@ void CFontFileListView::mark()
 void CFontFileListView::unmark()
 {
     QList<QTreeWidgetItem *> items(selectedItems());
-    QTreeWidgetItem          *item;
 
-    foreach(item, items)
+    for(QTreeWidgetItem* item: items)
         if(item->parent())
             unmarkItem(item);
     checkFiles();
@@ -591,9 +590,8 @@ void CFontFileListView::unmark()
 void CFontFileListView::selectionChanged()
 {
     QList<QTreeWidgetItem *> items(selectedItems());
-    QTreeWidgetItem          *item;
 
-    foreach(item, items)
+    for(QTreeWidgetItem* item: items)
         if(!item->parent() && item->isSelected())
             item->setSelected(false);
 }
@@ -623,9 +621,8 @@ void CFontFileListView::contextMenuEvent(QContextMenuEvent *ev)
              haveMarked(false);
 
         QList<QTreeWidgetItem *> items(selectedItems());
-        QTreeWidgetItem          *item;
 
-        foreach(item, items)
+        for(QTreeWidgetItem* item: items)
         {
             if(item->parent() && item->isSelected())
             {

@@ -594,7 +594,7 @@ void CKCmFontInst::print(bool all)
                             str << (*it).family << endl
                                 << (*it).styleInfo << endl;
 
-                        args << "--embed" << QString().sprintf("0x%x", (unsigned int)window()->winId())
+                        args << "--embed" << QString::asprintf("0x%x", (unsigned int)window()->winId())
                              << "--caption" << KGlobal::caption().toUtf8()
                              << "--icon" << "preferences-desktop-font-installer"
                              << "--size" << QString().setNum(constSizes[dlg.chosenSize() < 6 ? dlg.chosenSize() : 2])
@@ -609,7 +609,7 @@ void CKCmFontInst::print(bool all)
                 }
                 else
                 {
-                    args << "--embed" << QString().sprintf("0x%x", (unsigned int)window()->winId())
+                    args << "--embed" << QString::asprintf("0x%x", (unsigned int)window()->winId())
                          << "--caption" << KGlobal::caption().toUtf8()
                          << "--icon" << "preferences-desktop-font-installer"
                          << "--size" << QString().setNum(constSizes[dlg.chosenSize()<6 ? dlg.chosenSize() : 2]);

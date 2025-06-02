@@ -514,7 +514,6 @@ KDE_EXPORT int kdemain(int argc, char * argv[])
         if ((pos = display_name.lastIndexOf('.')) != -1)
             display_name.remove(pos, 10);   // 10 is enough to be sure we removed ".s"
 
-        QString envir;
         for (int i = 0; i < number_of_screens; i++) {
             // If execution doesn't pass by here, then kwin
             // acts exactly as previously
@@ -527,7 +526,7 @@ KDE_EXPORT int kdemain(int argc, char * argv[])
         }
         // In the next statement, display_name shouldn't contain a screen
         // number. If it had it, it was removed at the "pos" check
-        envir.sprintf("DISPLAY=%s.%d", display_name.data(), KWin::screen_number);
+        QString envir = QString::asprintf("DISPLAY=%s.%d", display_name.data(), KWin::screen_number);
 
         if (putenv(strdup(envir.toAscii()))) {
             fprintf(stderr, "%s: WARNING: unable to set DISPLAY environment variable\n", argv[0]);
@@ -589,7 +588,7 @@ KDE_EXPORT int kdemain(int argc, char * argv[])
     if (KWin::screen_number == 0)
         appname = "org.kde.kwin";
     else
-        appname.sprintf("org.kde.kwin-screen-%d", KWin::screen_number);
+        appname = QString::asprintf("org.kde.kwin-screen-%d", KWin::screen_number);
 
     QDBusConnection::sessionBus().interface()->registerService(
         appname, QDBusConnectionInterface::DontQueueService);

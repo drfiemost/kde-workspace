@@ -277,7 +277,7 @@ double Toplevel::opacity() const
 void Toplevel::setOpacity(double new_opacity)
 {
     double old_opacity = opacity();
-    new_opacity = qBound(0.0, new_opacity, 1.0);
+    new_opacity = std::clamp(new_opacity, 0.0, 1.0);
     if (old_opacity == new_opacity)
         return;
     info->setOpacity(static_cast< unsigned long >(new_opacity * 0xffffffff));

@@ -392,7 +392,7 @@ void Pager::createConfigurationInterface(KConfigDialog *parent)
 void Pager::recalculateGridSizes(int rows)
 {
     // recalculate the number of rows and columns in the grid
-    rows = qBound(1, rows, m_desktopCount);
+    rows = std::clamp(rows, 1, m_desktopCount);
     // avoid weird cases like having 3 rows for 4 desktops, where the last row is unused
     int columns = m_desktopCount / rows;
     if (m_desktopCount % rows > 0) {

@@ -206,7 +206,7 @@ bool Client::manage(xcb_window_t w, bool isMapped)
         desk = isDesktop() ? static_cast<int>(NET::OnAllDesktops) : VirtualDesktopManager::self()->current();
     desk = rules()->checkDesktop(desk, !isMapped);
     if (desk != NET::OnAllDesktops)   // Do range check
-        desk = qBound(1, desk, static_cast<int>(VirtualDesktopManager::self()->count()));
+        desk = std::clamp(desk, 1, static_cast<int>(VirtualDesktopManager::self()->count()));
     info->setDesktop(desk);
     workspace()->updateOnAllDesktopsOfTransients(this);   // SELI TODO
     //onAllDesktopsChange(); // Decoration doesn't exist here yet

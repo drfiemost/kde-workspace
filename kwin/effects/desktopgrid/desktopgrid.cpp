@@ -820,8 +820,8 @@ QPoint DesktopGridEffect::unscalePos(const QPoint& pos, int* desktop) const
         ( pos.y() - screenGeom.y() + unscaledBorder[screen] / 2.0 ) / ( screenGeom.height() + unscaledBorder[screen] ) + activeCell.y() - 1,*/
         (pos.y() - scaledOffset[screen].y() + double(border) / 2.0) / (scaledSize[screen].height() + border)/*,
         progress )*/;
-    int gx = qBound(0, int(scaledX), gridSize.width() - 1);     // Zero-based
-    int gy = qBound(0, int(scaledY), gridSize.height() - 1);
+    int gx = std::clamp(int(scaledX), 0, gridSize.width() - 1);     // Zero-based
+    int gy = std::clamp(int(scaledY), 0, gridSize.height() - 1);
     scaledX -= gx;
     scaledY -= gy;
     if (desktop != NULL) {
@@ -832,22 +832,22 @@ QPoint DesktopGridEffect::unscalePos(const QPoint& pos, int* desktop) const
     }
 
     return QPoint(
-               qBound(
-                   screenGeom.x(),
+               std::clamp(
                    qRound(
                        scaledX * (screenGeom.width() + unscaledBorder[screen])
                        - unscaledBorder[screen] / 2.0
                        + screenGeom.x()
                    ),
+                   screenGeom.x(),
                    screenGeom.right()
                ),
-               qBound(
-                   screenGeom.y(),
+               std::clamp(
                    qRound(
                        scaledY * (screenGeom.height() + unscaledBorder[screen])
                        - unscaledBorder[screen] / 2.0
                        + screenGeom.y()
                    ),
+                   screenGeom.y(),
                    screenGeom.bottom()
                )
            );
@@ -860,8 +860,8 @@ int DesktopGridEffect::posToDesktop(const QPoint& pos) const
 
     double scaledX = (pos.x() - scaledOffset[screen].x() + double(border) / 2.0) / (scaledSize[screen].width() + border);
     double scaledY = (pos.y() - scaledOffset[screen].y() + double(border) / 2.0) / (scaledSize[screen].height() + border);
-    int gx = qBound(0, int(scaledX), gridSize.width() - 1);     // Zero-based
-    int gy = qBound(0, int(scaledY), gridSize.height() - 1);
+    int gx = std::clamp(int(scaledX), 0, gridSize.width() - 1);     // Zero-based
+    int gy = std::clamp(int(scaledY), 0, gridSize.height() - 1);
     if (orientation == Qt::Horizontal)
         return gy * gridSize.width() + gx + 1;
     return gx * gridSize.height() + gy + 1;

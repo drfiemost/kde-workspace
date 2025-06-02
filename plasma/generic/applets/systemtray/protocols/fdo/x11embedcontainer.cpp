@@ -167,8 +167,8 @@ void X11EmbedContainer::embedSystemTrayClient(WId clientId)
 
 void X11EmbedContainer::ensureValidSize()
 {
-    QSize s = QSize(qBound(minimumSize().width(), width(), maximumSize().width()),
-                    qBound(minimumSize().height(), height(), maximumSize().height()));
+    QSize s = QSize(std::clamp(width(), minimumSize().width(), maximumSize().width()),
+                    std::clamp(height(), minimumSize().height(), maximumSize().height()));
     resize(s);
 }
 
