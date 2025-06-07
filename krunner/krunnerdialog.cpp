@@ -383,7 +383,7 @@ void KRunnerDialog::resizeEvent(QResizeEvent *e)
         if (borders & Plasma::FrameSvg::LeftBorder) {
             const int dx = x() + (e->oldSize().width() - width()) / 2 ;
             const int dy = (m_floating ? pos().y() : r.top());
-            move(qBound(r.left(), dx, r.right() - width() + 1), dy);
+            move(std::clamp(dx, r.left(), r.right() - width() + 1), dy);
             maskDirty = m_floating || !checkBorders(r);
         }
     }
@@ -498,7 +498,7 @@ void KRunnerDialog::mouseMoveEvent(QMouseEvent *e)
     } else {
         // moving
         const QRect r = m_desktopWidget->availableGeometry(m_shownOnScreen);
-        int newX = qBound(r.left(), x() - (m_lastPressPos.x() - e->globalX()), r.right() - width() + 1);
+        int newX = std::clamp(x() - (m_lastPressPos.x() - e->globalX()), r.left(), r.right() - width() + 1);
         if (abs(r.center().x() - (newX + (width() / 2))) < 20) {
             newX = r.center().x() - (width() / 2);
         } else {

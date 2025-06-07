@@ -226,23 +226,23 @@ bool NetPanelController::eventFilter(QObject *watched, QEvent *event)
         switch (m_containment->location()) {
         case Plasma::LeftEdge:
 
-            m_containment->setMinimumWidth(qBound((qreal)KIconLoader::SizeSmall, m_containment->size().width() + deltaPos.x(), (qreal)(KIconLoader::SizeEnormous*2)));
+            m_containment->setMinimumWidth(std::clamp(m_containment->size().width() + deltaPos.x(), (qreal)KIconLoader::SizeSmall, (qreal)(KIconLoader::SizeEnormous*2)));
             m_containment->setMaximumWidth(m_containment->minimumWidth());
 
             break;
         case Plasma::RightEdge:
 
-            m_containment->setMinimumWidth(qBound((qreal)KIconLoader::SizeSmall, m_containment->size().width() - deltaPos.x(), (qreal)(KIconLoader::SizeEnormous*2)));
+            m_containment->setMinimumWidth(std::clamp(m_containment->size().width() - deltaPos.x(), (qreal)KIconLoader::SizeSmall, (qreal)(KIconLoader::SizeEnormous*2)));
             m_containment->setMaximumWidth(m_containment->minimumWidth());
             break;
         case Plasma::TopEdge:
 
-            m_containment->setMinimumHeight(qBound((qreal)KIconLoader::SizeSmall, m_containment->size().height() + deltaPos.y(), (qreal)(KIconLoader::SizeEnormous*2)));
+            m_containment->setMinimumHeight(std::clamp(m_containment->size().height() + deltaPos.y(), (qreal)KIconLoader::SizeSmall, (qreal)(KIconLoader::SizeEnormous*2)));
             m_containment->setMaximumHeight(m_containment->minimumHeight());
             break;
         case Plasma::BottomEdge:
 
-            m_containment->setMinimumHeight(qBound((qreal)KIconLoader::SizeSmall, m_containment->size().height() - deltaPos.y(), (qreal)(KIconLoader::SizeEnormous*2)));
+            m_containment->setMinimumHeight(std::clamp(m_containment->size().height() - deltaPos.y(), (qreal)KIconLoader::SizeSmall, (qreal)(KIconLoader::SizeEnormous*2)));
             m_containment->setMaximumHeight(m_containment->minimumHeight());
             break;
         default:
