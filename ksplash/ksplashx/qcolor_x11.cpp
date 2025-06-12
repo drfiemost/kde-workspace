@@ -269,7 +269,7 @@ void QColor::initialize()
 	    }
 	}
 
-	int dictsize;
+	[[maybe_unused]] int dictsize;
 	if ( screendata[scr]->g_truecolor ) {			// truecolor
 	    dictsize    = 1;			// will not need color dict
 	    screendata[scr]->red_mask    = (uint)screendata[scr]->g_vis->red_mask;

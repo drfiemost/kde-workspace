@@ -1588,7 +1588,7 @@ void Client::setOnAllDesktops(bool b)
  * if @p on is true, sets on all activities.
  * if it's false, sets it to only be on the current activity
  */
-void Client::setOnAllActivities(bool on)
+void Client::setOnAllActivities(bool)
 {}
 
 /**
@@ -1605,8 +1605,8 @@ void Client::takeActivity(int flags, bool handled)
     }
 
 #ifndef NDEBUG
-    static Time previous_activity_timestamp;
-    static Client* previous_client;
+    //static Time previous_activity_timestamp;
+    //static Client* previous_client;
 
     //if ( previous_activity_timestamp == xTime() && previous_client != this )
     //    {
@@ -1614,8 +1614,8 @@ void Client::takeActivity(int flags, bool handled)
     //    kDebug( 1212 ) << kBacktrace();
     //    }
 
-    previous_activity_timestamp = xTime();
-    previous_client = this;
+    //previous_activity_timestamp = xTime();
+    //previous_client = this;
 #endif
 
     workspace()->sendTakeActivity(this, xTime(), flags);
@@ -1627,8 +1627,8 @@ void Client::takeActivity(int flags, bool handled)
 void Client::takeFocus()
 {
 #ifndef NDEBUG
-    static Time previous_focus_timestamp;
-    static Client* previous_client;
+    //static Time previous_focus_timestamp;
+    //static Client* previous_client;
 
     //if ( previous_focus_timestamp == xTime() && previous_client != this )
     //    {
@@ -1636,8 +1636,8 @@ void Client::takeFocus()
     //    kDebug( 1212 ) << kBacktrace();
     //    }
 
-    previous_focus_timestamp = xTime();
-    previous_client = this;
+    //previous_focus_timestamp = xTime();
+    //previous_client = this;
 #endif
     if (rules()->checkAcceptFocus(input))
         XSetInputFocus(display(), window(), RevertToPointerRoot, xTime());

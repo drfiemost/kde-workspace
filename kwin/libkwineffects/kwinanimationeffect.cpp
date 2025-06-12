@@ -840,7 +840,7 @@ region_creation:
     d->m_damageDirty = false;
 }
 
-void AnimationEffect::_expandedGeometryChanged(KWin::EffectWindow *w, const QRect &old)
+void AnimationEffect::_expandedGeometryChanged(KWin::EffectWindow *w, const QRect &)
 {
     Q_D(AnimationEffect);
     AniMap::const_iterator entry = d->m_animations.constFind(w);

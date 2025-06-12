@@ -457,10 +457,10 @@ void ForkLevel::screenCountChanged(int previousCount, int newCount)
     }
 }
 
-void ForkLevel::activityAdded(const QString &activityId)
+void ForkLevel::activityAdded(const QString &)
 {}
 
-void ForkLevel::activityRemoved(const QString &activityId)
+void ForkLevel::activityRemoved(const QString &)
 {}
 
 int ForkLevel::count() const

@@ -163,7 +163,7 @@ void ScreenSaverWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void ScreenSaverWindow::showEvent(QShowEvent *event)
+void ScreenSaverWindow::showEvent(QShowEvent *)
 {
     m_startMousePos = QPoint(-2, -2); // prevent mouse interpretation to cause an immediate hide
     m_reactivateTimer->stop();
@@ -174,7 +174,7 @@ void ScreenSaverWindow::showEvent(QShowEvent *event)
     startXScreenSaver();
 }
 
-void ScreenSaverWindow::paintEvent(QPaintEvent *event)
+void ScreenSaverWindow::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
     p.drawPixmap(m_background.rect(), m_background, m_background.rect());

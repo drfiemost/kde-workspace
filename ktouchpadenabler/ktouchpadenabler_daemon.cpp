@@ -38,14 +38,12 @@ class TouchpadEnablerDaemonPrivate : public QWidget
     public:
         TouchpadEnablerDaemonPrivate();
         ~TouchpadEnablerDaemonPrivate();
-        
-        bool initSuccessful() const { return m_keyCode != 0; }
-        
+
         bool x11Event(XEvent *event);
     
     private:
         enum TouchpadKey { ToggleKey = 0, OnKey, OffKey };
-        static const int nKeys = OffKey + 1;
+        static constexpr int nKeys = OffKey + 1;
         
         bool getEnabled(bool *currentValue) const;
         void setEnabled(bool enabled) const;
@@ -200,13 +198,8 @@ TouchpadEnablerDaemon::TouchpadEnablerDaemon(QObject *parent, const QList<QVaria
     : KDEDModule(parent)
 {
     d = new TouchpadEnablerDaemonPrivate();
-    
-    if (d->initSuccessful()) {
-        kapp->installX11EventFilter(d);
-    } else {
-        delete d;
-        d = 0;
-    }
+
+    kapp->installX11EventFilter(d);
 }
 
 TouchpadEnablerDaemon::~TouchpadEnablerDaemon()

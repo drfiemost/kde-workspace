@@ -126,12 +126,12 @@ WRAP(bool, waitForCompositingSetup)
 
 #undef WRAP
 
-bool DBusInterface::startActivity(const QString &in0)
+bool DBusInterface::startActivity(const QString &)
 {
     return false;
 }
 
-bool DBusInterface::stopActivity(const QString &in0)
+bool DBusInterface::stopActivity(const QString &)
 {
     return false;
 }

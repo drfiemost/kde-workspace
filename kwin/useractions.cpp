@@ -756,7 +756,7 @@ void UserActionsMenu::slotSendToScreen(QAction *action)
     Workspace::self()->sendClientToScreen(m_client.data(), screen);
 }
 
-void UserActionsMenu::slotToggleOnActivity(QAction *action)
+void UserActionsMenu::slotToggleOnActivity(QAction *)
 {}
 
 //****************************************
@@ -1073,6 +1073,8 @@ void Workspace::performWindowOperation(Client* c, Options::WindowOperation op)
         break;
     case Options::CloseTabGroupOp:
         c->tabGroup()->closeAll();
+        break;
+    case Options::ToggleClientTiledStateOp:
         break;
     }
 }

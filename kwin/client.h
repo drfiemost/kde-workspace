@@ -870,7 +870,7 @@ private:
 
     /** The quick tile mode of this window.
      */
-    int quick_tile_mode;
+    QuickTileMode quick_tile_mode;
 
     void readTransient();
     xcb_window_t verifyTransientFor(xcb_window_t transient_for, bool set);
