@@ -25,10 +25,8 @@
 
 #include <dcopobject.h>
 
-#define KDE3_SUPPORT
 #include <kcmodule.h>
 #include <QVariantList>
-#undef KDE3_SUPPORT
 
 #include "smartcardbase.h"
 #include "nosmartcardbase.h"
