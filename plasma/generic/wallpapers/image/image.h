@@ -27,10 +27,6 @@ class KDirWatch;
 class KFileDialog;
 class KJob;
 
-namespace KNS3 {
-    class DownloadDialog;
-}
-
 class BackgroundListModel;
 
 class Image : public Plasma::Wallpaper
@@ -130,7 +126,6 @@ class Image : public Plasma::Wallpaper
         KFileDialog *m_dialog;
         QSize m_size;
         QString m_img;
-        QWeakPointer<KNS3::DownloadDialog> m_newStuffDialog;
         QString m_findToken;
 
         QAction* m_nextWallpaperAction;
