@@ -39,6 +39,8 @@
 #include "kdecorationfactory.h"
 #include <KDE/KLocalizedString>
 
+#include <algorithm>
+
 #include "kcommondecoration.moc"
 
 /** @addtogroup kdecoration */
@@ -52,8 +54,7 @@ KCommonDecoration::KCommonDecoration(KDecorationBridge* bridge, KDecorationFacto
         wrapper(new KCommonDecorationWrapper(this, bridge, factory))
 
 {
-    // sizeof(...) is calculated at compile time
-    memset(m_button, 0, sizeof(KCommonDecorationButton *) * NumButtons);
+    std::fill_n(m_button, NumButtons, nullptr);
     connect(wrapper, SIGNAL(keepAboveChanged(bool)), this, SIGNAL(keepAboveChanged(bool)));
     connect(wrapper, SIGNAL(keepBelowChanged(bool)), this, SIGNAL(keepBelowChanged(bool)));
 }
