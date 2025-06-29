@@ -193,8 +193,8 @@ public:
 private Q_SLOTS:
     void desktopCountChanged(uint previousCount, uint newCount);
     void screenCountChanged(int previousCount, int newCount);
-    void activityAdded(const QString &id);
-    void activityRemoved(const QString &id);
+    [[deprecated]] void activityAdded(const QString &id);
+    [[deprecated]] void activityRemoved(const QString &id);
 private:
     QList<AbstractLevel*> m_children;
     QList<ClientModel::LevelRestriction> m_childRestrictions;

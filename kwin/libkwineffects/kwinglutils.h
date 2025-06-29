@@ -195,7 +195,7 @@ public:
     };
 
     enum IntUniform {
-        AlphaToOne,     ///< @deprecated no longer used
+        AlphaToOne [[deprecated]],     ///< @deprecated no longer used
         ColorCorrectionLookupTextureUnit,
         IntUniformCount
     };

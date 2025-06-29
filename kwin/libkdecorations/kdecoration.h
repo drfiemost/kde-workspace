@@ -140,17 +140,17 @@ public:
         ActivateNextTabOp, // Move left in the group
         ActivatePreviousTabOp, // Move right in the group
         ///< @deprecated, tiling got removed in 4.10
-        ToggleClientTiledStateOp, // put a floating client into tiling
+        ToggleClientTiledStateOp [[deprecated]], // put a floating client into tiling
         TabDragOp,
 
         //BEGIN ABI stability stuff
         // NOTICE for ABI stability
         // TODO remove with mandatory version tagging fo 4.9.x or 4.10
         /** @deprecated ABI compatibility only - don't use */
-        RemoveClientFromGroupOp = RemoveTabFromGroupOp, // Remove from group
-        CloseClientGroupOp = CloseTabGroupOp, // Close the group
-        MoveClientInGroupLeftOp = ActivateNextTabOp, // Move left in the group
-        MoveClientInGroupRightOp = ActivatePreviousTabOp // Move right in the group
+        RemoveClientFromGroupOp [[deprecated("Use RemoveTabFromGroupOp")]] = RemoveTabFromGroupOp, // Remove from group
+        CloseClientGroupOp [[deprecated("Use CloseTabGroupOp")]] = CloseTabGroupOp, // Close the group
+        MoveClientInGroupLeftOp [[deprecated("Use ActivateNextTabOp")]] = ActivateNextTabOp, // Move left in the group
+        MoveClientInGroupRightOp [[deprecated("Use ActivatePreviousTabOp")]] = ActivatePreviousTabOp // Move right in the group
         //END ABI stability stuff
     };
     /**
@@ -206,7 +206,7 @@ public:
     enum Ability {
         // announce
         AbilityAnnounceButtons = 0, ///< decoration supports AbilityButton* values (always use)
-        AbilityAnnounceColors = 1, ///< decoration supports AbilityColor* values (always use), @deprecated @todo remove KDE5
+        AbilityAnnounceColors [[deprecated]] = 1, ///< decoration supports AbilityColor* values (always use), @deprecated @todo remove KDE5
         // buttons
         AbilityButtonMenu = 1000,   ///< decoration supports the window menu button
         AbilityButtonOnAllDesktops = 1001, ///< decoration supports the on all desktops button
@@ -221,15 +221,15 @@ public:
         AbilityButtonResize = 1010, ///< decoration supports a resize button
         AbilityButtonApplicationMenu = 1011,   ///< decoration supports the application menu button
         // colors
-        AbilityColorTitleBack = 2000, ///< decoration supports titlebar background color, @deprecated @todo remove KDE5
-        ABILITYCOLOR_FIRST = AbilityColorTitleBack, ///< @internal, @deprecated @todo remove KDE5
-        AbilityColorTitleFore = 2001, ///< decoration supports titlebar foreground color, @deprecated @todo remove KDE5
-        AbilityColorTitleBlend = 2002, ///< decoration supports second titlebar background color, @deprecated @todo remove KDE5
-        AbilityColorFrame = 2010, ///< decoration supports frame color, @deprecated @todo remove KDE5
-        AbilityColorHandle = 2011, ///< decoration supports resize handle color, @deprecated @todo remove KDE5
-        AbilityColorButtonBack = 2020, ///< decoration supports button background color, @deprecated @todo remove KDE5
-        AbilityColorButtonFore = 2021, ///< decoration supports button foreground color, @deprecated @todo remove KDE5
-        ABILITYCOLOR_END, ///< @internal, @deprecated @todo remove KDE5
+        AbilityColorTitleBack [[deprecated]] = 2000, ///< decoration supports titlebar background color, @deprecated @todo remove KDE5
+        ABILITYCOLOR_FIRST [[deprecated]] = 2000, ///< @internal, @deprecated @todo remove KDE5
+        AbilityColorTitleFore [[deprecated]] = 2001, ///< decoration supports titlebar foreground color, @deprecated @todo remove KDE5
+        AbilityColorTitleBlend [[deprecated]] = 2002, ///< decoration supports second titlebar background color, @deprecated @todo remove KDE5
+        AbilityColorFrame [[deprecated]] = 2010, ///< decoration supports frame color, @deprecated @todo remove KDE5
+        AbilityColorHandle [[deprecated]] = 2011, ///< decoration supports resize handle color, @deprecated @todo remove KDE5
+        AbilityColorButtonBack [[deprecated]] = 2020, ///< decoration supports button background color, @deprecated @todo remove KDE5
+        AbilityColorButtonFore [[deprecated]] = 2021, ///< decoration supports button foreground color, @deprecated @todo remove KDE5
+        ABILITYCOLOR_END [[deprecated]], ///< @internal, @deprecated @todo remove KDE5
         // compositing
         AbilityProvidesShadow = 3000, ///< The decoration draws its own shadows.
         ///  @since 4.3
@@ -252,7 +252,7 @@ public:
         // NOTICE for ABI stability
         // TODO remove with mandatory version tagging fo 4.9.x or 4.10
         /** @deprecated ABI compatibility only - don't use */
-        AbilityClientGrouping = AbilityTabbing
+        AbilityClientGrouping [[deprecated("Use AbilityTabbing")]] = AbilityTabbing
         //END ABI stability stuff
     };
 
@@ -286,7 +286,7 @@ public:
     // NOTICE for ABI stability
     // TODO remove with mandatory version tagging fo 4.9.x or 4.10
     /** @deprecated ABI compatibility only - don't use */
-    static QString clientGroupItemDragMimeType() { return tabDragMimeType(); }
+    [[deprecated]] static QString clientGroupItemDragMimeType() { return tabDragMimeType(); }
     //END ABI stability stuff
     static QString tabDragMimeType();
 
@@ -296,7 +296,7 @@ public:
 // NOTICE for ABI stability
 // TODO remove with mandatory version tagging fo 4.9.x or 4.10
 /** @deprecated ABI compatibility only - don't use */
-class KWIN_EXPORT ClientGroupItem
+class KWIN_EXPORT [[deprecated]] ClientGroupItem
 {
 public:
     ClientGroupItem(QString t, QIcon i) {
@@ -389,7 +389,7 @@ public:
      * @li '_' spacer
      *
      * The default ( which is also returned if customButtonPositions returns false )
-     * is "MS".
+     * is "M".
      * Unknown buttons in the returned string must be ignored.
      * The changed flags for this setting is SettingButtons.
      */
@@ -405,7 +405,7 @@ public:
      * in titleButtonsLeft().
      *
      * The default ( which is also returned if customButtonPositions returns false )
-     * is "HIA__X".
+     * is "IAX".
      * Unknown buttons in the returned string must be ignored.
      * The changed flags for this setting is SettingButtons.
      */
@@ -436,7 +436,7 @@ public:
      * This functions returns false
      * @deprecated
     */
-    bool moveResizeMaximizedWindows() const;
+    [[deprecated]] bool moveResizeMaximizedWindows() const;
 
     /**
      * @internal
@@ -886,7 +886,8 @@ public:
      * @see geometry()
      * @deprecated
      */
-    virtual bool drawbound(const QRect& geom, bool clear);
+    [[deprecated]] virtual bool drawbound(const QRect& geom, bool clear);
+
     /**
      * @internal Reserved.
      */
@@ -1027,12 +1028,12 @@ public Q_SLOTS:
      * @internal
      * TODO KF5: remove me
      */
-    void emitKeepAboveChanged(bool above);
+    [[deprecated("Use keepAboveChanged")]] void emitKeepAboveChanged(bool above);
     /**
      * @internal
      * TODO KF5: remove me
      */
-    void emitKeepBelowChanged(bool below);
+    [[deprecated("Use keepBelowChanged")]] void emitKeepBelowChanged(bool below);
 
 protected Q_SLOTS:
     /**

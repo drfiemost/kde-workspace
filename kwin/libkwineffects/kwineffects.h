@@ -946,7 +946,7 @@ Q_SIGNALS:
      * @since 4.7
      * @deprecated
      */
-    void desktopChanged(int oldDesktop, int newDesktop);
+    [[deprecated]] void desktopChanged(int oldDesktop, int newDesktop);
     /**
      * Signal emitted when a window moved to another desktop
      * NOTICE that this does NOT imply that the desktop has changed
