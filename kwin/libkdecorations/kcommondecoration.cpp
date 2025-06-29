@@ -276,14 +276,14 @@ void KCommonDecoration::resetLayout()
     for (int n = 0; n < NumButtons; n++) {
         if (m_button[n]) {
             delete m_button[n];
-            m_button[n] = 0;
+            m_button[n] = nullptr;
         }
     }
     m_buttonsLeft.clear();
     m_buttonsRight.clear();
 
     delete m_previewWidget;
-    m_previewWidget = 0;
+    m_previewWidget = nullptr;
 
     // shown instead of the window contents in decoration previews
     if (isPreview()) {
@@ -326,12 +326,12 @@ void KCommonDecoration::objDestroyed(QObject *obj)
     // the same applies to m_previewWidget.
     for (int n = 0; n < NumButtons; n++) {
         if (m_button[n] == obj) {
-            m_button[n] = 0;
+            m_button[n] = nullptr;
             break;
         }
     }
     if (obj == m_previewWidget)
-        m_previewWidget = 0;
+        m_previewWidget = nullptr;
 }
 
 QRegion KCommonDecoration::region(KDecorationDefines::Region)
@@ -376,7 +376,7 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const QString&
 {
     if (s.length() > 0) {
         for (int n = 0; n < s.length(); n++) {
-            KCommonDecorationButton *btn = 0;
+            KCommonDecorationButton *btn = nullptr;
             switch(s[n].toAscii()) {
             case 'M': // Menu button
                 if (!m_button[MenuButton]) {
