@@ -949,7 +949,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>desktopSwitchingCombo</tabstop>
   <tabstop>animationSpeedCombo</tabstop>
   <tabstop>effectSelector</tabstop>
-  <tabstop>ghns</tabstop>
   <tabstop>compositingType</tabstop>
   <tabstop>graphicsSystem</tabstop>
   <tabstop>windowThumbnails</tabstop>
