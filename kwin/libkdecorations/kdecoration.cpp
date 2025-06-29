@@ -592,7 +592,7 @@ QString KDecorationOptions::titleButtonsLeft() const
 
 QString KDecorationOptions::defaultTitleButtonsLeft()
 {
-    return "MS";
+    return "M";
 }
 
 QString KDecorationOptions::titleButtonsRight() const
@@ -602,7 +602,7 @@ QString KDecorationOptions::titleButtonsRight() const
 
 QString KDecorationOptions::defaultTitleButtonsRight()
 {
-    return "HIAX";
+    return "IAX";
 }
 
 bool KDecorationOptions::showTooltips() const
