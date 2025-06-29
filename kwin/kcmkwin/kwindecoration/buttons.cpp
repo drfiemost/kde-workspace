@@ -372,7 +372,7 @@ void ButtonDropSite::dropEvent(QDropEvent* e)
     QPoint p = e->pos();
 
     // collect information where to insert the dropped button
-    ButtonList *buttonList = 0;
+    ButtonList *buttonList = nullptr;
     int         buttonPosition;
 
     if (leftDropArea().contains(p)) {
@@ -409,9 +409,9 @@ void ButtonDropSite::dropEvent(QDropEvent* e)
 
     // know where to insert the button. now see if we can use an existing item (drag within the widget = move)
     // orneed to create a new one
-    ButtonDropSiteItem *buttonItem = 0;
+    ButtonDropSiteItem *buttonItem = nullptr;
     if (e->source() == this && m_selected) {
-        ButtonList *oldList = 0;
+        ButtonList *oldList = nullptr;
         int oldPos;
         if (getItemPos(m_selected, oldList, oldPos)) {
             if (oldPos == buttonPosition && oldList == buttonList)
@@ -539,7 +539,7 @@ ButtonDropSiteItem *ButtonDropSite::buttonAt(QPoint p)
         }
     }
 
-    return 0;
+    return nullptr;
 }
 
 bool ButtonDropSite::removeButton(ButtonDropSiteItem *item)
@@ -577,7 +577,7 @@ bool ButtonDropSite::removeSelectedButton()
         emit buttonRemoved(m_selected->button().type);
         emit changed();
         delete m_selected;
-        m_selected = 0;
+        m_selected = nullptr;
         recalcItemGeometry();
         update(); // repaint...
     }
@@ -659,7 +659,7 @@ Button ButtonSourceItem::button() const
 
 ButtonPositionWidget::ButtonPositionWidget(QWidget *parent)
     : QWidget(parent),
-      m_factory(0)
+      m_factory(nullptr)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);

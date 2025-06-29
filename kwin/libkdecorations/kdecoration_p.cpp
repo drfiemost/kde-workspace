@@ -43,16 +43,15 @@ KDecorationOptionsPrivate::KDecorationOptionsPrivate()
     , opMaxButtonLeftClick(HMaximizeOp)
 {
     for (int i = 0; i < NUM_COLORS * 2; ++i)
-        pal[i] = NULL;
+        pal[i] = nullptr;
 }
 
 KDecorationOptionsPrivate::~KDecorationOptionsPrivate()
 {
-    int i;
-    for (i = 0; i < NUM_COLORS * 2; ++i) {
+    for (int i = 0; i < NUM_COLORS * 2; ++i) {
         if (pal[i]) {
             delete pal[i];
-            pal[i] = NULL;
+            pal[i] = nullptr;
         }
     }
 }
@@ -64,9 +63,7 @@ unsigned long KDecorationOptionsPrivate::updateSettings(KConfig* config)
 
 // SettingColors
     QColor old_colors[NUM_COLORS*2];
-    for (int i = 0;
-            i < NUM_COLORS * 2;
-            ++i)
+    for (int i = 0; i < NUM_COLORS * 2; ++i)
         old_colors[ i ] = colors[ i ];
 
     QPalette appPal = QApplication::palette();
@@ -126,9 +123,7 @@ unsigned long KDecorationOptionsPrivate::updateSettings(KConfig* config)
     colors[ColorFont+NUM_COLORS] = wmConfig.readEntry("inactiveForeground",
                                    colors[ColorFont+NUM_COLORS]);
 
-    for (int i = 0;
-            i < NUM_COLORS * 2;
-            ++i)
+    for (int i = 0; i < NUM_COLORS * 2; ++i)
         if (old_colors[ i ] != colors[ i ])
             changed |= SettingColors;
 
@@ -193,11 +188,10 @@ unsigned long KDecorationOptionsPrivate::updateSettings(KConfig* config)
     cached_border_size = BordersCount; // invalid
 
 // destroy cached values
-    int i;
-    for (i = 0; i < NUM_COLORS * 2; ++i) {
+    for (int i = 0; i < NUM_COLORS * 2; ++i) {
         if (pal[i]) {
             delete pal[i];
-            pal[i] = NULL;
+            pal[i] = nullptr;
         }
     }
 
