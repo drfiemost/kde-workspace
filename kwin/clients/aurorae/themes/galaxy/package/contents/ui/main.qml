@@ -91,6 +91,7 @@ Decoration {
     property alias buttonSize: titleRow.captionHeight
     property alias titleAlignment: caption.horizontalAlignment
     property color titleBarColor: options.titleBarColor
+    property color buttonColor: options.titleBarColor
     // set by readConfig after Component completed, ensures that buttons do not flicker
     property int animationDuration: 0
     property bool animateButtons: true
