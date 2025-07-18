@@ -76,12 +76,12 @@ KWinDecorationModule::KWinDecorationModule(QWidget* parent, const QVariantList &
     : KCModule(KWinDecoFactory::componentData(), parent)
     , kwinConfig(KSharedConfig::openConfig("kwinrc"))
     , m_showTooltips(false)
-    , m_model(NULL)
-    , m_proxyModel(NULL)
+    , m_model(nullptr)
+    , m_proxyModel(nullptr)
     , m_configLoaded(false)
     , m_decorationButtons(new DecorationButtons(this))
     , m_lastPreviewWidth(-1)
-    , m_previewUpdateTimer(NULL)
+    , m_previewUpdateTimer(nullptr)
 {
     qmlRegisterType<Aurorae::AuroraeTheme>("org.kde.kwin.aurorae", 0, 1, "AuroraeTheme");
     m_ui = new KWinDecorationForm(this);
@@ -118,11 +118,10 @@ void KWinDecorationModule::init()
     }
     const QString mainQmlPath = KStandardDirs::locate("data", "kwin/kcm_kwindecoration/main.qml");
     if (mainQmlPath.isNull()) {
-        // TODO 4.11 i18n this
-        KMessageBox::error(this, "<h1>Installation error</h1>"
+        KMessageBox::error(this, i18n("<h1>Installation error</h1>"
         "The resource<h2>kwin/kcm_kwindecoration/main.qml</h2>could not be located in any application data path."
         "<h2>Please contact your distribution</h2>"
-        "The application will now abort", "Installation Error");
+        "The application will now abort"), i18n("Installation Error"));
         abort();
     }
     KConfigGroup style(kwinConfig, "Style");
@@ -229,9 +228,9 @@ void KWinDecorationModule::readConfig(const KConfigGroup & conf)
     // Buttons tab
     // ============
     m_decorationButtons->setCustomPositions(conf.readEntry("CustomButtonPositions", false));
-    // Menu and onAllDesktops buttons are default on LHS
+    // Menu button is default on LHS
     m_decorationButtons->setLeftButtons(conf.readEntry("ButtonsOnLeft", KDecorationOptions::defaultTitleButtonsLeft()));
-    // Help, Minimize, Maximize and Close are default on RHS
+    // Minimize, Maximize and Close are default on RHS
     m_decorationButtons->setRightButtons(conf.readEntry("ButtonsOnRight", KDecorationOptions::defaultTitleButtonsRight()));
     if (m_configLoaded)
         m_model->changeButtons(m_decorationButtons);
@@ -331,7 +330,8 @@ QString KWinDecorationModule::quickHelp() const
 
 void KWinDecorationModule::slotConfigureButtons()
 {
-    QPointer< KWinDecorationButtonsConfigDialog > configDialog = new KWinDecorationButtonsConfigDialog(m_decorationButtons, m_showTooltips, this);
+    QPointer< KWinDecorationButtonsConfigDialog > configDialog =
+        new KWinDecorationButtonsConfigDialog(m_decorationButtons, m_showTooltips, this);
     if (configDialog->exec() == KDialog::Accepted) {
         m_decorationButtons->setCustomPositions(configDialog->customPositions());
         m_showTooltips = configDialog->showTooltips();
