@@ -404,23 +404,11 @@ private:
     int buttonContainerWidth(const ButtonContainer &btnContainer, bool countHidden = false) const;
     void addButtons(ButtonContainer &btnContainer, const QString& buttons, bool isLeft);
 
-    KCommonDecorationButton *m_button[NumButtons];
-
-    ButtonContainer m_buttonsLeft;
-    ButtonContainer m_buttonsRight;
-
-    QWidget *m_previewWidget;
-
     // button hiding for small windows
     void calcHiddenButtons();
-    int btnHideMinWidth;
-    int btnHideLastWidth;
 
-    bool closing; // for menu doubleclick closing...
-
-    KCommonDecorationWrapper* wrapper;
-
-    KCommonDecorationPrivate *d;
+    const QScopedPointer<KCommonDecorationPrivate> d;
+    friend class KCommonDecorationPrivate;
 };
 
 /**
@@ -493,15 +481,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *e);
 
 private:
-    KCommonDecoration *m_decoration;
-    ButtonType m_type;
-    int m_realizeButtons;
-    QSize m_size;
-    Qt::MouseButtons m_lastMouse;
-
-    bool m_isLeft;
-
-    KCommonDecorationButtonPrivate *d;
+    const QScopedPointer<KCommonDecorationButtonPrivate> d;
 };
 
 /** @} */
