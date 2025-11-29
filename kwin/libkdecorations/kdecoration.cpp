@@ -68,7 +68,7 @@ KDecorationOptions* KDecoration::options_;
 
 KDecoration::KDecoration(KDecorationBridge* bridge, KDecorationFactory* factory)
     :   bridge_(bridge),
-        w_(NULL),
+        w_(nullptr),
         factory_(factory),
         d(new KDecorationPrivate())
 {
@@ -100,7 +100,7 @@ void KDecoration::createMainWidget(Qt::WFlags flags)
 
 void KDecoration::setMainWidget(QWidget* w)
 {
-    assert(w_ == NULL);
+    assert(w_ == nullptr);
     w_ = w;
     w->setMouseTracking(true);
     widget()->resize(geometry().size());
@@ -537,14 +537,14 @@ QString KDecorationDefines::tabDragMimeType()
 KDecorationOptions::KDecorationOptions()
     : d(new KDecorationOptionsPrivate)
 {
-    assert(KDecoration::options_ == NULL);
+    assert(KDecoration::options_ == nullptr);
     KDecoration::options_ = this;
 }
 
 KDecorationOptions::~KDecorationOptions()
 {
     assert(KDecoration::options_ == this);
-    KDecoration::options_ = NULL;
+    KDecoration::options_ = nullptr;
     delete d;
 }
 
@@ -612,7 +612,7 @@ bool KDecorationOptions::showTooltips() const
 
 KDecorationOptions::BorderSize KDecorationOptions::preferredBorderSize(KDecorationFactory* factory) const
 {
-    assert(factory != NULL);
+    assert(factory != nullptr);
     if (d->cached_border_size == BordersCount)   // invalid
         d->cached_border_size = d->findPreferredBorderSize(d->border_size,
                                 factory->borderSizes());

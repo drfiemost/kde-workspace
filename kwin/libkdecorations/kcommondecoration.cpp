@@ -47,7 +47,7 @@
 /** @{ */
 
 KCommonDecoration::KCommonDecoration(KDecorationBridge* bridge, KDecorationFactory* factory)
-    :   m_previewWidget(0),
+    :   m_previewWidget(nullptr),
         btnHideMinWidth(200),
         btnHideLastWidth(0),
         closing(false),
