@@ -34,6 +34,7 @@ public:
         closeButtonCorner = (Qt::Corner)0;
     }
     Qt::Corner closeButtonCorner;
+    QList< KDecoration* > decorations;
 };
 
 KDecorationFactory::KDecorationFactory() : d(new KDecorationFactoryPrivate)
@@ -42,8 +43,8 @@ KDecorationFactory::KDecorationFactory() : d(new KDecorationFactoryPrivate)
 
 KDecorationFactory::~KDecorationFactory()
 {
+    assert(d->decorations.count() == 0);
     delete d;
-    assert(_decorations.count() == 0);
 }
 
 bool KDecorationFactory::reset(unsigned long)
@@ -62,7 +63,7 @@ QList< KDecorationDefines::BorderSize > KDecorationFactory::borderSizes() const
 
 bool KDecorationFactory::exists(const KDecoration* deco) const
 {
-    return _decorations.contains(const_cast< KDecoration* >(deco));
+    return d->decorations.contains(const_cast< KDecoration* >(deco));
 }
 
 Qt::Corner KDecorationFactory::closeButtonCorner()
@@ -79,18 +80,18 @@ void KDecorationFactory::setCloseButtonCorner(Qt::Corner cnr)
 
 void KDecorationFactory::addDecoration(KDecoration* deco)
 {
-    _decorations.append(deco);
+    d->decorations.append(deco);
 }
 
 void KDecorationFactory::removeDecoration(KDecoration* deco)
 {
-    _decorations.removeAll(deco);
+    d->decorations.removeAll(deco);
 }
 
 void KDecorationFactory::resetDecorations(unsigned long changed)
 {
-    for (QList< KDecoration* >::ConstIterator it = _decorations.constBegin();
-            it != _decorations.constEnd();
+    for (QList< KDecoration* >::ConstIterator it = d->decorations.constBegin();
+            it != d->decorations.constEnd();
             ++it)
         (*it)->reset(changed);
 }
