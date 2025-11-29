@@ -1447,5 +1447,10 @@ bool KCommonDecorationUnstable::eventFilter(QObject* o, QEvent* e)
     return KCommonDecoration::eventFilter(o, e);
 }
 
+Qt::MouseButtons KCommonDecorationButton::lastMousePress() const
+{
+    return m_lastMouse;
+}
+
 // kate: space-indent on; indent-width 4; mixedindent off; indent-mode cstyle;
 

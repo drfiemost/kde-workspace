@@ -1024,16 +1024,6 @@ public Q_SLOTS:
      * @param set Whether to keep the window below others
      */
     void setKeepBelow(bool set);
-    /**
-     * @internal
-     * TODO KF5: remove me
-     */
-    [[deprecated("Use keepAboveChanged")]] void emitKeepAboveChanged(bool above);
-    /**
-     * @internal
-     * TODO KF5: remove me
-     */
-    [[deprecated("Use keepBelowChanged")]] void emitKeepBelowChanged(bool below);
 
 protected Q_SLOTS:
     /**
@@ -1185,36 +1175,6 @@ inline
 KDecorationDefines::MaximizeMode operator|(KDecorationDefines::MaximizeMode m1, KDecorationDefines::MaximizeMode m2)
 {
     return KDecorationDefines::MaximizeMode(int(m1) | int(m2));
-}
-
-inline QWidget* KDecoration::widget()
-{
-    return w_;
-}
-
-inline const QWidget* KDecoration::widget() const
-{
-    return w_;
-}
-
-inline KDecorationFactory* KDecoration::factory() const
-{
-    return factory_;
-}
-
-inline bool KDecoration::isOnAllDesktops() const
-{
-    return desktop() == NET::OnAllDesktops;
-}
-
-inline int KDecoration::width() const
-{
-    return geometry().width();
-}
-
-inline int KDecoration::height() const
-{
-    return geometry().height();
 }
 
 /** @} */

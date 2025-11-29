@@ -340,16 +340,6 @@ void KDecoration::setKeepBelow(bool set)
     bridge_->setKeepBelow(set);
 }
 
-void KDecoration::emitKeepAboveChanged(bool above)
-{
-    keepAboveChanged(above);
-}
-
-void KDecoration::emitKeepBelowChanged(bool below)
-{
-    keepBelowChanged(below);
-}
-
 bool KDecoration::drawbound(const QRect&, bool)
 {
     return false;
@@ -527,6 +517,36 @@ QRegion KDecoration::region(KDecorationDefines::Region)
 KDecorationDefines::Position KDecoration::titlebarPosition()
 {
     return PositionTop;
+}
+
+QWidget* KDecoration::widget()
+{
+    return w_;
+}
+
+const QWidget* KDecoration::widget() const
+{
+    return w_;
+}
+
+KDecorationFactory* KDecoration::factory() const
+{
+    return factory_;
+}
+
+bool KDecoration::isOnAllDesktops() const
+{
+    return desktop() == NET::OnAllDesktops;
+}
+
+int KDecoration::width() const
+{
+    return geometry().width();
+}
+
+int KDecoration::height() const
+{
+    return geometry().height();
 }
 
 QString KDecorationDefines::tabDragMimeType()
