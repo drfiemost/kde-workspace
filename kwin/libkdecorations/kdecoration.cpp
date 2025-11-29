@@ -57,18 +57,21 @@ inheriting KCommonDecoration and adding the new API matching KDecoration2.
 class KDecorationPrivate
 {
 public:
-    KDecorationPrivate()
-        : alphaEnabled(false)
+    KDecorationPrivate(KDecorationBridge *b, KDecorationFactory *f)
+        : bridge(b)
+        , factory(f)
+        , alphaEnabled(false)
+        , w()
     {
     }
+    KDecorationBridge *bridge;
+    KDecorationFactory *factory;
     bool alphaEnabled;
+    QScopedPointer<QWidget> w;
 };
 
 KDecoration::KDecoration(KDecorationBridge* bridge, KDecorationFactory* factory)
-    :   bridge_(bridge),
-        w_(nullptr),
-        factory_(factory),
-        d(new KDecorationPrivate())
+    :   d(new KDecorationPrivate(bridge, factory))
 {
     factory->addDecoration(this);
 }
@@ -76,7 +79,6 @@ KDecoration::KDecoration(KDecorationBridge* bridge, KDecorationFactory* factory)
 KDecoration::~KDecoration()
 {
     factory()->removeDecoration(this);
-    delete w_;
     delete d;
 }
 
@@ -98,186 +100,186 @@ void KDecoration::createMainWidget(Qt::WFlags flags)
 
 void KDecoration::setMainWidget(QWidget* w)
 {
-    assert(w_ == nullptr);
-    w_ = w;
+    assert(d->w.isNull());
+    d->w.reset(w);
     w->setMouseTracking(true);
     widget()->resize(geometry().size());
 }
 
 QWidget* KDecoration::initialParentWidget() const
 {
-    return bridge_->initialParentWidget();
+    return d->bridge->initialParentWidget();
 }
 
 Qt::WFlags KDecoration::initialWFlags() const
 {
-    return bridge_->initialWFlags();
+    return d->bridge->initialWFlags();
 }
 
 bool KDecoration::isActive() const
 {
-    return bridge_->isActive();
+    return d->bridge->isActive();
 }
 
 bool KDecoration::isCloseable() const
 {
-    return bridge_->isCloseable();
+    return d->bridge->isCloseable();
 }
 
 bool KDecoration::isMaximizable() const
 {
-    return bridge_->isMaximizable();
+    return d->bridge->isMaximizable();
 }
 
 KDecoration::MaximizeMode KDecoration::maximizeMode() const
 {
-    return bridge_->maximizeMode();
+    return d->bridge->maximizeMode();
 }
 
 KDecoration::QuickTileMode KDecoration::quickTileMode() const
 {
-    return bridge_->quickTileMode();
+    return d->bridge->quickTileMode();
 }
 
 bool KDecoration::isMinimizable() const
 {
-    return bridge_->isMinimizable();
+    return d->bridge->isMinimizable();
 }
 
 bool KDecoration::providesContextHelp() const
 {
-    return bridge_->providesContextHelp();
+    return d->bridge->providesContextHelp();
 }
 
 int KDecoration::desktop() const
 {
-    return bridge_->desktop();
+    return d->bridge->desktop();
 }
 
 bool KDecoration::isModal() const
 {
-    return bridge_->isModal();
+    return d->bridge->isModal();
 }
 
 bool KDecoration::isShadeable() const
 {
-    return bridge_->isShadeable();
+    return d->bridge->isShadeable();
 }
 
 bool KDecoration::isShade() const
 {
-    return bridge_->isShade();
+    return d->bridge->isShade();
 }
 
 bool KDecoration::isSetShade() const
 {
-    return bridge_->isSetShade();
+    return d->bridge->isSetShade();
 }
 
 bool KDecoration::keepAbove() const
 {
-    return bridge_->keepAbove();
+    return d->bridge->keepAbove();
 }
 
 bool KDecoration::keepBelow() const
 {
-    return bridge_->keepBelow();
+    return d->bridge->keepBelow();
 }
 
 bool KDecoration::isMovable() const
 {
-    return bridge_->isMovable();
+    return d->bridge->isMovable();
 }
 
 bool KDecoration::isResizable() const
 {
-    return bridge_->isResizable();
+    return d->bridge->isResizable();
 }
 
 NET::WindowType KDecoration::windowType(unsigned long supported_types) const
 {
     // this one is also duplicated in KDecorationFactory
-    return bridge_->windowType(supported_types);
+    return d->bridge->windowType(supported_types);
 }
 
 QIcon KDecoration::icon() const
 {
-    return bridge_->icon();
+    return d->bridge->icon();
 }
 
 QString KDecoration::caption() const
 {
-    return bridge_->caption();
+    return d->bridge->caption();
 }
 
 void KDecoration::processMousePressEvent(QMouseEvent* e)
 {
-    return bridge_->processMousePressEvent(e);
+    return d->bridge->processMousePressEvent(e);
 }
 
 void KDecoration::showWindowMenu(const QRect &pos)
 {
-    bridge_->showWindowMenu(pos);
+    d->bridge->showWindowMenu(pos);
 }
 
 void KDecoration::showWindowMenu(QPoint pos)
 {
-    bridge_->showWindowMenu(pos);
+    d->bridge->showWindowMenu(pos);
 }
 
 void KDecoration::showApplicationMenu(const QPoint &p)
 {
-    bridge_->showApplicationMenu(p);
+    d->bridge->showApplicationMenu(p);
 }
 
 bool KDecoration::menuAvailable() const
 {
-    return bridge_->menuAvailable();
+    return d->bridge->menuAvailable();
 }
 
 void KDecoration::performWindowOperation(WindowOperation op)
 {
-    bridge_->performWindowOperation(op);
+    d->bridge->performWindowOperation(op);
 }
 
 void KDecoration::setMask(const QRegion& reg, int mode)
 {
-    bridge_->setMask(reg, mode);
+    d->bridge->setMask(reg, mode);
 }
 
 void KDecoration::clearMask()
 {
-    bridge_->setMask(QRegion(), 0);
+    d->bridge->setMask(QRegion(), 0);
 }
 
 bool KDecoration::isPreview() const
 {
-    return bridge_->isPreview();
+    return d->bridge->isPreview();
 }
 
 QRect KDecoration::geometry() const
 {
-    return bridge_->geometry();
+    return d->bridge->geometry();
 }
 
 QRect KDecoration::iconGeometry() const
 {
-    return bridge_->iconGeometry();
+    return d->bridge->iconGeometry();
 }
 
 QRegion KDecoration::unobscuredRegion(const QRegion& r) const
 {
-    return bridge_->unobscuredRegion(r);
+    return d->bridge->unobscuredRegion(r);
 }
 
 WId KDecoration::windowId() const
 {
-    return bridge_->windowId();
+    return d->bridge->windowId();
 }
 
 void KDecoration::closeWindow()
 {
-    bridge_->closeWindow();
+    d->bridge->closeWindow();
 }
 
 void KDecoration::maximize(Qt::MouseButtons button)
@@ -287,55 +289,55 @@ void KDecoration::maximize(Qt::MouseButtons button)
 
 void KDecoration::maximize(MaximizeMode mode)
 {
-    bridge_->maximize(mode);
+    d->bridge->maximize(mode);
 }
 
 void KDecoration::minimize()
 {
-    bridge_->minimize();
+    d->bridge->minimize();
 }
 
 void KDecoration::showContextHelp()
 {
-    bridge_->showContextHelp();
+    d->bridge->showContextHelp();
 }
 
 void KDecoration::setDesktop(int desktop)
 {
-    bridge_->setDesktop(desktop);
+    d->bridge->setDesktop(desktop);
 }
 
 void KDecoration::toggleOnAllDesktops()
 {
     if (isOnAllDesktops())
-        setDesktop(bridge_->currentDesktop());
+        setDesktop(d->bridge->currentDesktop());
     else
         setDesktop(NET::OnAllDesktops);
 }
 
 void KDecoration::titlebarDblClickOperation()
 {
-    bridge_->titlebarDblClickOperation();
+    d->bridge->titlebarDblClickOperation();
 }
 
 void KDecoration::titlebarMouseWheelOperation(int delta)
 {
-    bridge_->titlebarMouseWheelOperation(delta);
+    d->bridge->titlebarMouseWheelOperation(delta);
 }
 
 void KDecoration::setShade(bool set)
 {
-    bridge_->setShade(set);
+    d->bridge->setShade(set);
 }
 
 void KDecoration::setKeepAbove(bool set)
 {
-    bridge_->setKeepAbove(set);
+    d->bridge->setKeepAbove(set);
 }
 
 void KDecoration::setKeepBelow(bool set)
 {
-    bridge_->setKeepBelow(set);
+    d->bridge->setKeepBelow(set);
 }
 
 bool KDecoration::drawbound(const QRect&, bool)
@@ -354,12 +356,12 @@ void KDecoration::reset(unsigned long)
 
 void KDecoration::grabXServer()
 {
-    bridge_->grabXServer(true);
+    d->bridge->grabXServer(true);
 }
 
 void KDecoration::ungrabXServer()
 {
-    bridge_->grabXServer(false);
+    d->bridge->grabXServer(false);
 }
 
 KDecoration::Position KDecoration::mousePosition(const QPoint& p) const
@@ -399,7 +401,7 @@ KDecoration::Position KDecoration::mousePosition(const QPoint& p) const
 
 QRect KDecoration::transparentRect() const
 {
-    if (KDecorationBridgeUnstable *bridge2 = dynamic_cast<KDecorationBridgeUnstable*>(bridge_))
+    if (KDecorationBridgeUnstable *bridge2 = dynamic_cast<KDecorationBridgeUnstable*>(d->bridge))
         return bridge2->transparentRect();
     else
         return QRect();
@@ -421,7 +423,7 @@ bool KDecoration::isAlphaEnabled() const
 
 bool KDecoration::compositingActive() const
 {
-    return static_cast< KDecorationBridgeUnstable* >(bridge_)->compositingActive();
+    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->compositingActive();
 }
 
 void KDecoration::padding(int &left, int &right, int &top, int &bottom) const
@@ -433,69 +435,69 @@ void KDecoration::padding(int &left, int &right, int &top, int &bottom) const
 
 int KDecoration::tabCount() const
 {
-    return static_cast< KDecorationBridgeUnstable* >(bridge_)->tabCount();
+    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->tabCount();
 }
 
 long KDecoration::tabId(int idx) const
 {
-    return static_cast< KDecorationBridgeUnstable* >(bridge_)->tabId(idx);
+    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->tabId(idx);
 }
 
 QString KDecoration::caption(int idx) const
 {
-    return static_cast< KDecorationBridgeUnstable* >(bridge_)->caption(idx);
+    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->caption(idx);
 }
 
 QIcon KDecoration::icon(int idx) const
 {
-    return static_cast< KDecorationBridgeUnstable* >(bridge_)->icon(idx);
+    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->icon(idx);
 }
 
 long KDecoration::currentTabId() const
 {
-    return static_cast< KDecorationBridgeUnstable* >(bridge_)->currentTabId();
+    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->currentTabId();
 }
 
 void KDecoration::setCurrentTab(long id)
 {
-    static_cast< KDecorationBridgeUnstable* >(bridge_)->setCurrentTab(id);
+    static_cast< KDecorationBridgeUnstable* >(d->bridge)->setCurrentTab(id);
 }
 
 void KDecoration::tab_A_before_B(long A, long B)
 {
-    static_cast< KDecorationBridgeUnstable* >(bridge_)->tab_A_before_B(A, B);
+    static_cast< KDecorationBridgeUnstable* >(d->bridge)->tab_A_before_B(A, B);
 }
 
 void KDecoration::tab_A_behind_B(long A, long B)
 {
-    static_cast< KDecorationBridgeUnstable* >(bridge_)->tab_A_behind_B(A, B);
+    static_cast< KDecorationBridgeUnstable* >(d->bridge)->tab_A_behind_B(A, B);
 }
 
 void KDecoration::untab(long id, const QRect& newGeom)
 {
-    static_cast< KDecorationBridgeUnstable* >(bridge_)->untab(id, newGeom);
+    static_cast< KDecorationBridgeUnstable* >(d->bridge)->untab(id, newGeom);
 }
 
 void KDecoration::closeTab(long id)
 {
-    static_cast< KDecorationBridgeUnstable* >(bridge_)->closeTab(id);
+    static_cast< KDecorationBridgeUnstable* >(d->bridge)->closeTab(id);
 }
 
 void KDecoration::closeTabGroup()
 {
-    static_cast< KDecorationBridgeUnstable* >(bridge_)->closeTabGroup();
+    static_cast< KDecorationBridgeUnstable* >(d->bridge)->closeTabGroup();
 }
 
 void KDecoration::showWindowMenu(const QPoint &pos, long id)
 {
-    static_cast< KDecorationBridgeUnstable* >(bridge_)->showWindowMenu(pos, id);
+    static_cast< KDecorationBridgeUnstable* >(d->bridge)->showWindowMenu(pos, id);
 }
 
 //END tabbing
 
 KDecoration::WindowOperation KDecoration::buttonToWindowOperation(Qt::MouseButtons button)
 {
-    return static_cast< KDecorationBridgeUnstable* >(bridge_)->buttonToWindowOperation(button);
+    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->buttonToWindowOperation(button);
 }
 
 QRegion KDecoration::region(KDecorationDefines::Region)
@@ -510,17 +512,17 @@ KDecorationDefines::Position KDecoration::titlebarPosition()
 
 QWidget* KDecoration::widget()
 {
-    return w_;
+    return d->w.data();
 }
 
 const QWidget* KDecoration::widget() const
 {
-    return w_;
+    return d->w.data();
 }
 
 KDecorationFactory* KDecoration::factory() const
 {
-    return factory_;
+    return d->factory;
 }
 
 bool KDecoration::isOnAllDesktops() const
