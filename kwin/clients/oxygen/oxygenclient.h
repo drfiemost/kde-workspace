@@ -195,12 +195,6 @@ namespace Oxygen
 
         //@}
 
-        //! default buttons located on the left
-        virtual QString defaultButtonsLeft() const;
-
-        //! default buttons located on the right
-        virtual QString defaultButtonsRight() const;
-
         //! title alignment
         inline Qt::Alignment titleAlignment( void ) const;
 

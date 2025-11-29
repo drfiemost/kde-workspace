@@ -68,16 +68,6 @@ KCommonDecoration::~KCommonDecoration()
 //    delete wrapper; - do not do this, this object is actually owned and deleted by the wrapper
 }
 
-QString KCommonDecoration::defaultButtonsLeft() const
-{
-    return KDecorationOptions::defaultTitleButtonsLeft();
-}
-
-QString KCommonDecoration::defaultButtonsRight() const
-{
-    return KDecorationOptions::defaultTitleButtonsRight();
-}
-
 bool KCommonDecoration::decorationBehaviour(DecorationBehaviour behaviour) const
 {
     switch(behaviour) {
@@ -297,10 +287,10 @@ void KCommonDecoration::resetLayout()
     }
 
     addButtons(m_buttonsLeft,
-               options()->customButtonPositions() ? options()->titleButtonsLeft() : defaultButtonsLeft(),
+               options()->customButtonPositions() ? options()->titleButtonsLeft() : KDecorationOptions::defaultTitleButtonsLeft(),
                true);
     addButtons(m_buttonsRight,
-               options()->customButtonPositions() ? options()->titleButtonsRight() : defaultButtonsRight(),
+               options()->customButtonPositions() ? options()->titleButtonsRight() : KDecorationOptions::defaultTitleButtonsRight(),
                false);
 
     updateLayout();
