@@ -37,7 +37,9 @@ public:
     QList< KDecoration* > decorations;
 };
 
-KDecorationFactory::KDecorationFactory() : d(new KDecorationFactoryPrivate)
+KDecorationFactory::KDecorationFactory(QObject *parent)
+    : QObject(parent)
+    , d(new KDecorationFactoryPrivate)
 {
 }
 

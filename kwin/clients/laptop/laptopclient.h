@@ -73,12 +73,12 @@ private:
     bool bufferDirty;
 };
 
-class LaptopClientFactory : public QObject, public KDecorationFactory
+class LaptopClientFactory : public KDecorationFactory
 {
     Q_OBJECT
 
 public:
-    LaptopClientFactory();
+    explicit LaptopClientFactory(QObject *parent = nullptr);
     virtual ~LaptopClientFactory();
     virtual KDecoration* createDecoration( KDecorationBridge* );
     virtual bool reset( unsigned long changed );

@@ -706,7 +706,8 @@ bool LaptopClient::isTransient() const
 
 // =====================================
 
-LaptopClientFactory::LaptopClientFactory()
+LaptopClientFactory::LaptopClientFactory(QObject *parent)
+    : KDecorationFactory(parent)
 {
     create_pixmaps();
 }

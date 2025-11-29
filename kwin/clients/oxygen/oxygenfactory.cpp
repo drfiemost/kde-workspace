@@ -42,7 +42,8 @@ namespace Oxygen
 {
 
     //___________________________________________________
-    Factory::Factory():
+    Factory::Factory(QObject *parent):
+        KDecorationFactory(parent),
         _initialized( false ),
         _helper( "oxygenDeco" ),
         _shadowCache( _helper )

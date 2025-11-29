@@ -35,14 +35,15 @@ class KDecorationBridge;
 class KDecorationFactoryPrivate;
 
 class KWIN_EXPORT KDecorationFactory
-    : public KDecorationDefines
+    : public QObject, public KDecorationDefines
 {
+    Q_OBJECT
 public:
     /**
      * Constructor. Called after loading the decoration plugin. All global
      * initialization of the plugin should be done in the factory constructor.
      */
-    KDecorationFactory();
+    explicit KDecorationFactory(QObject *parent = nullptr);
     /**
      * Destructor. Called before unloading the decoration plugin. All global
      * cleanup of the plugin should be done in the factory destructor.
@@ -127,15 +128,6 @@ protected:
     NET::WindowType windowType(unsigned long supported_types, KDecorationBridge* bridge) const;
 private:
     KDecorationFactoryPrivate* d;
-};
-
-/**
- * @warning THIS CLASS IS UNSTABLE!
- * Keep all decoration class names in sync. E.g. KDecorationFactory2 and KDecoration2.
- */
-class KWIN_EXPORT KDecorationFactoryUnstable
-    : public KDecorationFactory
-{
 };
 
 inline const KDecorationOptions* KDecorationFactory::options()
