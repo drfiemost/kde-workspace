@@ -443,6 +443,8 @@ public:
      */
     WindowOperation operationMaxButtonClick(Qt::MouseButtons button) const;
 
+    static KDecorationOptions *self();
+
     /**
      * @internal
      */
@@ -468,6 +470,7 @@ private:
      * @internal
      */
     KDecorationOptionsPrivate* d;
+    static KDecorationOptions *s_self;
 };
 
 
@@ -498,8 +501,10 @@ public:
     /**
      * Returns the KDecorationOptions object, which is used to access
      * configuration settings for the decoration.
+     *
+     * @deprecated use KDecorationOptions::self()
      */
-    static const KDecorationOptions* options();
+    [[deprecated("use KDecorationOptions::self()")]] static const KDecorationOptions* options();
     /**
      * Returns @a true if the decorated window is currently active.
      */
@@ -1052,9 +1057,7 @@ private:
     KDecorationBridge* bridge_;
     QWidget* w_;
     KDecorationFactory* factory_;
-    friend class KDecorationOptions; // for options_
     friend class KDecorationUnstable; // for bridge_
-    static KDecorationOptions* options_;
     KDecorationPrivate* d;
 
 };

@@ -64,8 +64,6 @@ public:
     bool alphaEnabled;
 };
 
-KDecorationOptions* KDecoration::options_;
-
 KDecoration::KDecoration(KDecorationBridge* bridge, KDecorationFactory* factory)
     :   bridge_(bridge),
         w_(nullptr),
@@ -84,7 +82,7 @@ KDecoration::~KDecoration()
 
 const KDecorationOptions* KDecoration::options()
 {
-    return options_;
+    return KDecorationOptions::self();
 }
 
 void KDecoration::createMainWidget(Qt::WFlags flags)
@@ -554,18 +552,25 @@ QString KDecorationDefines::tabDragMimeType()
     return "text/ClientGroupItem";
 }
 
+KDecorationOptions* KDecorationOptions::s_self = nullptr;
+
 KDecorationOptions::KDecorationOptions()
     : d(new KDecorationOptionsPrivate)
 {
-    assert(KDecoration::options_ == nullptr);
-    KDecoration::options_ = this;
+    assert(s_self == nullptr);
+    s_self = this;
 }
 
 KDecorationOptions::~KDecorationOptions()
 {
-    assert(KDecoration::options_ == this);
-    KDecoration::options_ = nullptr;
+    assert(s_self == this);
+    s_self = nullptr;
     delete d;
+}
+
+KDecorationOptions* KDecorationOptions::self()
+{
+    return s_self;
 }
 
 QColor KDecorationOptions::color(ColorType type, bool active) const
