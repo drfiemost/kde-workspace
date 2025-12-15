@@ -64,69 +64,69 @@ class KDecorationPreviewBridge
 {
 public:
     KDecorationPreviewBridge(KDecorationPreview* preview, bool active);
-    virtual bool isActive() const;
-    virtual bool isCloseable() const;
-    virtual bool isMaximizable() const;
-    virtual MaximizeMode maximizeMode() const;
-    virtual QuickTileMode quickTileMode() const;
-    virtual bool isMinimizable() const;
-    virtual bool providesContextHelp() const;
-    virtual int desktop() const;
-    virtual bool isModal() const;
-    virtual bool isShadeable() const;
-    virtual bool isShade() const;
-    virtual bool isSetShade() const;
-    virtual bool keepAbove() const;
-    virtual bool keepBelow() const;
-    virtual bool isMovable() const;
-    virtual bool isResizable() const;
-    virtual NET::WindowType windowType(unsigned long supported_types) const;
-    virtual QIcon icon() const;
-    virtual QString caption() const;
-    virtual void processMousePressEvent(QMouseEvent*);
-    virtual void showWindowMenu(const QRect &);
-    virtual void showWindowMenu(const QPoint &);
-    virtual void showApplicationMenu(const QPoint &);
-    virtual bool menuAvailable() const;
-    virtual void performWindowOperation(WindowOperation);
-    virtual void setMask(const QRegion&, int);
-    virtual bool isPreview() const;
-    virtual QRect geometry() const;
-    virtual QRect iconGeometry() const;
-    virtual QRegion unobscuredRegion(const QRegion& r) const;
-    virtual WId windowId() const;
-    virtual void closeWindow();
-    virtual void maximize(MaximizeMode mode);
-    virtual void minimize();
-    virtual void showContextHelp();
-    virtual void setDesktop(int desktop);
-    virtual void titlebarDblClickOperation();
-    virtual void titlebarMouseWheelOperation(int delta);
-    virtual void setShade(bool set);
-    virtual void setKeepAbove(bool);
-    virtual void setKeepBelow(bool);
-    virtual int currentDesktop() const;
-    virtual QWidget* initialParentWidget() const;
-    virtual Qt::WFlags initialWFlags() const;
-    virtual void grabXServer(bool grab);
+    bool isActive() const override;
+    bool isCloseable() const override;
+    bool isMaximizable() const override;
+    MaximizeMode maximizeMode() const override;
+    QuickTileMode quickTileMode() const override;
+    bool isMinimizable() const override;
+    bool providesContextHelp() const override;
+    int desktop() const override;
+    bool isModal() const override;
+    bool isShadeable() const override;
+    bool isShade() const override;
+    bool isSetShade() const override;
+    bool keepAbove() const override;
+    bool keepBelow() const override;
+    bool isMovable() const override;
+    bool isResizable() const override;
+    NET::WindowType windowType(unsigned long supported_types) const override;
+    QIcon icon() const override;
+    QString caption() const override;
+    void processMousePressEvent(QMouseEvent*) override;
+    void showWindowMenu(const QRect &) override;
+    void showWindowMenu(const QPoint &) override;
+    void showApplicationMenu(const QPoint &) override;
+    bool menuAvailable() const override;
+    void performWindowOperation(WindowOperation) override;
+    void setMask(const QRegion&, int) override;
+    bool isPreview() const override;
+    QRect geometry() const override;
+    QRect iconGeometry() const override;
+    QRegion unobscuredRegion(const QRegion& r) const override;
+    WId windowId() const override;
+    void closeWindow() override;
+    void maximize(MaximizeMode mode) override;
+    void minimize() override;
+    void showContextHelp() override;
+    void setDesktop(int desktop) override;
+    void titlebarDblClickOperation() override;
+    void titlebarMouseWheelOperation(int delta) override;
+    void setShade(bool set) override;
+    void setKeepAbove(bool) override;
+    void setKeepBelow(bool) override;
+    int currentDesktop() const override;
+    QWidget* initialParentWidget() const override;
+    Qt::WFlags initialWFlags() const override;
+    void grabXServer(bool grab) override;
 
-    virtual bool compositingActive() const;
-    virtual QRect transparentRect() const;
+    bool compositingActive() const override;
+    QRect transparentRect() const override;
 
     // Window tabbing
-    virtual QString caption(int idx) const;
-    virtual void closeTab(long id);
-    virtual void closeTabGroup();
-    virtual long currentTabId() const;
-    virtual QIcon icon(int idx) const;
-    virtual void setCurrentTab(long id);
-    virtual void showWindowMenu(const QPoint &, long id);
-    virtual void tab_A_before_B(long A, long B);
-    virtual void tab_A_behind_B(long A, long B);
-    virtual int tabCount() const;
-    virtual long tabId(int idx) const;
-    virtual void untab(long id, const QRect& newGeom);
-    virtual WindowOperation buttonToWindowOperation(Qt::MouseButtons button);
+    QString caption(int idx) const override;
+    void closeTab(long id) override;
+    void closeTabGroup() override;
+    long currentTabId() const override;
+    QIcon icon(int idx) const override;
+    void setCurrentTab(long id) override;
+    void showWindowMenu(const QPoint &, long id) override;
+    void tab_A_before_B(long A, long B) override;
+    void tab_A_behind_B(long A, long B) override;
+    int tabCount() const override;
+    long tabId(int idx) const override;
+    void untab(long id, const QRect& newGeom) override;
+    WindowOperation buttonToWindowOperation(Qt::MouseButtons button) override;
 
 private:
     KDecorationPreview* preview;
@@ -139,7 +139,7 @@ class KDecorationPreviewOptions
 public:
     KDecorationPreviewOptions();
     virtual ~KDecorationPreviewOptions();
-    virtual unsigned long updateSettings();
+    unsigned long updateSettings();
 
     void setCustomBorderSize(BorderSize size);
     void setCustomTitleButtonsEnabled(bool enabled);
@@ -158,7 +158,7 @@ class KDecorationPreviewPlugins
 {
 public:
     explicit KDecorationPreviewPlugins(const KSharedConfigPtr &cfg);
-    virtual bool provides(Requirement);
+    bool provides(Requirement) override;
 };
 
 inline KDecorationPreviewPlugins::KDecorationPreviewPlugins(const KSharedConfigPtr &cfg)
