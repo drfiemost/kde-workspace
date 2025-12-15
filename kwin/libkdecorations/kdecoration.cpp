@@ -401,10 +401,7 @@ KDecoration::Position KDecoration::mousePosition(const QPoint& p) const
 
 QRect KDecoration::transparentRect() const
 {
-    if (KDecorationBridgeUnstable *bridge2 = dynamic_cast<KDecorationBridgeUnstable*>(d->bridge))
-        return bridge2->transparentRect();
-    else
-        return QRect();
+    return d->bridge->transparentRect();
 }
 
 void KDecoration::setAlphaEnabled(bool enabled)
@@ -423,7 +420,7 @@ bool KDecoration::isAlphaEnabled() const
 
 bool KDecoration::compositingActive() const
 {
-    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->compositingActive();
+    return d->bridge->compositingActive();
 }
 
 void KDecoration::padding(int &left, int &right, int &top, int &bottom) const
@@ -435,69 +432,69 @@ void KDecoration::padding(int &left, int &right, int &top, int &bottom) const
 
 int KDecoration::tabCount() const
 {
-    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->tabCount();
+    return d->bridge->tabCount();
 }
 
 long KDecoration::tabId(int idx) const
 {
-    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->tabId(idx);
+    return d->bridge->tabId(idx);
 }
 
 QString KDecoration::caption(int idx) const
 {
-    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->caption(idx);
+    return d->bridge->caption(idx);
 }
 
 QIcon KDecoration::icon(int idx) const
 {
-    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->icon(idx);
+    return d->bridge->icon(idx);
 }
 
 long KDecoration::currentTabId() const
 {
-    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->currentTabId();
+    return d->bridge->currentTabId();
 }
 
 void KDecoration::setCurrentTab(long id)
 {
-    static_cast< KDecorationBridgeUnstable* >(d->bridge)->setCurrentTab(id);
+    d->bridge->setCurrentTab(id);
 }
 
 void KDecoration::tab_A_before_B(long A, long B)
 {
-    static_cast< KDecorationBridgeUnstable* >(d->bridge)->tab_A_before_B(A, B);
+    d->bridge->tab_A_before_B(A, B);
 }
 
 void KDecoration::tab_A_behind_B(long A, long B)
 {
-    static_cast< KDecorationBridgeUnstable* >(d->bridge)->tab_A_behind_B(A, B);
+    d->bridge->tab_A_behind_B(A, B);
 }
 
 void KDecoration::untab(long id, const QRect& newGeom)
 {
-    static_cast< KDecorationBridgeUnstable* >(d->bridge)->untab(id, newGeom);
+    d->bridge->untab(id, newGeom);
 }
 
 void KDecoration::closeTab(long id)
 {
-    static_cast< KDecorationBridgeUnstable* >(d->bridge)->closeTab(id);
+    d->bridge->closeTab(id);
 }
 
 void KDecoration::closeTabGroup()
 {
-    static_cast< KDecorationBridgeUnstable* >(d->bridge)->closeTabGroup();
+    d->bridge->closeTabGroup();
 }
 
 void KDecoration::showWindowMenu(const QPoint &pos, long id)
 {
-    static_cast< KDecorationBridgeUnstable* >(d->bridge)->showWindowMenu(pos, id);
+    d->bridge->showWindowMenu(pos, id);
 }
 
 //END tabbing
 
 KDecoration::WindowOperation KDecoration::buttonToWindowOperation(Qt::MouseButtons button)
 {
-    return static_cast< KDecorationBridgeUnstable* >(d->bridge)->buttonToWindowOperation(button);
+    return d->bridge->buttonToWindowOperation(button);
 }
 
 QRegion KDecoration::region(KDecorationDefines::Region)

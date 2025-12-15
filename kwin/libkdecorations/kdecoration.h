@@ -334,12 +334,6 @@ public:
     KDecorationOptions();
     virtual ~KDecorationOptions();
     /**
-     * Call to update settings when the config changes. Return value is
-     * a combination of Setting* (SettingColors, etc.) that have changed.
-     * @since 4.0.1
-     */
-    unsigned long updateSettings(KConfig* config);
-    /**
      * Returns the color that should be used for the given part of the decoration.
      * The changed flags for this setting is SettingColors.
      *
@@ -445,11 +439,6 @@ public:
 
     static KDecorationOptions *self();
 
-    /**
-     * @internal
-     */
-    virtual unsigned long updateSettings() = 0; // returns SettingXYZ mask
-
 protected:
     /** @internal */
     void setOpMaxButtonLeftClick(WindowOperation op);
@@ -465,6 +454,12 @@ protected:
     void setTitleButtonsLeft(const QString& b);
     /** @internal */
     void setTitleButtonsRight(const QString& b);
+    /**
+     * Call to update settings when the config changes. Return value is
+     * a combination of Setting* (SettingColors, etc.) that have changed.
+     * @since 4.0.1
+     */
+    unsigned long updateSettings(KConfig* config);
 private:
     /**
      * @internal
