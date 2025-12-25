@@ -9,12 +9,11 @@ install(FILES
 	flwm.desktop
 	fvwm.desktop
 	fvwm95.desktop
-    gnome.desktop
+	gnome.desktop
 	icewm.desktop
 	lwm.desktop
 	openbox.desktop
 	twm.desktop
-	ude.desktop
 	xfce.desktop
 	xfce4.desktop
 
